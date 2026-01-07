@@ -13,7 +13,6 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "eslint": "yarn eslint --fix",
-    "console": "console.log('test')"
+    "!(*eslint|.pnp).{config,loader}.{mjs,mts,cjs}": "eslint --fix"
   }
 }
