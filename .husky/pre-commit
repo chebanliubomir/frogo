@@ -1,1 +1,1 @@
-yarn lint-staged
+yarn start lint-staged
