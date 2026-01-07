@@ -13,6 +13,6 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "!(*eslint|.pnp).{config,loader}.{mjs,mts,cjs}": "eslint --fix"
+    "!(*eslint|.pnp).{config,loader}.{mjs,mts,cjs}": "eslint . --fix"
   }
 }
