@@ -1,10 +1,11 @@
-import eslint from '@eslint/js';
 import { defineConfig } from 'eslint/config';
-import tseslint from 'typescript-eslint';
 
-export default defineConfig(
-  eslint.configs.recommended,
-  tseslint.configs.strict,
-  tseslint.configs.stylistic,
-
-);
+export default defineConfig({
+  root: true,
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint/eslint-plugin'],
+  extends: ['@typescript-eslint/recommended', 'prettier'],
+  rules: {
+    semi: ['error', 'always'],
+  }
+});
