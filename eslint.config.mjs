@@ -1,11 +1,24 @@
-import { defineConfig } from 'eslint/config';
+import eslint from '@eslint/js';
+import {defineConfig} from 'eslint/config';
+import tseslint from 'typescript-eslint';
 
-export default defineConfig({
-  root: true,
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint/eslint-plugin'],
-  extends: ['@typescript-eslint/recommended', 'prettier'],
-  rules: {
-    semi: ['error', 'always'],
+export default defineConfig(
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  {
+    rules: {
+      'import/order': ['error', {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+          'object',
+          'type'
+        ]
+      }],
+    }
   }
-});
+);
