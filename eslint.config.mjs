@@ -1,4 +1,4 @@
-import { defineConfig } from 'eslint/config';
+import {defineConfig} from 'eslint/config';
 
 export default defineConfig({
   root: true,
@@ -7,5 +7,18 @@ export default defineConfig({
   extends: ['@typescript-eslint/recommended', 'prettier'],
   rules: {
     semi: ['error', 'always'],
+    'import/order': ['error', {
+      groups: [
+        'builtin',
+        'external',
+        'internal',
+        'parent',
+        'sibling',
+        'index',
+        'object',
+        'type'
+      ],
+    }],
   }
-});
+})
+;
