@@ -6,19 +6,20 @@ export default defineConfig(
   eslint.configs.recommended,
   tseslint.configs.recommended,
   {
+
     rules: {
-      'import/order': ['error', {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          'parent',
-          'sibling',
-          'index',
-          'object',
-          'type'
-        ]
-      }],
+      // 'import/order': ['error', {
+      //   groups: [
+      //     'builtin',
+      //     'external',
+      //     'internal',
+      //     'parent',
+      //     'sibling',
+      //     'index',
+      //     'object',
+      //     'type'
+      //   ]
+      // }],
     }
   }
 );
