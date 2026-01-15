@@ -7,10 +7,11 @@ export default defineConfig(
   tseslint.configs.recommended,
   tseslint.configs.strict,
   tseslint.configs.stylistic,
-
   {
 
     rules: {
+      "@typescript-eslint/array-type": "error",
+      "@typescript-eslint/no-extraneous-class": "off"
       // 'import/order': ['error', {
       //   groups: [
       //     'builtin',
