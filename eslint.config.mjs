@@ -19,7 +19,6 @@ export default defineConfig(
         './backend/tsconfig.json',
         './tsconfig.json'
       ],
-      tsconfigRootDir: __dirname,
     },
     rules: {
       "@typescript-eslint/array-type": "error",
