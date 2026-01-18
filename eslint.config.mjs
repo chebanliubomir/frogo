@@ -11,15 +11,15 @@ export default defineConfig(
   tseslint.configs.strict,
   tseslint.configs.stylistic,
   {
-    parser: '@typescript-eslint/parser',
-    files: ['*.ts', '*.tsx'],
-    parserOptions: {
-      project: [
-        './frontend/tsconfig.json',
-        './backend/tsconfig.json',
-        './tsconfig.json'
-      ],
-    },
+    // parser: '@typescript-eslint/parser',
+    // files: ['*.ts', '*.tsx'],
+    // parserOptions: {
+    //   project: [
+    //     './frontend/tsconfig.json',
+    //     './backend/tsconfig.json',
+    //     './tsconfig.json'
+    //   ],
+    // },
     rules: {
       "@typescript-eslint/array-type": "error",
       "@typescript-eslint/no-extraneous-class": "off",
