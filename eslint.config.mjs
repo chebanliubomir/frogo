@@ -2,6 +2,7 @@ import globals from 'globals';
 import {defineConfig} from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import js from "@eslint/js";
+import react from 'eslint-plugin-react'
 
 export default defineConfig([
   //root
@@ -13,19 +14,32 @@ export default defineConfig([
       "**/*.*.cjs",
       "**/*.*.mjs",
       "**/*.*.mjs",
+      "**/.yarn/**",
       "!**/eslint.*.mjs",
+      "**/dist/**/*",
+      "**/node_modules/**/*",
     ],
   },
   //frontend
-  // {
-  //   files: ["frontend/**/*.{ts,tsx}"],
-  //   ignores: ["node_modules"],
-  //   rules: {},
-  // },
+  {
+    files: ["frontend/**/*.{ts,tsx}"],
+    plugins: {
+      react: react.configs.recommended,
+    },
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        }
+      }
+    },
+    rules: {
+      "react/jsx-filename-extension": "warn",
+    },
+  },
   //backend
   {
     files: ["backend/**/*.{ts,mts,cts}"],
-    ignores: ["./backend/dist/**/*"],
     plugins: {
       "@typescript-eslint": tseslint.plugin,
     },
@@ -36,10 +50,16 @@ export default defineConfig([
       },
       globals: {
         ...globals.browser,
+        ...globals.node,
+        ...globals.es2026,
       },
     },
     rules: {
       semi: ["error", "always"],
+      eqeqeq: ["error", "always"],
+      "no-unused-vars": ["error"],
+      "no-console": ["error"],
+      "no-empty-function": ["error"],
     },
   },
 ]);
