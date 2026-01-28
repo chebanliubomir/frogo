@@ -21,20 +21,20 @@ export default defineConfig([
     ],
   },
   //frontend
-  {
-    files: ["frontend/**/*.{ts,tsx}"],
-    plugins: {
-      react: react.configs.recommended,
-    },
-    languageOptions: {
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        }
-      }
-    },
-    rules: {},
-  },
+  // {
+  //   files: ["frontend/**/*.{ts,tsx}"],
+  //   plugins: {
+  //     react: react.configs.recommended,
+  //   },
+  //   languageOptions: {
+  //     parserOptions: {
+  //       ecmaFeatures: {
+  //         jsx: true,
+  //       }
+  //     }
+  //   },
+  //   rules: {},
+  // },
   //backend
   {
     files: ["backend/**/*.{ts,mts,cts}"],
