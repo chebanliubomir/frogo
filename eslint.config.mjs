@@ -33,9 +33,7 @@ export default defineConfig([
         }
       }
     },
-    rules: {
-      "react/jsx-filename-extension": "warn",
-    },
+    rules: {},
   },
   //backend
   {
