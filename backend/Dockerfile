@@ -1,8 +1,8 @@
-FROM node:22.20 AS main
+FROM node:22-alpine AS main
 
 WORKDIR /app
 
-COPY . /app
+COPY . .
 
 RUN yarn install
 
