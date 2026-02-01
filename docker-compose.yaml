@@ -8,4 +8,13 @@ services:
     build: "backend"
     ports:
       - "3000:3000"
+    depends_on:
+      - "postgresql"
+
+  postgresql:
+    image: "18.1-alpine"
+    ports:
+      - "5432:5432"
+    volumes:
+      - "postgresql:var/lib/postgresql"
 
