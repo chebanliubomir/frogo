@@ -1,13 +1,9 @@
-FROM node:22-alpine AS build
+FROM node:22-alpine
 
 WORKDIR /app
 
-FROM build AS dependencies
-
 COPY package.* tsconfig.* tsconfig.*.* yarn.lock /app/
-COPY /src/ /app/
-
-FROM dependencies AS installation
+COPY src app
 
 RUN yarn install
 
