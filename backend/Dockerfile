@@ -1,12 +1,16 @@
-FROM node:22-alpine
-# mistake to determining directory
+FROM node:22-alpine AS main
+
 WORKDIR /app
+
+FROM main as dependencies
 
 COPY package.json tsconfig.json tsconfig.build.json yarn.lock /app/
 
 RUN yarn install
 
-COPY src app
+FROM dependencies AS build
+
+COPY ./src /app/src
 
 EXPOSE 3000
 
