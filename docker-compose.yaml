@@ -1,10 +1,12 @@
 services:
 #  frontend:
+#    container_name: "frontend"
 #    build: "frontend"
 #    ports:
 #      - "2000:2000"
 
   backend:
+    container_name: "backend"
     build: backend
     restart: always
     ports:
@@ -13,6 +15,7 @@ services:
       - postgres
 
   postgres:
+    container_name: "postgres"
     image: "postgres:18-alpine"
     restart: always
     ports:
