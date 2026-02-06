@@ -2,7 +2,7 @@ FROM node:22-alpine AS main
 
 WORKDIR /app
 
-FROM main as dependencies
+FROM main AS dependencies
 
 COPY package.json tsconfig.json tsconfig.build.json yarn.lock /app/
 
