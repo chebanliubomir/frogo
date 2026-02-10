@@ -23,5 +23,3 @@ jobs:
 
       - name: Installing Package manager ${{ matrix.yarn-version }}
         run: sudo apt install yarn
-        with:
-          yarn-version: ${{ matrix.yarn-version }}
