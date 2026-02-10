@@ -1,18 +1,39 @@
 name: CI for project "FROGO"
+run-name: Project FROGO
 
 on:
   push:
 
 jobs:
-  initialization:
+  installation:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.20.0]
+        node-version: [ 22.20.0 ]
+        yarn-version: [1.22.22]
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Starting Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Installing Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Installing Package manager ${{ matrix.yarn-version }}
+        run: sudo apt install yarn
+
+  dependencies:
+    needs: installation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Installing dependencies to root directory
+        run: yarn install
+
+      - name: Installing dependencies to backend directory
+        run: cd ./backend/ && yarn install
+
+      - name: Installing dependencies to frontend directory
+        run: cd ./frontend/ && yarn install
