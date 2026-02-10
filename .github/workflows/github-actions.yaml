@@ -1,4 +1,5 @@
 name: CI for project "FROGO"
+run-name: Project FROGO
 
 on:
   push:
@@ -16,3 +17,5 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Installing dependencies
+        run: yarn install
