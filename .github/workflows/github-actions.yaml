@@ -23,3 +23,17 @@ jobs:
 
       - name: Installing Package manager ${{ matrix.yarn-version }}
         run: sudo apt install yarn
+
+  dependencies:
+    needs: installation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Installing dependencies to root directory
+        run: yarn install
+
+      - name: Installing dependencies to backend directory
+        run: cd ./backend/ && yarn install
+
+      - name: Installing dependencies to frontend directory
+        run: cd ./frontend/ && yarn install
