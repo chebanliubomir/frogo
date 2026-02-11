@@ -31,12 +31,11 @@ jobs:
     steps:
       - name: Installing dependencies to root directory
         run: yarn install
-        working-directory: .
 
       - name: Installing dependencies to backend directory
-        run: ls -la
-#        working-directory: ./backend
-#
-#      - name: Installing dependencies to frontend directory
-#        run: yarn install
-#        working-directory: ./frontend
+        working-directory: ./backend
+        run: yarn install
+
+      - name: Installing dependencies to frontend directory
+        working-directory: ./frontend
+        run: yarn install
