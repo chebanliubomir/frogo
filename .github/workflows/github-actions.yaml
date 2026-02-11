@@ -34,9 +34,9 @@ jobs:
         working-directory: .
 
       - name: Installing dependencies to backend directory
-        run: yarn install
-        working-directory: ./backend
-
-      - name: Installing dependencies to frontend directory
-        run: yarn install
-        working-directory: ./frontend
+        run: ls -la
+#        working-directory: ./backend
+#
+#      - name: Installing dependencies to frontend directory
+#        run: yarn install
+#        working-directory: ./frontend
