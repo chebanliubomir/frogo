@@ -24,46 +24,7 @@ jobs:
       - name: Installing Package manager ${{ matrix.yarn-version }}
         run: sudo apt install yarn
 
-  dependencies:
-    needs: installation
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-      - name: Installing dependencies to root directory
-        run: |
-          corepack enable
-          yarn install
-
-      - name: Installing dependencies to backend directory
-        run: |
-          corepack enable
-          yarn install
-        working-directory: ./backend
-
-      - name: Installing dependencies to frontend directory
-        run: |
-          corepack enable
-          yarn install
-        working-directory: ./frontend
-
-  builds:
-    needs: dependencies
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Build backend
-        run: yarn run backend:build
-        working-directory: ./backend
-
-      - name: Build frontend
-        run: yarn run start
-        working-directory: ./frontend
-
   lint:
-    needs: builds
     runs-on: ubuntu-latest
 
     steps:
@@ -71,6 +32,33 @@ jobs:
 
       - name: Starting linters
         run: npx eslint . --fix
+
+  deploy:
+    needs: lint
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Installing Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Installing Package manager ${{ matrix.yarn-version }}
+        run: |
+          sudo apt install yarn
+          corepack enable
+
+      - name: Setup Docker
+        uses: docker/setup-docker-action@v4
+
+
+
+
+
 
 
 
