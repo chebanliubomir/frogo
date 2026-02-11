@@ -46,3 +46,31 @@ jobs:
           corepack enable
           yarn install
         working-directory: ./frontend
+
+  builds:
+    needs: dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Build backend
+        run: yarn run backend:build
+        working-directory: ./backend
+
+      - name: Build frontend
+        run: yarn run start
+        working-directory: ./frontend
+
+  lint:
+    needs: builds
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Starting linters
+        run: npx eslint . --fix
+
+
+
