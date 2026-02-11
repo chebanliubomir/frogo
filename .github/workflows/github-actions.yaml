@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ 22.20.0 ]
-        yarn-version: [1.22.22]
+        yarn-version: [ 1.22.22 ]
 
     steps:
       - name: Checkout code
@@ -31,14 +31,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Installing dependencies to root directory
-        run: yarn install
+        run: |
+          corepack enable
+          yarn install
 
-      - uses: actions/checkout@v6
       - name: Installing dependencies to backend directory
-        working-directory: backend
-        run: yarn install
+        run: |
+          corepack enable
+          yarn install
+        working-directory: ./backend
 
-      - uses: actions/checkout@v6
       - name: Installing dependencies to frontend directory
-        working-directory: frontend
-        run: yarn install
+        run: |
+          corepack enable
+          yarn install
+        working-directory: ./frontend
