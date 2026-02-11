@@ -29,8 +29,8 @@ jobs:
 
       - name: Starting linters
         run: |
-          yarn eslint . --fix
           corepack enable
+          yarn eslint . --fix
 
   deploy:
     needs: lint
@@ -48,8 +48,8 @@ jobs:
 
       - name: Installing Package manager ${{ matrix.yarn-version }}
         run: |
-          sudo apt install yarn
           corepack enable
+          sudo apt install yarn
 
       - name: Setup Docker
         uses: docker/setup-docker-action@v4
