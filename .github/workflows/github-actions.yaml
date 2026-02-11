@@ -29,13 +29,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v6
       - name: Installing dependencies to root directory
         run: yarn install
 
+      - uses: actions/checkout@v6
       - name: Installing dependencies to backend directory
         working-directory: backend
         run: yarn install
 
+      - uses: actions/checkout@v6
       - name: Installing dependencies to frontend directory
         working-directory: frontend
         run: yarn install
