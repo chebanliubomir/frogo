@@ -33,9 +33,9 @@ jobs:
         run: yarn install
 
       - name: Installing dependencies to backend directory
-        working-directory: ./backend
+        working-directory: backend
         run: yarn install
 
       - name: Installing dependencies to frontend directory
-        working-directory: ./frontend
+        working-directory: frontend
         run: yarn install
