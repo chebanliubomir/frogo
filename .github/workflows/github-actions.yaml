@@ -5,12 +5,12 @@ on:
   push:
 
 jobs:
+
   installation:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [ 22.20.0 ]
-        yarn-version: [ 1.22.22 ]
 
     steps:
       - name: Checkout code
@@ -21,15 +21,27 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+
+
   lint:
+    needs: installation
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install yarn
+        run: npm install -g yarn
+
+      - name: Installation dev dependencies
+        run: yarn install
 
       - name: Starting linters
         run: |
-          corepack enable
           yarn eslint . --fix
 
   deploy:
