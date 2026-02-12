@@ -20,10 +20,13 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
 
-      - name: Install yarn
-        run: sudo apt install yarn && corepack enable
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Display version yarn
+        run: yarn --version
+
 
   lint:
     needs: installation
