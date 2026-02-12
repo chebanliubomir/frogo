@@ -31,6 +31,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Install yarn
         run: npm install -g yarn
 
