@@ -37,6 +37,9 @@ jobs:
       - name: Install yarn
         run: npm install -g yarn
 
+      - name: Installation dev dependencies
+        run: yarn install
+
       - name: Starting linters
         run: |
           yarn eslint . --fix
