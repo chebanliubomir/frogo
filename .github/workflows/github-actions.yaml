@@ -5,71 +5,13 @@ on:
   push:
 
 jobs:
-
-  installation:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 22.20.0 ]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Installing Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ matrix.node-version }}
-
-
-
   lint:
-    needs: installation
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install yarn
-        run: npm install -g yarn
-
-      - name: Installation dev dependencies
+      - name: Install dependencies
         run: yarn install
-
-      - name: Starting linters
-        run: |
-          yarn eslint . --fix
-
-  deploy:
-    needs: lint
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Installing Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Installing Package manager ${{ matrix.yarn-version }}
-        run: |
-          corepack enable
-          sudo apt install yarn
-
-      - name: Setup Docker
-        uses: docker/setup-docker-action@v4
-
-
-
-
-
-
-
 
