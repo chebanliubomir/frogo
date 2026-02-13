@@ -10,6 +10,8 @@ jobs:
     strategy:
       matrix:
         node-version: [22.20.0]
+        yarn-version: [1.22.22]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -19,5 +21,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Yarn
+      - name: Install Yarn version:${{ matrix.yarn-version }}
         run: sudo npm install -g yarn
+
+      - name: Installing dependencies to root directory
+        run: yarn install
+
+      - name: Started lint
+        run: yarn eslint . --fix
+
