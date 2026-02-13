@@ -22,7 +22,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install Yarn version:${{ matrix.yarn-version }}
-        run: sudo npm install -g yarn
+        run: |
+          sudo npm install -g corepack
+          corepack enable
+          sudo npm install -g yarn
+        
 
       - name: Installing dependencies to root directory
         run: yarn install
