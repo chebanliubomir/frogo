@@ -54,7 +54,9 @@ jobs:
           sudo npm install -g yarn
 
       - name: Installing dependencies to root directory
-        run: yarn install
+        run: |
+          corepack enable
+          yarn install
 
       - name: Installing dependencies to backend directory
         run: yarn install
