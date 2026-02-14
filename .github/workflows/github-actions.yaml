@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install Yarn version:${{ matrix.yarn-version }}
+      - name: Install Yarn version - ${{ matrix.yarn-version }}
         run: |
           sudo npm install -g corepack
           corepack enable
@@ -34,3 +34,42 @@ jobs:
       - name: Started lint
         run: yarn eslint . --fix
 
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Yarn version - ${{ matrix.yarn-version }}
+        run: |
+          sudo npm install -g corepack
+          sudo corepack enable
+          sudo npm install -g yarn
+
+      - name: Installing dependencies to root directory
+        run: |
+          corepack enable
+          yarn install
+
+      - name: Installing dependencies to backend directory
+        run: yarn install
+        working-directory: ./backend
+
+      - name: Installing dependencies to frontend directory
+        run: yarn install
+        working-directory: ./frontend
+
+      - name: Building backend
+        run: yarn run backend:build
+        working-directory: ./backend
+
+      - name: Building frontend
+        run: yarn run build
+        working-directory: ./frontend
