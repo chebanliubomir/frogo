@@ -50,7 +50,7 @@ jobs:
       - name: Install Yarn version - ${{ matrix.yarn-version }}
         run: |
           sudo npm install -g corepack
-          corepack enable
+          sudo corepack enable
           sudo npm install -g yarn
 
       - name: Installing dependencies to root directory
