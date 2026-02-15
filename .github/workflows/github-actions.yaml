@@ -1,0 +1,75 @@
+name: CI for project "FROGO"
+run-name: Project FROGO
+
+on:
+  push:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.20.0]
+        yarn-version: [1.22.22]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Yarn version - ${{ matrix.yarn-version }}
+        run: |
+          sudo npm install -g corepack
+          corepack enable
+          sudo npm install -g yarn
+        
+
+      - name: Installing dependencies to root directory
+        run: yarn install
+
+      - name: Started lint
+        run: yarn eslint . --fix
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Yarn version - ${{ matrix.yarn-version }}
+        run: |
+          sudo npm install -g corepack
+          sudo corepack enable
+          sudo npm install -g yarn
+
+      - name: Installing dependencies to root directory
+        run: |
+          corepack enable
+          yarn install
+
+      - name: Installing dependencies to backend directory
+        run: yarn install
+        working-directory: ./backend
+
+      - name: Installing dependencies to frontend directory
+        run: yarn install
+        working-directory: ./frontend
+
+      - name: Building backend
+        run: yarn run backend:build
+        working-directory: ./backend
+
+      - name: Building frontend
+        run: yarn run build
+        working-directory: ./frontend
