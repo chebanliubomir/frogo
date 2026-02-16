@@ -1,4 +1,7 @@
 {
+  "dependencies": {
+    "@nestjs/mapped-types": "*"
+  },
   "name": "frogo",
   "packageManager": "yarn@4.9.2",
   "devDependencies": {
