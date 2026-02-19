@@ -4,13 +4,13 @@ WORKDIR /app
 
 FROM main AS dependencies
 
-COPY package.json tsconfig.json tsconfig.build.json yarn.lock /app/
+COPY --chown=node:node package.json tsconfig.json tsconfig.build.json yarn.lock /app/
 
 RUN yarn install
 
 FROM dependencies AS build
 
-COPY ./src /app/src
+COPY --chown=node:node ./src /app/src
 
 EXPOSE 3000
 
