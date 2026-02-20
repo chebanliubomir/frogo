@@ -20,6 +20,11 @@ Install dependencies to backend & frontend directory: yarn install
 
 ### Step 3.
 ```
+Prisma initializated and installed database: yarn dlx prisma generate & yarn dlx prisma push
+```
+
+### Step 4.
+```
 Starting Docker Compose in root directory: 
   * docker compose -f docker-compose.prod.yaml up - for prodaction
   * docker compose -f docker-compose.dev.yaml up - for development
