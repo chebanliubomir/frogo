@@ -1,9 +1,5 @@
 services:
-#  frontend:
-#    container_name: "frontend"
-#    build: "frontend"
-#    ports:
-#      - "2000:2000"
+
 
   backend:
     container_name: "backend"
