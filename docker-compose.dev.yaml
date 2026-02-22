@@ -1,24 +1,19 @@
 services:
-#  frontend:
-#    container_name: "frontend"
-#    build: "frontend"
-#    ports:
-#      - "2000:2000"
+
 
   backend:
     container_name: "backend"
     build:
       context: ./backend/
       dockerfile: Dockerfile.dev
-    restart: always
     environment:
-      - NODE_ENV=production
-      - PORT=3000
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true
+    command: "yarn backend:start:dev"
     ports:
       - "3000:3000"
     volumes:
-      - "./backend/src/:/app/src"
-      - "./backend/package.json:/app/package.json"
+      - "./backend:/app"
     depends_on:
       - postgres
 
