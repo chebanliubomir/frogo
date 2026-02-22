@@ -7,8 +7,9 @@ services:
       context: ./backend/
       dockerfile: Dockerfile.dev
     environment:
-      - ASPNETCORE_ENVIRONMENT=development
+      - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true
+    command: "yarn backend:start:dev"
     ports:
       - "3000:3000"
     volumes:
