@@ -6,11 +6,15 @@ services:
       context: ./backend/
       dockerfile: Dockerfile.dev
     environment:
+      - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     ports:
       - "3000:3000"
     volumes:
-      - "./backend/src:/app/src"
+      - "./backend:/app"
+      - "/app/node_modules"
+      - "/app/dist"
     depends_on:
       - postgres
 
