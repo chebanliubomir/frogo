@@ -1,19 +1,20 @@
 services:
 
-
   backend:
     container_name: "backend"
     build:
       context: ./backend/
       dockerfile: Dockerfile.dev
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=true
-    command: "yarn backend:start:dev"
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     ports:
       - "3000:3000"
     volumes:
       - "./backend:/app"
+      - "/app/node_modules"
+      - "/app/dist"
     depends_on:
       - postgres
 

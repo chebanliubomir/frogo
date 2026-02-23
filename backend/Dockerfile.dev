@@ -1,4 +1,4 @@
-FROM node:24-alpine AS development
+FROM node:20-alpine AS development
 
 WORKDIR /app
 
@@ -12,5 +12,5 @@ COPY ./src /app/src
 ENV CHOKIDAR_USEPOLLING=true
 ENV WATCHPACK_POLLING=true
 
-CMD ["yarn", "backend:start:dev"]
+CMD ["yarn", "backend:start:dev", "--", "--poll", "1000"]
 
