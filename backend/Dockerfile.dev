@@ -3,9 +3,6 @@ FROM node:20-alpine AS development
 WORKDIR /app
 
 COPY package.json tsconfig.json tsconfig.build.json yarn.lock /app/
-COPY ./dist /app/dist
-
-RUN yarn global add @nestjs/cli
 
 RUN yarn install
 
@@ -15,5 +12,5 @@ COPY ./src /app/src
 ENV CHOKIDAR_USEPOLLING=true
 ENV WATCHPACK_POLLING=true
 
-CMD ["yarn", "backend:start:dev"]
+CMD ["yarn", "backend:start:dev", "--", "--poll", "1000"]
 
