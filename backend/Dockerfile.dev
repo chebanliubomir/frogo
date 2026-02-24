@@ -8,9 +8,5 @@ RUN yarn install
 
 COPY ./src /app/src
 
-# Settings hot reload
-ENV CHOKIDAR_USEPOLLING=true
-ENV WATCHPACK_POLLING=true
-
 CMD ["yarn", "backend:start:dev", "--", "--poll", "1000"]
 
