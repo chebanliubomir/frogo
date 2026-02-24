@@ -1,0 +1,7 @@
+.git
+.idea
+.gitignore
+node_modules/
+dist/
+Dockerfile.*
+yarn.lock
