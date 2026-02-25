@@ -9,8 +9,13 @@ services:
       - "3000:3000"
     volumes:
       - "./backend:/app"
-      - "/app/node_modules"
-      - "/app/dist"
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /app/
+        - action: rebuild
+          path: package.json
     depends_on:
       - postgres
 
