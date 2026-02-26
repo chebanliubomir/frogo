@@ -12,8 +12,9 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./
-          target: /app/
+          path: ./backend/src
+          target: ./app/
+
         - action: rebuild
           path: package.json
     depends_on:
