@@ -2,10 +2,14 @@ FROM node:20-alpine AS development
 
 WORKDIR /app
 
+RUN yarn global add @nestjs/cli
+
 COPY package.json tsconfig.json tsconfig.build.json yarn.lock ./app/
 
 RUN yarn install
 
 COPY ./src /app/src
+
+EXPOSE 3000
 
 CMD ["yarn", "run", "backend:start:dev"]
