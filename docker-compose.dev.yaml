@@ -13,7 +13,7 @@ services:
       watch:
         - action: sync
           path: ./backend/src
-          target: ./app/
+          target: ./app
 
         - action: rebuild
           path: package.json

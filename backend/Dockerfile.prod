@@ -8,4 +8,4 @@ RUN yarn install
 
 COPY ./src /app/src
 
-CMD ["yarn", "run", "backend:start:dev"]
+CMD ["yarn", "backend:start:dev"]
