@@ -1,8 +1,6 @@
-dist
 .git
 .yarn
-.env
-.pnp.loader.mjs
-.pnp.cjs
-Dockerfile.prod
-Dockerfile.dev
+dist
+node_modules
+Dockerfile.*
+
