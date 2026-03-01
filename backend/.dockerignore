@@ -1,14 +1,6 @@
-dist
 .git
 .yarn
-<<<<<<< HEAD
 dist
 node_modules
 Dockerfile.*
-=======
-.env
-.pnp.loader.mjs
-.pnp.cjs
-Dockerfile.prod
-Dockerfile.dev
->>>>>>> 2151454ad1b519ca6c709abdfbde62dc0c2c8a12
+
