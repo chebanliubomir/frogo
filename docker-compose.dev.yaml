@@ -7,13 +7,18 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
-    volumes:
-      - "./backend:/app"
+
     develop:
       watch:
         - action: sync
+<<<<<<< HEAD
           path: ./backend/
           target: /app/
+=======
+          path: ./backend/src
+          target: ./app
+
+>>>>>>> 2151454ad1b519ca6c709abdfbde62dc0c2c8a12
         - action: rebuild
           path: package.json
     depends_on:

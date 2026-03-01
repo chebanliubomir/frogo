@@ -9,7 +9,7 @@ services:
     container_name: "backend"
     build:
       context: ./backend/
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.prod.prod
     restart: always
     ports:
       - "3000:3000"

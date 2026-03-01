@@ -1,5 +1,7 @@
 # IDEs and editors
 .idea
+.yarn
+dist
 
 # Dependencies
 .yarn
