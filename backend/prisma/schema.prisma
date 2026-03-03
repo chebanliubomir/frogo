@@ -7,11 +7,6 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
 model User {
   id            Int      @id @default(autoincrement())
   avatar        String   @default("null")
@@ -25,4 +20,9 @@ model User {
   updated_at    DateTime @updatedAt
 
   @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
