@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "./generated/prisma"
 }
 
 datasource db {
@@ -18,8 +18,6 @@ model User {
   activatedLink String   @unique @default("null")
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
-
-  @@map("users")
 }
 
 enum Role {
