@@ -20,9 +20,16 @@ Install dependencies to backend & frontend directory: yarn install
 
 ### Step 3.
 ```
-Prisma initializated and installed database (in the backend directory):
-  * yarn prisma db pull - for prodaction & development
-  * yarn prisma backend:prisma:seed - for development
+Prisma initializated and installed database for development (in the backend directory):
+  * dotenv -e .env.development -- yarn prisma generate
+  * dotenv -e .env.development -- yarn prisma db pull
+  * yarn prisma backend:prisma:seed
+```
+
+```
+Prisma initializated and installed database for production (in the backend directory):
+  * dotenv -e .env.production -- yarn prisma generate
+  * dotenv -e .env.production -- yarn prisma db pull
 ```
 
 ### Step 4.

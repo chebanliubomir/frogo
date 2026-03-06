@@ -14,11 +14,10 @@
     "backend:prisma:generate:prod": "dotenv -e .env.production -- yarn prisma generate",
     "backend:prisma:migrate:prod": "dotenv -e .env.production -- yarn prisma migrate",
     "backend:prisma:db:pull:prod": "dotenv -e .env.production -- yarn prisma db pull",
-
     "backend:prisma:generate:dev": "dotenv -e .env.development -- yarn prisma generate",
     "backend:prisma:migrate:dev": "dotenv -e .env.development -- yarn prisma migrate dev",
     "backend:prisma:db:pull:dev": "dotenv -e .env.development -- yarn prisma db pull",
-    "backend:prisma:seed": "node ./prisma/seed/seed.js"
+    "backend:prisma:seed": "dotenv -e .env.development -- ts-node prisma/seed/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
