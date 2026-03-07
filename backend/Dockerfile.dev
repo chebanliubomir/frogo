@@ -6,6 +6,7 @@ COPY package.json tsconfig.json tsconfig.build.json yarn.lock /app/
 
 RUN yarn install
 
+COPY ./prisma /app/prisma
 COPY ./src /app/src
 
 EXPOSE 3000
