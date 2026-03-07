@@ -7,6 +7,10 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+}
 model User {
   id            Int      @id @default(autoincrement())
   avatar        String   @default("null")
@@ -18,9 +22,4 @@ model User {
   activatedLink String   @unique @default("null")
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
-}
-
-enum Role {
-  USER
-  ADMIN
 }

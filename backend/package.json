@@ -17,7 +17,7 @@
     "backend:prisma:generate:dev": "dotenv -e .env.development -- yarn prisma generate",
     "backend:prisma:migrate:dev": "dotenv -e .env.development -- yarn prisma migrate dev",
     "backend:prisma:db:pull:dev": "dotenv -e .env.development -- yarn prisma db pull",
-    "backend:prisma:seed": "dotenv -e .env.development -- ts-node prisma/seed/seed.ts"
+    "backend:prisma:seed": "node --loader ts-node/esm prisma/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
