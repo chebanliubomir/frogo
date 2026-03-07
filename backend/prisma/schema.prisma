@@ -20,6 +20,6 @@ model User {
   password      String
   rule          Role     @default(USER)
   activatedLink String   @unique @default("null")
-  created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
+  created_at    DateTime @default(now())
 }
