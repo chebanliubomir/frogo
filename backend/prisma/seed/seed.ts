@@ -20,8 +20,6 @@ const prisma = new PrismaClient({ adapter })
     }
   })
 
-  console.log(user)
-
   await prisma.$disconnect()
 
 }
