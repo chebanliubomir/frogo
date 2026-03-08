@@ -1,7 +1,7 @@
 import 'dotenv/config'
-import { env } from 'prisma/config'
+import { env } from '@prisma/config'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient } from '../generated/prisma/client'
+import { PrismaClient } from '../generated/prisma/client.js'
 
 async function seed() {
 

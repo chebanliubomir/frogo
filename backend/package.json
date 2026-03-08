@@ -1,6 +1,7 @@
 {
   "name": "backend",
   "version": "0.0.1",
+  "type": "module",
   "description": "",
   "author": "",
   "private": true,
@@ -11,7 +12,8 @@
     "backend:start:dev": "nest start --watch",
     "backend:start:debug": "nest start --debug --watch",
     "backend:start:prod": "node dist/main",
-    "backend:prisma:seed": "ts-node ./prisma/seed/seed.ts"
+    "backend:prisma:studio": "dotenv -e .env.development -- yarn prisma studio",
+    "backend:prisma:seed": "dotenv -e .env.development -- npx tsx prisma/seed/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -20,6 +22,7 @@
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "dotenv-cli": "^11.0.0",
+    "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -28,7 +31,8 @@
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
     "@types/express": "^5.0.0",
-    "@types/node": "^25.3.3",
+    "@types/node": "^25.3.5",
+    "@types/pg": "^8",
     "@types/supertest": "^6.0.2",
     "dotenv": "^17.3.1",
     "globals": "^16.0.0",
@@ -36,8 +40,7 @@
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-loader": "^9.5.2",
-    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.9.3"
   }
 }

@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.4.2",
   "engineVersion": "94a226be1cf2967af2541cca5529f0f7ba866919",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nenum Role {\n  USER\n  ADMIN\n}\n\nmodel User {\n  id            Int      @id @default(autoincrement())\n  avatar        String   @default(\"null\")\n  name          String\n  surname       String\n  email         String   @unique\n  password      String\n  rule          Role     @default(USER)\n  activatedLink String   @unique @default(\"null\")\n  updated_at    DateTime @updatedAt\n  created_at    DateTime @default(now())\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"./generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id            Int      @id @default(autoincrement())\n  avatar        String   @default(\"null\")\n  name          String\n  surname       String\n  email         String   @unique\n  password      String\n  rule          Role     @default(USER)\n  activatedLink String   @unique @default(\"null\")\n  updated_at    DateTime @updatedAt\n  created_at    DateTime @default(now())\n}\n\nenum Role {\n  USER\n  ADMIN\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
