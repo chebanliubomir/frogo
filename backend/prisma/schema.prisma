@@ -10,12 +10,12 @@ datasource db {
 model User {
   id            Int      @id @default(autoincrement())
   avatar        String   @default("null")
-  name          String
-  surname       String
+  name          String   @db.VarChar(60)
+  surname       String   @db.VarChar(60)
   email         String   @unique
   password      String
   rule          Role     @default(USER)
-  activatedLink String   @unique @default("null")
+  activatedLink String   @default("null")
   updated_at    DateTime @updatedAt
   created_at    DateTime @default(now())
 }
