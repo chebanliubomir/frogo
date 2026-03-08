@@ -11,7 +11,7 @@
     "backend:start:dev": "nest start --watch",
     "backend:start:debug": "nest start --debug --watch",
     "backend:start:prod": "node dist/main",
-    "backend:prisma:seed": "node --loader ts-node/esm prisma/seed.ts"
+    "backend:prisma:seed": "ts-node ./prisma/seed/seed.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
