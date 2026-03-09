@@ -5,25 +5,22 @@ import { PrismaClient } from '../generated/prisma/client.js'
 
 async function seed() {
 
-const adapter = new PrismaPg({
-  connectionString: env("DATABASE_URL")
-})
+  const adapter = new PrismaPg({
+    connectionString: env("DATABASE_URL")
+  })
 
-const prisma = new PrismaClient({ adapter })
+  const prisma = new PrismaClient({ adapter })
 
-  const user = await prisma.user.create({
+  await prisma.user.create({
     data: {
-      name: 'liubomir',
-      surname: 'cheban',
-      email: 'qwqzx1485@gmail.com',
-      password: 'Qwerty123'
+      name: 'mfwiper',
+      surname: "jfwoemrp",
+      email: "wmorsp@gmail.com",
+      password: "wmfritmroivm4#$#$"
     }
   })
 
-  console.log(user)
-
   await prisma.$disconnect()
-
 }
 
 seed()

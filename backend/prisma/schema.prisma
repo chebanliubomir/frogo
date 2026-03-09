@@ -7,20 +7,57 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id            Int      @id @default(autoincrement())
-  avatar        String   @default("null")
-  name          String
-  surname       String
-  email         String   @unique
-  password      String
-  rule          Role     @default(USER)
-  activatedLink String   @unique @default("null")
-  updated_at    DateTime @updatedAt
-  created_at    DateTime @default(now())
-}
-
 enum Role {
   USER
   ADMIN
+}
+
+model User {
+  id            Int        @id @default(autoincrement())
+  avatar        String     @default("null")
+  name          String     @db.VarChar(60)
+  surname       String     @db.VarChar(60)
+  email         String     @unique
+  password      String
+  rule          Role       @default(USER)
+  activatedLink String     @default("null")
+  posts         Post[]
+  comments      Comments[]
+  updated_at    DateTime   @updatedAt
+  created_at    DateTime   @default(now())
+}
+
+model Post {
+  id          Int          @id @default(autoincrement())
+  title       String       @db.VarChar(100)
+  description String       @db.VarChar(1000)
+  views       Int          @default(0)
+  edited      Boolean      @default(false)
+  file        String       @unique
+  updated_at  DateTime     @updatedAt
+  created_at  DateTime     @default(now())
+  post_images Post_Image[]
+  comments    Comments[]
+  user        User?        @relation(fields: [userId], references: [id])
+  userId      Int?
+}
+
+model Post_Image {
+  id         Int      @id @default(autoincrement())
+  image      String
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  post       Post?    @relation(fields: [postId], references: [id])
+  postId     Int?
+}
+
+model Comments {
+  id         Int      @id @default(autoincrement())
+  text       String   @db.VarChar(255)
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  post       Post?    @relation(fields: [postId], references: [id])
+  postId     Int?
+  user       User?    @relation(fields: [userId], references: [id])
+  userId     Int?
 }

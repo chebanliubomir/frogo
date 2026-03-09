@@ -51,7 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Post: 'Post',
+  Post_Image: 'Post_Image',
+  Comments: 'Comments'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -86,6 +89,44 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const PostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  views: 'views',
+  edited: 'edited',
+  file: 'file',
+  updated_at: 'updated_at',
+  created_at: 'created_at',
+  userId: 'userId'
+} as const
+
+export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+export const Post_ImageScalarFieldEnum = {
+  id: 'id',
+  image: 'image',
+  updated_at: 'updated_at',
+  created_at: 'created_at',
+  postId: 'postId'
+} as const
+
+export type Post_ImageScalarFieldEnum = (typeof Post_ImageScalarFieldEnum)[keyof typeof Post_ImageScalarFieldEnum]
+
+
+export const CommentsScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  updated_at: 'updated_at',
+  created_at: 'created_at',
+  postId: 'postId',
+  userId: 'userId'
+} as const
+
+export type CommentsScalarFieldEnum = (typeof CommentsScalarFieldEnum)[keyof typeof CommentsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -100,4 +141,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
