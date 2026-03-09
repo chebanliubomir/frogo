@@ -384,7 +384,10 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Post: 'Post',
+  Post_Image: 'Post_Image',
+  Comments: 'Comments'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user"
+    modelProps: "user" | "post" | "post_Image" | "comments"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +481,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Post: {
+      payload: Prisma.$PostPayload<ExtArgs>
+      fields: Prisma.PostFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PostFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PostFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+        }
+        findFirst: {
+          args: Prisma.PostFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PostFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+        }
+        findMany: {
+          args: Prisma.PostFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+        }
+        create: {
+          args: Prisma.PostCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+        }
+        createMany: {
+          args: Prisma.PostCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PostCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+        }
+        delete: {
+          args: Prisma.PostDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+        }
+        update: {
+          args: Prisma.PostUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+        }
+        deleteMany: {
+          args: Prisma.PostDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PostUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PostUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>[]
+        }
+        upsert: {
+          args: Prisma.PostUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PostPayload>
+        }
+        aggregate: {
+          args: Prisma.PostAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePost>
+        }
+        groupBy: {
+          args: Prisma.PostGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PostGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PostCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PostCountAggregateOutputType> | number
+        }
+      }
+    }
+    Post_Image: {
+      payload: Prisma.$Post_ImagePayload<ExtArgs>
+      fields: Prisma.Post_ImageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.Post_ImageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.Post_ImageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
+        }
+        findFirst: {
+          args: Prisma.Post_ImageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.Post_ImageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
+        }
+        findMany: {
+          args: Prisma.Post_ImageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>[]
+        }
+        create: {
+          args: Prisma.Post_ImageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
+        }
+        createMany: {
+          args: Prisma.Post_ImageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.Post_ImageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>[]
+        }
+        delete: {
+          args: Prisma.Post_ImageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
+        }
+        update: {
+          args: Prisma.Post_ImageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
+        }
+        deleteMany: {
+          args: Prisma.Post_ImageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.Post_ImageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.Post_ImageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>[]
+        }
+        upsert: {
+          args: Prisma.Post_ImageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
+        }
+        aggregate: {
+          args: Prisma.Post_ImageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePost_Image>
+        }
+        groupBy: {
+          args: Prisma.Post_ImageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Post_ImageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.Post_ImageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Post_ImageCountAggregateOutputType> | number
+        }
+      }
+    }
+    Comments: {
+      payload: Prisma.$CommentsPayload<ExtArgs>
+      fields: Prisma.CommentsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CommentsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CommentsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>
+        }
+        findFirst: {
+          args: Prisma.CommentsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CommentsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>
+        }
+        findMany: {
+          args: Prisma.CommentsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>[]
+        }
+        create: {
+          args: Prisma.CommentsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>
+        }
+        createMany: {
+          args: Prisma.CommentsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CommentsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>[]
+        }
+        delete: {
+          args: Prisma.CommentsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>
+        }
+        update: {
+          args: Prisma.CommentsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>
+        }
+        deleteMany: {
+          args: Prisma.CommentsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CommentsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CommentsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>[]
+        }
+        upsert: {
+          args: Prisma.CommentsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommentsPayload>
+        }
+        aggregate: {
+          args: Prisma.CommentsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateComments>
+        }
+        groupBy: {
+          args: Prisma.CommentsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CommentsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CommentsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CommentsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -533,6 +758,44 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const PostScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  views: 'views',
+  edited: 'edited',
+  file: 'file',
+  updated_at: 'updated_at',
+  created_at: 'created_at',
+  userId: 'userId'
+} as const
+
+export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+export const Post_ImageScalarFieldEnum = {
+  id: 'id',
+  image: 'image',
+  updated_at: 'updated_at',
+  created_at: 'created_at',
+  postId: 'postId'
+} as const
+
+export type Post_ImageScalarFieldEnum = (typeof Post_ImageScalarFieldEnum)[keyof typeof Post_ImageScalarFieldEnum]
+
+
+export const CommentsScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  updated_at: 'updated_at',
+  created_at: 'created_at',
+  postId: 'postId',
+  userId: 'userId'
+} as const
+
+export type CommentsScalarFieldEnum = (typeof CommentsScalarFieldEnum)[keyof typeof CommentsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -547,6 +810,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -608,6 +879,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -720,6 +998,9 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  post?: Prisma.PostOmit
+  post_Image?: Prisma.Post_ImageOmit
+  comments?: Prisma.CommentsOmit
 }
 
 /* Types for Logging */

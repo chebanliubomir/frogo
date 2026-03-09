@@ -46,3 +46,18 @@ export { Prisma }
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Post
+ * 
+ */
+export type Post = Prisma.PostModel
+/**
+ * Model Post_Image
+ * 
+ */
+export type Post_Image = Prisma.Post_ImageModel
+/**
+ * Model Comments
+ * 
+ */
+export type Comments = Prisma.CommentsModel
