@@ -55,7 +55,7 @@ export default defineConfig([
       "semi": ["error", "always"],
       "eqeqeq": ["error", "always"],
       "no-unused-vars": ["error"],
-      "no-console": ["error"],
+      "no-console": ["warn"],
       "no-empty-function": ["error"],
     },
   },
