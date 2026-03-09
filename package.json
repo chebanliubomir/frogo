@@ -23,7 +23,7 @@
   "scripts": {
     "prepare": "husky",
     "docker:backend:prod": "docker compose -f docker-compose.prod.yaml --env-file ./backend/.env.production up",
-    "docker:backend:dev": "docker compose -f docker-compose.dev.yaml --env-file ./backend/.env.development up --watch --build --no-cache"
+    "docker:backend:dev": "docker compose -f docker-compose.dev.yaml --env-file ./backend/.env.development up --watch --build"
   },
   "lint-staged": {
     "!(*eslint|.pnp).{config,loader}.{mjs,mts,cjs}": "eslint . --fix"
