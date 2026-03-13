@@ -14,7 +14,7 @@ export class UserService {
         email,
         password
       }
-    }).catch(e => console.log(e))
+    })
     return user
   }
 
