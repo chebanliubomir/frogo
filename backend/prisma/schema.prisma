@@ -7,11 +7,6 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
 model User {
   id            Int        @id @default(autoincrement())
   avatar        String     @default("null")
@@ -21,10 +16,10 @@ model User {
   password      String
   rule          Role       @default(USER)
   activatedLink String     @default("null")
-  posts         Post[]
-  comments      Comments[]
   updated_at    DateTime   @updatedAt
   created_at    DateTime   @default(now())
+  comments      Comments[]
+  posts         Post[]
 }
 
 model Post {
@@ -36,10 +31,10 @@ model Post {
   file        String       @unique
   updated_at  DateTime     @updatedAt
   created_at  DateTime     @default(now())
-  post_images Post_Image[]
+  userId      Int?
   comments    Comments[]
   user        User?        @relation(fields: [userId], references: [id])
-  userId      Int?
+  post_images Post_Image[]
 }
 
 model Post_Image {
@@ -47,8 +42,8 @@ model Post_Image {
   image      String
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
-  post       Post?    @relation(fields: [postId], references: [id])
   postId     Int?
+  post       Post?    @relation(fields: [postId], references: [id])
 }
 
 model Comments {
@@ -56,8 +51,13 @@ model Comments {
   text       String   @db.VarChar(255)
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
-  post       Post?    @relation(fields: [postId], references: [id])
   postId     Int?
-  user       User?    @relation(fields: [userId], references: [id])
   userId     Int?
+  post       Post?    @relation(fields: [postId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
 }
