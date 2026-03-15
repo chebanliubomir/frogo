@@ -6,7 +6,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [`.env.${process.env.DATABASE_URL}`, '.env'],
+      envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
       isGlobal: true
     }),
     UserModule,
