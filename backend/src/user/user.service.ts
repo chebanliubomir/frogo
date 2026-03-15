@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ICreateUser } from './interfaces/create-user.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 
@@ -9,6 +9,8 @@ export class UserService {
   async create({name, surname, email, password}: ICreateUser) {
 
     const findUser = await this.prisma.user.findUnique({ where: { email } })
+
+    if(findUser) return;
 
     const user = await this.prisma.user.create({
       data: {
