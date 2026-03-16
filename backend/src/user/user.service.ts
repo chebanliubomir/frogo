@@ -1,4 +1,4 @@
-import { ConflictException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { ICreateUser } from './interfaces/create-user.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 
@@ -24,8 +24,22 @@ export class UserService {
         email,
         password
       }
-    })
+    })   
     return user
+  }
+
+  async findOne(id: number) {
+    const findUser = await this.prisma.user.findUnique({ where: { id } })
+    
+    if(!findUser) {
+      throw new NotFoundException({
+        status: HttpStatus.NOT_FOUND,
+        message: 'Такого користувача не існує.'
+      })
+    }
+
+    return findUser
+
   }
 
 }
