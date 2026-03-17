@@ -23,8 +23,8 @@ export class UserController {
 
   @ApiOkResponse({ type: UserEntity })
   @Get('all')
-  getAllUser() {
-    return this.userService.getAllUser()
+  getAllUsers() {
+    return this.userService.getAllUsers()
   }
 
 }
