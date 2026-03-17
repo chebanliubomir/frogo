@@ -21,4 +21,10 @@ export class UserController {
     return this.userService.findOne(id)
   }
 
+  @ApiOkResponse({ type: UserEntity })
+  @Get('all')
+  getAllUser() {
+    return this.userService.getAllUser()
+  }
+
 }
