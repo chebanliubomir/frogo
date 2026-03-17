@@ -42,8 +42,17 @@ export class UserService {
 
   }
 
-  async getAllUser() {
-    return this.prisma.user.findMany()
+  async getAllUsers() {
+    const allUsers = await this.prisma.user.findMany()
+
+    if(allUsers.length <= 0) {
+      throw new NotFoundException({
+        status: HttpStatus.NOT_FOUND,
+        message: 'Жодного користувача не знайдено.'
+      })
+    }
+
+    return allUsers
   }
 
 }
