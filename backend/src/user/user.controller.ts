@@ -10,12 +10,6 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
   
   @ApiOkResponse({ type: UserEntity })
-  @Post('create')
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto)
-  }
-  
-  @ApiOkResponse({ type: UserEntity })
   @Get('one')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.userService.findOne(id)
