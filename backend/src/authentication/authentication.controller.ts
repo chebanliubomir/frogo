@@ -4,7 +4,7 @@ import { RegistrationDto } from './dto/registration.dto.js';
 
 @Controller('authentication')
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationService) {}
+  constructor(private readonly authenticationService: AuthenticationService) { }
 
   @Post('registration')
   registration(@Body() registrationDto: RegistrationDto) {

@@ -8,4 +8,4 @@ import { UserModule } from '../user/user.module.js';
   providers: [AuthenticationService],
   imports: [UserModule],
 })
-export class AuthenticationModule {}
+export class AuthenticationModule { }
