@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
 import { env } from '@prisma/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -7,7 +7,8 @@ import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.f
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalFilters(new PrismaClientExeptionFilter())
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new PrismaClientExeptionFilter(httpAdapter))
   
    const config = new DocumentBuilder()
     .setTitle('Frogo')
