@@ -1,6 +1,5 @@
-import { Controller, Post, Body, Param, Get, ParseIntPipe } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get } from '@nestjs/common';
 import { UserService } from './user.service.js';
-import { CreateUserDto } from './dto/create-user.dto.js'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity.js';
 @Controller('user')
@@ -8,12 +7,6 @@ import { UserEntity } from './entities/user.entity.js';
 export class UserController {
 
   constructor(private readonly userService: UserService) {}
-  
-  @ApiOkResponse({ type: UserEntity })
-  @Get('one')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.userService.findOne(id)
-  }
 
   @ApiOkResponse({ type: UserEntity })
   @Get('all')
