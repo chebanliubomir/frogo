@@ -3,12 +3,17 @@ import { AppModule } from './app.module.js';
 import { env } from '@prisma/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.filter.js';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('api')
+
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExeptionFilter(httpAdapter))
+
+  app.useGlobalPipes(new ValidationPipe())
   
    const config = new DocumentBuilder()
     .setTitle('Frogo')

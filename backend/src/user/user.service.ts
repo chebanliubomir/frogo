@@ -25,21 +25,12 @@ export class UserService {
         password
       }
     })   
+    
     return user
   }
 
-  async findOne(id: number) {
-    const findUser = await this.prisma.user.findUnique({ where: { id } })
-    
-    if(!findUser) {
-      throw new NotFoundException({
-        status: HttpStatus.NOT_FOUND,
-        message: 'Такого користувача не існує.'
-      })
-    }
-
-    return findUser
-
+  async findOne(email: string) {
+    return await this.prisma.user.findUnique({ where: { email } })
   }
 
   async getAllUsers() {
