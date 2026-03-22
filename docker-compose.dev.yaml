@@ -14,8 +14,8 @@ services:
         - action: sync
           path: ./backend/
           target: /app/
-        - action: rebuild
-          path: package.json
+        - path: ./package.json
+          action: rebuild
     depends_on:
       - postgres_db
 
