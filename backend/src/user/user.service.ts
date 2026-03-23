@@ -9,7 +9,7 @@ export class UserService {
   async create({ name, surname, email, password }: ICreateUser) {
 
     const findUser = await this.prisma.user.findUnique({ where: { email } })
-
+    
     if (findUser) {
       throw new ConflictException({
         status: HttpStatus.CONFLICT,

@@ -3,17 +3,30 @@ import { HttpStatus, Injectable, NotFoundException, UnauthorizedException } from
 import { RegistrationDto } from './dto/registration.dto.js';
 import { UserService } from '../user/user.service.js';
 import { LoginDto } from './dto/login.dto.js';
-
+import { JwtService } from '@nestjs/jwt';
+import { RegistrationEntity } from './entities/registration.entity.js';
 @Injectable()
 export class AuthenticationService {
-  constructor(private readonly user: UserService) { }
+  constructor(
+    private readonly user: UserService,
+    private readonly jwt: JwtService
+  ) { }
 
-  async registration({ name, surname, email, password }: RegistrationDto) {
+  async registration({name, surname, email, password}: RegistrationDto) {
 
     const hashPassword = await bcrypt.hash(password, 8)
 
     const newUser = await this.user.create({ name, surname, email, password: hashPassword })
-    return newUser
+
+    const payload = {
+      ...newUser
+    }
+    return payload
+
+    // return {
+    //   access_token: await this.jwt.signAsync(payload)
+    // }
+
   }
 
   async login({email, password}: LoginDto) {
