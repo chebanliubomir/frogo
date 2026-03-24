@@ -14,7 +14,11 @@ services:
         - action: sync
           path: ./backend/
           target: /app/
-        - path: ./package.json
+          ignore:
+            - node_modules/
+        - path: ./backend/package.json
+          action: rebuild
+        - path: ./backend/yarn.lock
           action: rebuild
     depends_on:
       - postgres_db
