@@ -10,11 +10,9 @@ export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
 
   @ApiOkResponse({ type: RegistrationEntity })
-  @SerializeOptions({ type: RegistrationEntity })
   @Post('registration')
-  async registration(@Body() registrationDto: RegistrationDto) {
-    const reg = await this.authenticationService.registration(registrationDto)
-    console.log(reg)
+  registration(@Body() registrationDto: RegistrationDto) {
+    return this.authenticationService.registration(registrationDto)
   }
 
   @Post('login')
