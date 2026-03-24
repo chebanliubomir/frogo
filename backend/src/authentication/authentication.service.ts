@@ -4,7 +4,6 @@ import { RegistrationDto } from './dto/registration.dto.js';
 import { UserService } from '../user/user.service.js';
 import { LoginDto } from './dto/login.dto.js';
 import { JwtService } from '@nestjs/jwt';
-import { RegistrationEntity } from './entities/registration.entity.js';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -21,11 +20,10 @@ export class AuthenticationService {
     const payload = {
       ...newUser
     }
-    return payload
-
-    // return {
-    //   access_token: await this.jwt.signAsync(payload)
-    // }
+    
+    return {
+      access_token: await this.jwt.signAsync(payload)
+    }
 
   }
 

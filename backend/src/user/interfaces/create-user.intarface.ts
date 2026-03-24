@@ -1,4 +1,4 @@
-export interface ICreateUser {
+export interface CreateUser {
   name: string
   surname: string
   email: string

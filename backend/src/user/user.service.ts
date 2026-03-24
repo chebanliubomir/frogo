@@ -1,12 +1,12 @@
 import { ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { ICreateUser } from './interfaces/create-user.js';
+import { CreateUser } from './interfaces/create-user.intarface.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) { }
 
-  async create({ name, surname, email, password }: ICreateUser) {
+  async create({ name, surname, email, password }: CreateUser) {
 
     const findUser = await this.prisma.user.findUnique({ where: { email } })
     
