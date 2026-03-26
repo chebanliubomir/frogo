@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Param, Get } from '@nestjs/common';
-import { UserService } from './user.service.js';
+import { UserService } from './user.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { UserEntity } from './entities/user.entity.js';
+import { UserEntity } from './entities/user.entity';
 @Controller('user')
 @ApiTags('User')
 export class UserController {

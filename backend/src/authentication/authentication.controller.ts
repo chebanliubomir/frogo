@@ -1,9 +1,9 @@
 import { Controller, Post, Body, SerializeOptions } from '@nestjs/common';
-import { AuthenticationService } from './authentication.service.js';
-import { RegistrationDto } from './dto/registration.dto.js';
-import { LoginDto } from './dto/login.dto.js';
+import { AuthenticationService } from './authentication.service';
+import { RegistrationDto } from './dto/registration.dto';
+import { LoginDto } from './dto/login.dto';
 import { ApiOkResponse } from '@nestjs/swagger';
-import { RegistrationEntity } from './entities/registration.entity.js';
+import { RegistrationEntity } from './entities/registration.entity';
 
 @Controller('authentication')
 export class AuthenticationController {
