@@ -1,6 +1,6 @@
 import { ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUser } from './interfaces/create-user.intarface.js';
-import { PrismaService } from '../prisma/prisma.service.js';
+import { CreateUser } from './interfaces/create-user.intarface';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UserService {

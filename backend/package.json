@@ -14,6 +14,7 @@
     "backend:prisma:generate": "dotenv -e .env.development -- yarn prisma generate",
     "backend:prisma:migrate": "dotenv -e .env.development -- yarn prisma migrate dev",
     "backend:prisma:studio": "dotenv -e .env.development -- yarn prisma studio",
+    "backend:prisma:db:pull": "dotenv -e .env.development -- yarn prisma db pull",
     "backend:prisma:seed": "dotenv -e .env.development -- npx tsx prisma/seed/seed.ts"
   },
   "dependencies": {
