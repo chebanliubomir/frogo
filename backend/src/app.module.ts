@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'prisma/config';
+import { TokensModule } from './tokens/tokens.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { env } from 'prisma/config';
     AuthenticationModule,
     UserModule,
     PrismaModule,
+    TokensModule,
     ],
   controllers: [],
   providers: [],
