@@ -1,4 +1,4 @@
-import { Controller, Post, Body, SerializeOptions } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
@@ -20,10 +20,10 @@ export class AuthenticationController {
     return this.authenticationService.login(loginDto)
   }
 
-  resetPassword() {}
+  // resetPassword() {}
 
-  confirmAccount() {}
+  // confirmAccount() {}
 
-  logout() {}
+  // logout() {}
 
 }

@@ -54,10 +54,10 @@ export class AuthenticationService {
     return checkPassword
   }
 
-  resetPassword() {}
+  // resetPassword() {}
 
-  confirmAccount() {}
+  // confirmAccount() {}
 
-  logout() {}
+  // logout() {}
 
 }
