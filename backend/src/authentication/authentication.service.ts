@@ -3,13 +3,13 @@ import { HttpStatus, Injectable, NotFoundException, UnauthorizedException } from
 import { RegistrationDto } from './dto/registration.dto';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
-import { JwtService } from '@nestjs/jwt';
+import { TokensService } from '@/tokens/tokens.service';
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly user: UserService,
-    private readonly jwt: JwtService
-  ) { }
+    private readonly tokens: TokensService
+  ) {}
 
   async registration({name, surname, email, password}: RegistrationDto) {
 
@@ -18,12 +18,18 @@ export class AuthenticationService {
     const newUser = await this.user.create({ name, surname, email, password: hashPassword })
 
     const payload = {
-      ...newUser
+      id: newUser.id,
+      avatar: newUser.avatar,
+      name: newUser.name,
+      surname: newUser.surname,
+      email: newUser.email,
+      activatedLink: newUser.activatedLink,
+      rule: newUser.rule,
+      updated_at: newUser.updated_at,
+      created_at: newUser.created_at,
     }
     
-    return {
-      access_token: await this.jwt.signAsync(payload)
-    }
+    return  this.tokens.generateTokens(payload)
 
   }
 
@@ -48,10 +54,10 @@ export class AuthenticationService {
     return checkPassword
   }
 
-  resetPassword() {}
+  // resetPassword() {}
 
-  confirmAccount() {}
+  // confirmAccount() {}
 
-  logout() {}
+  // logout() {}
 
 }
