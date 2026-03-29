@@ -29,8 +29,7 @@ export class AuthenticationService {
       created_at: newUser.created_at,
     }
     
-    return  this.tokens.generateTokens(payload)
-
+    return this.tokens.generateTokens(payload)
   }
 
   async login({email, password}: LoginDto) {

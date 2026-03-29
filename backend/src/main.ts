@@ -4,6 +4,7 @@ import { env } from '@prisma/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.filter';
 import { ValidationPipe } from '@nestjs/common';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,8 @@ async function bootstrap() {
   app.useGlobalFilters(new PrismaClientExeptionFilter(httpAdapter))
 
   app.useGlobalPipes(new ValidationPipe())
+
+  app.use(cookieParser())
   
    const config = new DocumentBuilder()
     .setTitle('Frogo')
