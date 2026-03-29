@@ -4,6 +4,7 @@ import { RegistrationDto } from './dto/registration.dto';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
+import { TokensType } from '@/types/tokens.type';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -11,7 +12,7 @@ export class AuthenticationService {
     private readonly tokens: TokensService
   ) {}
 
-  async registration({name, surname, email, password}: RegistrationDto) {
+  async registration({name, surname, email, password}: RegistrationDto): Promise<TokensType> {
 
     const hashPassword = await bcrypt.hash(password, 8)
 

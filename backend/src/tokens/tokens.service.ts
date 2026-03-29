@@ -1,3 +1,4 @@
+import { TokensType } from '@/types/tokens.type';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -5,7 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 export class TokensService {
   constructor(private readonly jwt: JwtService) {}
   
-  async generateTokens(payload) {
+  async generateTokens(payload): Promise<TokensType> {
     const accessToken = await this.jwt.signAsync(payload)
     const refreshToken = await this.jwt.signAsync(payload)
 

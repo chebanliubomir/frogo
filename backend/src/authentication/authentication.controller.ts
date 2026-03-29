@@ -6,6 +6,7 @@ import { ApiOkResponse } from '@nestjs/swagger';
 import { RegistrationEntity } from './entities/registration.entity';
 import { Response } from 'express';
 import { access } from 'node:fs';
+import { TokensType } from '@/types/tokens.type';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
