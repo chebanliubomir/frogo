@@ -17,6 +17,7 @@ export class AuthenticationService {
 
     const newUser = await this.user.create({ name, surname, email, password: hashPassword })
 
+    // This needs to be changed to entity strategy
     const payload = {
       id: newUser.id,
       avatar: newUser.avatar,
@@ -28,8 +29,8 @@ export class AuthenticationService {
       updated_at: newUser.updated_at,
       created_at: newUser.created_at,
     }
-    
-    return this.tokens.generateTokens(payload)
+
+    return await this.tokens.generateTokens(payload)
   }
 
   async login({email, password}: LoginDto) {

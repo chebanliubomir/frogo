@@ -5,34 +5,31 @@ import { LoginDto } from './dto/login.dto';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { RegistrationEntity } from './entities/registration.entity';
 import { Response } from 'express';
+import { access } from 'node:fs';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
 
   @ApiOkResponse({ type: RegistrationEntity })
   @Post('registration')
-  registration(@Body() registrationDto: RegistrationDto) {
-    const tokens = this.authenticationService.registration(registrationDto)
+  async registration(
+    @Body() registrationDto: RegistrationDto,
+    @Res() response: Response
+  ) {
+    const tokens = await this.authenticationService.registration(registrationDto)
 
-    return tokens['access_token']
-    // res.cookie('refreshToken', tokens, {
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === 'production',
-    //   maxAge: 1000 * 60 * 60 * 24 * 7,
-    //   path: '/'
-    // })
+    response.cookie('refreshToken', tokens.refresh_token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    })
+
+    return response.json({ access_token: tokens.access_token })
 
   }
 
   @Post('login')
-  login(
-    @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) res: Response
-  ) {
-    const tokens = this.authenticationService.login(loginDto)
-
-
-    return tokens
+  login(@Body() loginDto: LoginDto) {
+    return this.authenticationService.login(loginDto)
 
   }
 
