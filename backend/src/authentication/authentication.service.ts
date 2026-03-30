@@ -18,7 +18,6 @@ export class AuthenticationService {
 
     const newUser = await this.user.create({ name, surname, email, password: hashPassword })
 
-    // This needs to be changed to entity strategy
     const payload = {
       id: newUser.id,
       avatar: newUser.avatar,
@@ -51,14 +50,20 @@ export class AuthenticationService {
         message: "Невірний пароль."
       })
     }
-    
-    return checkPassword
+
+    const payload = {
+      id: findUser.id,
+      avatar: findUser.avatar,
+      name: findUser.name,
+      surname: findUser.surname,
+      email: findUser.email,
+      activatedLink: findUser.activatedLink,
+      rule: findUser.rule,
+      updated_at: findUser.updated_at,
+      created_at: findUser.created_at,
+    }
+
+    return await this.tokens.generateTokens(payload)
   }
-
-  // resetPassword() {}
-
-  // confirmAccount() {}
-
-  // logout() {}
 
 }

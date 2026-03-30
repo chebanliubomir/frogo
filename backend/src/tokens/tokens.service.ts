@@ -16,5 +16,10 @@ export class TokensService {
     }
 
   }
+
+  async checkToken(token) {
+    const check = await this.jwt.verifyAsync(token)
+    console.log(check)
+  }
   
 }
