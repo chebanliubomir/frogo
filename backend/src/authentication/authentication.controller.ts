@@ -2,14 +2,12 @@ import { Controller, Post, Body, Res, Redirect } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
-
 import { Response } from 'express';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
 
   @Post('registration')
-  @Redirect(`http://localhost:5000/`, 301)
   async registration(
     @Body() registrationDto: RegistrationDto,
     @Res() response: Response
@@ -25,7 +23,6 @@ export class AuthenticationController {
   }
 
   @Post('login')
-  @Redirect(`http://localhost:5000/`, 301)
   async login(
     @Body() loginDto: LoginDto,
     @Res() response: Response

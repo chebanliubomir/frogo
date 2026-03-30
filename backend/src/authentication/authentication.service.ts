@@ -5,11 +5,12 @@ import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly user: UserService,
-    private readonly tokens: TokensService
+    private readonly tokens: TokensService,
   ) {}
 
   async registration({name, surname, email, password}: RegistrationDto): Promise<TokensType> {
