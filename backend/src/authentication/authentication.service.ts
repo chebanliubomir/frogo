@@ -4,6 +4,7 @@ import { RegistrationDto } from './dto/registration.dto';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
+import { TokensType } from '@/types/tokens.type';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -11,7 +12,7 @@ export class AuthenticationService {
     private readonly tokens: TokensService
   ) {}
 
-  async registration({name, surname, email, password}: RegistrationDto) {
+  async registration({name, surname, email, password}: RegistrationDto): Promise<TokensType> {
 
     const hashPassword = await bcrypt.hash(password, 8)
 
@@ -28,8 +29,8 @@ export class AuthenticationService {
       updated_at: newUser.updated_at,
       created_at: newUser.created_at,
     }
-    
-    return this.tokens.generateTokens(payload)
+
+    return await this.tokens.generateTokens(payload)
   }
 
   async login({email, password}: LoginDto) {
@@ -49,14 +50,20 @@ export class AuthenticationService {
         message: "Невірний пароль."
       })
     }
-    
-    return checkPassword
+
+    const payload = {
+      id: findUser.id,
+      avatar: findUser.avatar,
+      name: findUser.name,
+      surname: findUser.surname,
+      email: findUser.email,
+      activatedLink: findUser.activatedLink,
+      rule: findUser.rule,
+      updated_at: findUser.updated_at,
+      created_at: findUser.created_at,
+    }
+
+    return await this.tokens.generateTokens(payload)
   }
-
-  // resetPassword() {}
-
-  // confirmAccount() {}
-
-  // logout() {}
 
 }

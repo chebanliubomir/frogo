@@ -1,45 +1,43 @@
-import { Controller, Post, Body, Res } from '@nestjs/common';
+import { Controller, Post, Body, Res, Redirect } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
-import { ApiOkResponse } from '@nestjs/swagger';
-import { RegistrationEntity } from './entities/registration.entity';
+
 import { Response } from 'express';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
 
-  @ApiOkResponse({ type: RegistrationEntity })
   @Post('registration')
-  registration(@Body() registrationDto: RegistrationDto) {
-    const tokens = this.authenticationService.registration(registrationDto)
+  @Redirect(`http://localhost:5000/`, 301)
+  async registration(
+    @Body() registrationDto: RegistrationDto,
+    @Res() response: Response
+  ) {
+    const tokens = await this.authenticationService.registration(registrationDto)
 
-    return tokens['access_token']
-    // res.cookie('refreshToken', tokens, {
-    //   httpOnly: true,
-    //   secure: process.env.NODE_ENV === 'production',
-    //   maxAge: 1000 * 60 * 60 * 24 * 7,
-    //   path: '/'
-    // })
+    response.cookie('refreshToken', tokens.refresh_token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    })
 
+    return response.json({ access_token: tokens.access_token })
   }
 
   @Post('login')
-  login(
+  @Redirect(`http://localhost:5000/`, 301)
+  async login(
     @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) res: Response
+    @Res() response: Response
   ) {
-    const tokens = this.authenticationService.login(loginDto)
+    const tokens = await this.authenticationService.login(loginDto)
 
+    response.cookie('refreshToken', tokens.refresh_token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    })
 
-    return tokens
-
+    return response.json({ access_token: tokens.access_token })
   }
-
-  // resetPassword() {}
-
-  // confirmAccount() {}
-
-  // logout() {}
 
 }
