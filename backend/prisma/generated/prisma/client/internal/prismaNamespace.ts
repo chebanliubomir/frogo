@@ -836,7 +836,10 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const SessionScalarFieldEnum = {
   id: 'id',
   session: 'session',
-  userId: 'userId'
+  device: 'device',
+  userId: 'userId',
+  updated_at: 'updated_at',
+  created_at: 'created_at'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]

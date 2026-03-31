@@ -66,6 +66,8 @@ export class AuthenticationService {
     return await this.tokens.generateTokens(payload)
   }
 
-  
+  async refresh() {
+    
+  }
 
 }
