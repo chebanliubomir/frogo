@@ -9,7 +9,7 @@ import { TokensType } from '@/types/tokens.type';
 export class AuthenticationService {
   constructor(
     private readonly user: UserService,
-    private readonly tokens: TokensService
+    private readonly tokens: TokensService,
   ) {}
 
   async registration({name, surname, email, password}: RegistrationDto): Promise<TokensType> {
@@ -65,5 +65,7 @@ export class AuthenticationService {
 
     return await this.tokens.generateTokens(payload)
   }
+
+  
 
 }

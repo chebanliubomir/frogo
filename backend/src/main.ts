@@ -29,7 +29,7 @@ async function bootstrap() {
   
   await app.listen(env("PORT"));
   
-  console.log(`Server was started on URL: http://localhost:${env("PORT")}/api`);
+  console.log(`Server was started on URL: http://localhost:${process.env.PORT}/api`);
 }
 
 bootstrap()

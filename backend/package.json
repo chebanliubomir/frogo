@@ -11,10 +11,10 @@
     "backend:start:dev": "nest start --watch",
     "backend:start:debug": "nest start --debug --watch",
     "backend:start:prod": "node dist/main",
-    "backend:prisma:generate": "dotenv -e .env.development -- yarn prisma generate",
-    "backend:prisma:migrate": "dotenv -e .env.development -- yarn prisma migrate dev",
-    "backend:prisma:studio": "dotenv -e .env.development -- yarn prisma studio --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
-    "backend:prisma:db:pull": "dotenv -e .env.development -- yarn prisma db pull",
+    "backend:prisma:generate": "yarn prisma generate",
+    "backend:prisma:migrate": "yarn prisma migrate dev --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
+    "backend:prisma:studio": "yarn prisma studio --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
+    "backend:prisma:db:pull": "yarn prisma db pull --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
     "backend:prisma:seed": "dotenv -e .env.development -- npx tsx prisma/seed/seed.ts"
   },
   "dependencies": {
