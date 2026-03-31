@@ -14,14 +14,14 @@ export class AuthenticationController {
     @Body() registrationDto: RegistrationDto,
     @Res() response: Response
   ) {
-    const tokens = await this.authenticationService.registration(registrationDto)
+    const tokens = await this.authenticationService.registration(registrationDto);
 
     response.cookie('refreshToken', tokens.refresh_token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7,
-    })
+    });
 
-    return response.json({ access_token: tokens.access_token })
+    return response.json({ access_token: tokens.access_token });
   }
 
   @UseGuards(AuthenticationGuard)
@@ -30,20 +30,21 @@ export class AuthenticationController {
     @Body() loginDto: LoginDto,
     @Res() response: Response
   ) {
-    const tokens = await this.authenticationService.login(loginDto)
+    const tokens = await this.authenticationService.login(loginDto);
 
     response.cookie('refreshToken', tokens.refresh_token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7,
-    })
+    });
 
-    return response.json({ access_token: tokens.access_token })
+    return response.json({ access_token: tokens.access_token });
   }
 
   @UseGuards(AuthenticationGuard)
   @Post('refresh')
   async refresh() {
-    const tokens = this.authenticationService.refresh()
+    const tokens = this.authenticationService.refresh();
+    return tokens;
   }
 
 }

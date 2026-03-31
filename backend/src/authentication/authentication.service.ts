@@ -14,9 +14,9 @@ export class AuthenticationService {
 
   async registration({name, surname, email, password}: RegistrationDto): Promise<TokensType> {
 
-    const hashPassword = await bcrypt.hash(password, 8)
+    const hashPassword = await bcrypt.hash(password, 8);
 
-    const newUser = await this.user.create({ name, surname, email, password: hashPassword })
+    const newUser = await this.user.create({ name, surname, email, password: hashPassword });
 
     const payload = {
       id: newUser.id,
@@ -28,27 +28,27 @@ export class AuthenticationService {
       rule: newUser.rule,
       updated_at: newUser.updated_at,
       created_at: newUser.created_at,
-    }
+    };
 
-    return await this.tokens.generateTokens(payload)
+    return await this.tokens.generateTokens(payload);
   }
 
   async login({email, password}: LoginDto) {
 
-    const findUser = await this.user.findOne(email)
+    const findUser = await this.user.findOne(email);
     if(!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
         message: 'Такого користувача не існує.'
-      })
+      });
     }
 
-    const checkPassword = await bcrypt.compare(password, findUser.password)
+    const checkPassword = await bcrypt.compare(password, findUser.password);
     if(!checkPassword) {
       throw new UnauthorizedException({
         status: HttpStatus.UNAUTHORIZED,
         message: "Невірний пароль."
-      })
+      });
     }
 
     const payload = {
@@ -61,13 +61,13 @@ export class AuthenticationService {
       rule: findUser.rule,
       updated_at: findUser.updated_at,
       created_at: findUser.created_at,
-    }
+    };
 
-    return await this.tokens.generateTokens(payload)
+    return await this.tokens.generateTokens(payload);
   }
 
   async refresh() {
-    
+    return '';
   }
 
 }
