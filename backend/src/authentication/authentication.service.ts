@@ -5,7 +5,6 @@ import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
-import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -66,5 +65,7 @@ export class AuthenticationService {
 
     return await this.tokens.generateTokens(payload)
   }
+
+  
 
 }
