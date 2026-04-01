@@ -45,10 +45,10 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model Sessions
+ * Model Session
  * 
  */
-export type Sessions = Prisma.SessionsModel
+export type Session = Prisma.SessionModel
 /**
  * Model Post
  * 

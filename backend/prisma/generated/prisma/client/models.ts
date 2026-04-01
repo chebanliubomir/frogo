@@ -9,7 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
-export type * from './models/Sessions'
+export type * from './models/Session'
 export type * from './models/Post'
 export type * from './models/Post_Image'
 export type * from './models/Comments'

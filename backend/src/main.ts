@@ -9,14 +9,14 @@ import cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api')
+  app.setGlobalPrefix('api');
 
   const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new PrismaClientExeptionFilter(httpAdapter))
+  app.useGlobalFilters(new PrismaClientExeptionFilter(httpAdapter));
 
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(new ValidationPipe());
 
-  app.use(cookieParser())
+  app.use(cookieParser());
   
    const config = new DocumentBuilder()
     .setTitle('Frogo')
@@ -35,5 +35,5 @@ async function bootstrap() {
 bootstrap()
   .then()
   .catch(e => {
-    console.log(`Main app bootstrap error: ${e}`)
-  })
+    console.log(`Main app bootstrap error: ${e}`);
+  });
