@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Res, UseGuards, Request } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
@@ -8,7 +8,6 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
 
-  @UseGuards(AuthenticationGuard)
   @Post('registration')
   async registration(
     @Body() registrationDto: RegistrationDto,
@@ -24,7 +23,6 @@ export class AuthenticationController {
     return response.json({ access_token: tokens.access_token });
   }
 
-  @UseGuards(AuthenticationGuard)
   @Post('login')
   async login(
     @Body() loginDto: LoginDto,
@@ -42,9 +40,11 @@ export class AuthenticationController {
 
   @UseGuards(AuthenticationGuard)
   @Post('refresh')
-  async refresh() {
-    const tokens = this.authenticationService.refresh();
-    return tokens;
+  async refresh(@Request() req) {
+    const user = req.user
+    console.log(user)
+    // const tokens = this.authenticationService.refresh();
+    // return tokens;
   }
 
 }
