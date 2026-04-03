@@ -20,7 +20,7 @@ import { commonConfig } from './configs/common.config';
     JwtModule.register({
       global: true,
       secret: env('JWT_SECRET_KEY'),
-      signOptions: { expiresIn: 60 }
+      signOptions: { expiresIn: 6000 }
     }),
     AuthenticationModule,
     UserModule,
