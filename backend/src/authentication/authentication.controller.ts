@@ -4,6 +4,7 @@ import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
 import { Response } from 'express';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { ApiCookieAuth } from '@nestjs/swagger';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
@@ -38,19 +39,21 @@ export class AuthenticationController {
     });
 
     return response.json({ 
-      ccess_token: tokens.access_token,
+      access_token: tokens.access_token,
       refresh_token: tokens.refresh_token
-     })
+    });
   }
 
   @UseGuards(AuthenticationGuard)
+  @ApiCookieAuth('refres_token')
   @Post('refresh')
   async refresh(
     //problem with types for Request(express)
     @Req() req
   ) {
-    return;
-    // return await this.authenticationService.refresh(user)
+    const user = req?.user;
+    console.log(user);
+    return await this.authenticationService.refresh(user);
   }
 
 }
