@@ -16,11 +16,9 @@ export class AuthenticationGuard implements CanActivate {
         throw new UnauthorizedException()
       }
 
-      console.log(await request.cookie)
-      console.log(await request.cookies)
-
       const payload = await this.checkValidToken(token);
 
+      console.log(request)
       request['user'] = payload
 
     } catch {

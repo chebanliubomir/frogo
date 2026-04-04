@@ -18,6 +18,7 @@ export class AuthenticationController {
     response.cookie('refreshToken', tokens.refresh_token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7,
+      path: '/'
     });
 
     return response.json({ access_token: tokens.access_token });
@@ -26,13 +27,20 @@ export class AuthenticationController {
   @Post('login')
   async login(
     @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) response: Response
+    @Res({ passthrough: true }) response: Response,
   ) {
     const tokens = await this.authenticationService.login(loginDto);
 
-    response.cookie('refreshToken', tokens.refresh_token);
+    response.cookie('refreshToken', tokens.refresh_token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      path: '/'
+    });
 
-    return response.json({ access_token: tokens.access_token })
+    return response.json({ 
+      ccess_token: tokens.access_token,
+      refresh_token: tokens.refresh_token
+     })
   }
 
   @UseGuards(AuthenticationGuard)
@@ -41,10 +49,8 @@ export class AuthenticationController {
     //problem with types for Request(express)
     @Req() req
   ) {
-    const user = await req.user
-    const cookie = await req.cookies
-    console.log(cookie)
-    return await this.authenticationService.refresh(user)
+    return;
+    // return await this.authenticationService.refresh(user)
   }
 
 }
