@@ -6,14 +6,16 @@ import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
 import { User } from '@prisma/generated';
+import { PrismaService } from '@/prisma/prisma.service';
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly user: UserService,
     private readonly tokens: TokensService,
-  ) {}
+    private readonly prisma: PrismaService
+  ) { }
 
-  async registration({name, surname, email, password}: RegistrationDto): Promise<TokensType> {
+  async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
 
     const hashPassword = await bcrypt.hash(password, 8);
 
@@ -34,10 +36,10 @@ export class AuthenticationService {
     return await this.tokens.generateTokens(payload);
   }
 
-  async login({email, password}: LoginDto) {
+  async login({ email, password }: LoginDto) {
 
-    const findUser = await this.user.findOne(email);
-    if(!findUser) {
+    const findUser = await this.user.findOneByEmail(email);
+    if (!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
         message: 'Такого користувача не існує.'
@@ -45,7 +47,7 @@ export class AuthenticationService {
     }
 
     const checkPassword = await bcrypt.compare(password, findUser.password);
-    if(!checkPassword) {
+    if (!checkPassword) {
       throw new UnauthorizedException({
         status: HttpStatus.UNAUTHORIZED,
         message: "Невірний пароль."
@@ -64,11 +66,23 @@ export class AuthenticationService {
       created_at: findUser.created_at,
     };
 
-    return await this.tokens.generateTokens(payload);
+    const { access_token, refresh_token } = await this.tokens.generateTokens(payload);
+
+    await this.prisma.session.create({
+      data: {
+        userId: findUser.id,
+        device: 'PC',
+        session: refresh_token,
+
+      }
+    });
+
+    return { access_token, refresh_token };
+
   }
 
   async refresh(user: User) {
-    return 'token'
+    return user;
   }
 
 }

@@ -20,6 +20,7 @@ async function bootstrap() {
   
    const config = new DocumentBuilder()
     .setTitle('Frogo')
+    .addCookieAuth('refresh_token')
     .setDescription('This backend parts')
     .setVersion('1.0')
     .addTag('frogo')
