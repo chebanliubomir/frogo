@@ -81,7 +81,7 @@ export class AuthenticationService {
 
   }
 
-  async refresh(user: User) {
+  async refresh(user: User, token: string) {
     return user;
   }
 

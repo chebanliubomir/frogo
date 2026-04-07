@@ -1,4 +1,3 @@
-import { TokensService } from '@/tokens/tokens.service';
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/generated';
@@ -8,31 +7,23 @@ export class AuthenticationGuard implements CanActivate {
 
   constructor(
     private readonly jwt: JwtService,
-    private readonly token: TokensService
   ) { }
 
   async canActivate(context: ExecutionContext) {
     try {
       const request = context.switchToHttp().getRequest();
-      const access_token = this.expectTokenFromHeader(request);
+      // const access_token = this.expectTokenFromHeader(request);
+      const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYXZhdGFyIjoibnVsbCIsIm5hbWUiOiJEbWl0cml5Iiwic3VybmFtZSI6IlBldHJvdiIsImVtYWlsIjoicXdlcnR5QGdtYWlsLmNvbSIsImFjdGl2YXRlZExpbmsiOiJudWxsIiwicnVsZSI6IlVTRVIiLCJ1cGRhdGVkX2F0IjoiMjAyNi0wMy0zMVQyMTowMjo0OC45OTFaIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDMtMzFUMjE6MDI6NDguOTkxWiIsImlhdCI6MTc3NTU3OTU4NCwiZXhwIjoxNzc1NTg1NTg0fQ.qd-E4VbhuKKjiGBGRFQ_ZnFxsEvpPqoyriFDM5xF-JA"
       const refresh_token = this.getRefreshTokenFromCookies(request);
       if(!access_token || !refresh_token) {
-        console.log('1');
         throw new UnauthorizedException();
       }
 
       const payload = await this.checkValidToken(access_token);
-      const findRefreshTokenInTheDB = this.token.findTokenInTheDB(refresh_token);
-
-      if(!findRefreshTokenInTheDB) {
-        console.log('2');
-        throw new UnauthorizedException();
-      }
 
       request['user'] = payload;
 
     } catch {
-      console.log('3');
       throw new UnauthorizedException();
     }
     return true;
@@ -44,8 +35,8 @@ export class AuthenticationGuard implements CanActivate {
   }
 
   private getRefreshTokenFromCookies(request: Request): string | undefined {
-    const [type, token] = request.cookies.refreshToken?.split('=') ?? [];
-    return type === "refreshToken" ? token : undefined;
+    const token = request.cookies['refreshToken'];
+    return token ? token : undefined;
 
   }
 

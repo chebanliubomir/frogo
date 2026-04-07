@@ -2,7 +2,7 @@ import { Controller, Post, Body, Res, UseGuards, Req } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { ApiCookieAuth } from '@nestjs/swagger';
 @Controller('authentication')
@@ -40,7 +40,6 @@ export class AuthenticationController {
 
     return response.json({ 
       access_token: tokens.access_token,
-      refresh_token: tokens.refresh_token
     });
   }
 
@@ -51,9 +50,9 @@ export class AuthenticationController {
     //problem with types for Request(express)
     @Req() req
   ) {
-    const user = req?.user;
-    console.log(user);
-    return await this.authenticationService.refresh(user);
+    const user = req.user
+    const token = req.cookies['refreshToken']
+    return await this.authenticationService.refresh(user, token)
   }
 
 }
