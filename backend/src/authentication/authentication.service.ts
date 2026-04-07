@@ -81,8 +81,12 @@ export class AuthenticationService {
 
   }
 
-  async refresh(user: User, token: string) {
-    return user;
+  async refresh(token: string) {
+    const validateToken = this.tokens.checkToken(token)
+    const findToken = this.tokens.findTokenInTheDB(token)
+
+    if
+
   }
 
 }

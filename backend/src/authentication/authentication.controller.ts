@@ -50,9 +50,8 @@ export class AuthenticationController {
     //problem with types for Request(express)
     @Req() req
   ) {
-    const user = req.user
     const token = req.cookies['refreshToken']
-    return await this.authenticationService.refresh(user, token)
+    return await this.authenticationService.refresh(token)
   }
 
 }
