@@ -44,12 +44,8 @@ export class AuthenticationController {
   }
 
   @UseGuards(AuthenticationGuard)
-  @ApiCookieAuth('refres_token')
   @Post('refresh')
-  async refresh(
-    //problem with types for Request(express)
-    @Req() req
-  ) {
+  async refresh(@Req() req: Request) {
     const token = req.cookies['refreshToken']
     return await this.authenticationService.refresh(token)
   }
