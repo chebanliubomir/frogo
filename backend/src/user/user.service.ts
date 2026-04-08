@@ -9,7 +9,7 @@ export class UserService {
   async create({ name, surname, email, password }: CreateUser) {
 
     const findUser = await this.prisma.user.findUnique({ where: { email } });
-    
+
     if (findUser) {
       throw new ConflictException({
         status: HttpStatus.CONFLICT,
@@ -24,9 +24,13 @@ export class UserService {
         email,
         password
       }
-    });   
-    
+    });
+
     return user;
+  }
+
+  async findUserById(id: number) {
+    return await this.prisma.user.findFirst({ where: { id } })
   }
 
   async findOneByEmail(email: string) {
@@ -36,7 +40,7 @@ export class UserService {
   async getAllUsers() {
     const allUsers = await this.prisma.user.findMany();
 
-    if(allUsers.length <= 0) {
+    if (allUsers.length <= 0) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
         message: 'Жодного користувача не знайдено.'

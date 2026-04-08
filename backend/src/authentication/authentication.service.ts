@@ -82,10 +82,27 @@ export class AuthenticationService {
   }
 
   async refresh(token: string) {
-    const validateToken = this.tokens.checkToken(token)
-    const findToken = this.tokens.findTokenInTheDB(token)
+    const userData = await this.tokens.checkValidToken(token)
+    const tokenFromDb = await this.tokens.findTokenInTheDB(token)
 
-    if
+    if (!userData || !tokenFromDb) {
+      throw new UnauthorizedException()
+    }
+
+    const findUser = await this.user.findUserById(userData.id)
+
+    const payload = {
+      id: findUser?.id,
+      avatar: findUser?.avatar,
+      name: findUser?.name,
+      surname: findUser?.surname,
+      email: findUser?.email,
+      activatedLink: findUser?.activatedLink,
+      rule: findUser?.rule,
+      updated_at: findUser?.updated_at,
+      created_at: findUser?.created_at,
+    }
+
 
   }
 
