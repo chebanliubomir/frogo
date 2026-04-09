@@ -244,15 +244,15 @@ export type SessionOrderByWithRelationInput = {
 export type SessionWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   session?: string
+  userId?: number
   AND?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   OR?: Prisma.SessionWhereInput[]
   NOT?: Prisma.SessionWhereInput | Prisma.SessionWhereInput[]
   device?: Prisma.StringFilter<"Session"> | string
-  userId?: Prisma.IntNullableFilter<"Session"> | number | null
   updated_at?: Prisma.DateTimeFilter<"Session"> | Date | string
   created_at?: Prisma.DateTimeFilter<"Session"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id" | "session">
+}, "id" | "session" | "userId">
 
 export type SessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

@@ -13,7 +13,7 @@ export class AuthenticationGuard implements CanActivate {
     try {
       const request = context.switchToHttp().getRequest();
       // const access_token = this.expectTokenFromHeader(request);
-      const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYXZhdGFyIjoibnVsbCIsIm5hbWUiOiJEbWl0cml5Iiwic3VybmFtZSI6IlBldHJvdiIsImVtYWlsIjoicXdlcnR5QGdtYWlsLmNvbSIsImFjdGl2YXRlZExpbmsiOiJudWxsIiwicnVsZSI6IlVTRVIiLCJ1cGRhdGVkX2F0IjoiMjAyNi0wMy0zMVQyMTowMjo0OC45OTFaIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDMtMzFUMjE6MDI6NDguOTkxWiIsImlhdCI6MTc3NTY2ODE0MSwiZXhwIjoxNzc1Njc0MTQxfQ.bKpG60583-AAUae9uAHyqFGv13vRpWONdVxRRyTP5xc"
+      const access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiYXZhdGFyIjoibnVsbCIsIm5hbWUiOiJEbWl0cml5Iiwic3VybmFtZSI6IlBldHJvdiIsImVtYWlsIjoicXdlcnR5QGdtYWlsLmNvbSIsImFjdGl2YXRlZExpbmsiOiJudWxsIiwicnVsZSI6IlVTRVIiLCJ1cGRhdGVkX2F0IjoiMjAyNi0wMy0zMVQyMTowMjo0OC45OTFaIiwiY3JlYXRlZF9hdCI6IjIwMjYtMDMtMzFUMjE6MDI6NDguOTkxWiIsImlhdCI6MTc3NTc0OTI0MSwiZXhwIjoxNzc1NzU1MjQxfQ.3_RrYVN-1_Im9Jd8hsCd5-UGlhUaJAlz5LKqqw1u1Iw"
       const refresh_token = this.getRefreshTokenFromCookies(request);
       if(!access_token || !refresh_token) {
         throw new UnauthorizedException();
@@ -42,6 +42,7 @@ export class AuthenticationGuard implements CanActivate {
   }
 
   private async checkValidToken(token): Promise<User> {
+    console.log('1', await this.jwt.verifyAsync(token))
     return await this.jwt.verifyAsync(token);
   }
 
