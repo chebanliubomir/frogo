@@ -7,6 +7,7 @@ import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
 import { User } from '@prisma/generated';
 import { PrismaService } from '@/prisma/prisma.service';
+import { find } from 'rxjs';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -90,18 +91,18 @@ export class AuthenticationService {
     }
 
     const findUser = await this.user.findUserById(userData.id)
-
-    const payload = {
-      id: findUser?.id,
-      avatar: findUser?.avatar,
-      name: findUser?.name,
-      surname: findUser?.surname,
-      email: findUser?.email,
-      activatedLink: findUser?.activatedLink,
-      rule: findUser?.rule,
-      updated_at: findUser?.updated_at,
-      created_at: findUser?.created_at,
+    if(!findUser) {
+      throw new UnauthorizedException()
     }
+
+
+    const {password, ...payload} = findUser
+
+    console.log(payload)
+
+    await this.tokens.saveToken(findUser.id, token)
+
+
 
 
   }
