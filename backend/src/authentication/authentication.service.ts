@@ -91,20 +91,18 @@ export class AuthenticationService {
     }
 
     const findUser = await this.user.findUserById(userData.id)
-    if(!findUser) {
+    if (!findUser) {
       throw new UnauthorizedException()
     }
 
 
-    const {password, ...payload} = findUser
+    const { password, ...payload } = findUser
 
-    console.log(payload)
+    const generateTokens = await this.tokens.generateTokens(payload)
 
-    await this.tokens.saveToken(findUser.id, token)
+    const tokens = await this.tokens.saveToken(findUser.id, generateTokens.refresh_token)
 
-
-
-
+    return { ...tokens, user: payload }
   }
 
 }

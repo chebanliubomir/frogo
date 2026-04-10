@@ -38,16 +38,27 @@ export class AuthenticationController {
       path: '/'
     });
 
-    return response.json({ 
+    return response.json({
       access_token: tokens.access_token,
     });
   }
 
   @UseGuards(AuthenticationGuard)
   @Post('refresh')
-  async refresh(@Req() req: Request) {
+  async refresh(
+    @Req() req: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const token = req.cookies['refreshToken']
-    return await this.authenticationService.refresh(token)
+    const data = await this.authenticationService.refresh(token)
+
+    response.cookie('refreshToken', data.session, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      path: '/'
+    });
+
+    return response.json(data.user);
   }
 
 }
