@@ -36,13 +36,15 @@ export class TokensService {
   }
 
   async saveToken(userId: number, token: string) {
-    const tokenData = await this.prisma.session.findFirst({ where: { userId } })
-    if (!!tokenData) {
-      await this.prisma.session.upsert({
-        where: { userId: tokenData.id },
-        update: { session: token }
-      })
-    }
+    return await this.prisma.session.upsert({
+      where: { userId },
+      update: { session: token },
+      create: {
+        userId, 
+        session: token,
+        device: 'PC'
+      }
+    })
   }
 
 }
