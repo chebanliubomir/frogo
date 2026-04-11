@@ -4,7 +4,6 @@ import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
 import { AuthenticationGuard } from './guards/authentication.guard';
-import { ApiCookieAuth } from '@nestjs/swagger';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
@@ -22,7 +21,7 @@ export class AuthenticationController {
       path: '/'
     });
 
-    return response.json({ access_token: tokens.access_token });
+    response.json({ access_token: tokens.access_token });
   }
 
   @Post('login')
@@ -38,7 +37,7 @@ export class AuthenticationController {
       path: '/'
     });
 
-    return response.json({
+    response.json({
       access_token: tokens.access_token,
     });
   }
@@ -49,8 +48,8 @@ export class AuthenticationController {
     @Req() req: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const token = req.cookies['refreshToken']
-    const data = await this.authenticationService.refresh(token)
+    const token = req.cookies['refreshToken'];
+    const data = await this.authenticationService.refresh(token);
 
     response.cookie('refreshToken', data.session, {
       httpOnly: true,
@@ -58,7 +57,7 @@ export class AuthenticationController {
       path: '/'
     });
 
-    return response.json(data.user);
+    response.json(data.user);
   }
 
 }

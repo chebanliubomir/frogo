@@ -2,8 +2,6 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { TokensType } from '@/types/tokens.type';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/generated';
-import { Session } from 'node:inspector';
 
 @Injectable()
 export class TokensService {
@@ -32,7 +30,7 @@ export class TokensService {
   }
 
   async findTokenByUsingUserId(userId: number) {
-    return await this.prisma.session.findFirst({ where: { userId } })
+    return await this.prisma.session.findFirst({ where: { userId } });
   }
 
   async saveToken(userId: number, token: string) {
@@ -44,7 +42,7 @@ export class TokensService {
         session: token,
         device: 'PC'
       }
-    })
+    });
   }
 
 }

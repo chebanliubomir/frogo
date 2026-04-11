@@ -5,9 +5,7 @@ import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
-import { User } from '@prisma/generated';
 import { PrismaService } from '@/prisma/prisma.service';
-import { find } from 'rxjs';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -73,36 +71,43 @@ export class AuthenticationService {
       data: {
         userId: findUser.id,
         device: 'PC',
-        session: refresh_token,
-
+        session: refresh_token
       }
     });
 
     return { access_token, refresh_token };
-
   }
 
   async refresh(token: string) {
-    const userData = await this.tokens.checkValidToken(token)
-    const tokenFromDb = await this.tokens.findTokenInTheDB(token)
+    const userData = await this.tokens.checkValidToken(token);
+    const tokenFromDb = await this.tokens.findTokenInTheDB(token);
 
     if (!userData || !tokenFromDb) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.findUserById(userData.id)
+    const findUser = await this.user.findUserById(userData.id);
     if (!findUser) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException();
     }
 
+    const payload = {
+      id: findUser.id,
+      avatar: findUser.avatar,
+      name: findUser.name,
+      surname: findUser.surname,
+      email: findUser.email,
+      activatedLink: findUser.activatedLink,
+      rule: findUser.rule,
+      updated_at: findUser.updated_at,
+      created_at: findUser.created_at,
+    };
 
-    const { password, ...payload } = findUser
+    const generateTokens = await this.tokens.generateTokens(payload);
 
-    const generateTokens = await this.tokens.generateTokens(payload)
+    const tokens = await this.tokens.saveToken(findUser.id, generateTokens.refresh_token);
 
-    const tokens = await this.tokens.saveToken(findUser.id, generateTokens.refresh_token)
-
-    return { ...tokens, user: payload }
+    return { ...tokens, user: payload };
   }
 
 }
