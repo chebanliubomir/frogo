@@ -73,7 +73,7 @@ export class AuthenticationService {
         device: 'PC',
         session: refresh_token
       }
-    });
+    })
 
     return { access_token, refresh_token };
   }
