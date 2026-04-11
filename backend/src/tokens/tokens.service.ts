@@ -32,7 +32,7 @@ export class TokensService {
   }
 
   async findTokenByUsingUserId(userId: number) {
-    return await this.prisma.session.findFirst({ where: { userId } })
+    return await this.prisma.session.findFirst({ where: { userId } });
   }
 
   async saveToken(userId: number, token: string) {
@@ -44,7 +44,7 @@ export class TokensService {
         session: token,
         device: 'PC'
       }
-    })
+    });
   }
 
 }
