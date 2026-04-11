@@ -57,6 +57,7 @@ export default defineConfig([
       "no-unused-vars": ["warn"],
       "no-console": ["warn"],
       "no-empty-function": ["warn"],
+      "no-unsed-vars": ["warn"]
     },
   },
 ]);
