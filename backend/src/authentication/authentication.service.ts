@@ -73,7 +73,7 @@ export class AuthenticationService {
         device: 'PC',
         session: refresh_token
       }
-    })
+    });
 
     return { access_token, refresh_token };
   }
@@ -91,7 +91,17 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const { password, ...payload } = findUser
+    const payload = {
+      id: findUser.id,
+      avatar: findUser.avatar,
+      name: findUser.name,
+      surname: findUser.surname,
+      email: findUser.email,
+      activatedLink: findUser.activatedLink,
+      rule: findUser.rule,
+      updated_at: findUser.updated_at,
+      created_at: findUser.created_at,
+    };
 
     const generateTokens = await this.tokens.generateTokens(payload);
 

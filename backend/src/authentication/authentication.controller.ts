@@ -48,16 +48,16 @@ export class AuthenticationController {
     @Req() req: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const token = req.cookies['refreshToken']
-    const data = await this.authenticationService.refresh(token)
+    const token = req.cookies['refreshToken'];
+    const data = await this.authenticationService.refresh(token);
 
     response.cookie('refreshToken', data.session, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7,
       path: '/'
-    })
+    });
 
-    response.json(data.user)
+    response.json(data.user);
   }
 
 }
