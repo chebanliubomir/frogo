@@ -91,7 +91,7 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const { password, ...payload } = findUser;
+    const { password, ...payload } = findUser
 
     const generateTokens = await this.tokens.generateTokens(payload);
 
