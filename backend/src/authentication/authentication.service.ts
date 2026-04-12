@@ -110,4 +110,14 @@ export class AuthenticationService {
     return { ...tokens, user: payload };
   }
 
+  async logout(token: string) {
+    const userData = await this.tokens.checkValidToken(token);
+    const tokenFromDb = await this.tokens.findTokenInTheDB(token);
+
+    if (tokenFromDb) {
+      return await this.prisma.session.deleteMany({ where: { userId: userData.id } });
+    }
+
+  }
+
 }
