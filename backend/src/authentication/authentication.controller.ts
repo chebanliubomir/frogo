@@ -39,6 +39,7 @@ export class AuthenticationController {
 
     response.json({
       access_token: tokens.access_token,
+      refresh_token: tokens.refresh_token
     });
   }
 
@@ -59,5 +60,21 @@ export class AuthenticationController {
 
     response.json(data.user);
   }
+
+  @UseGuards(AuthenticationGuard)
+  @Post('logout')
+  async logout(
+    @Req() req: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const token = req.cookies['refreshToken'];
+    await this.authenticationService.logout(token);
+
+    response.clearCookie('refreshToken');
+
+    return 'Ви вийшли з аккаунту.';
+
+  } 
+
 
 }
