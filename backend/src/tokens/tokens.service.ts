@@ -11,8 +11,21 @@ export class TokensService {
   ) { }
 
   async generateTokens(payload): Promise<TokensType> {
-    const accessToken = await this.jwt.signAsync(payload);
-    const refreshToken = await this.jwt.signAsync(payload);
+
+    const [accessToken, refreshToken] = await Promise.all([
+
+      // change secret key in to env variable for accessToken
+      this.jwt.signAsync(payload, {
+        secret: 'access',
+        expiresIn: '15m',
+      }),
+
+      // change secret key in to env variable fror refreshToken
+      this.jwt.signAsync(payload, {
+        secret: 'refresh',
+        expiresIn: '30d',
+      })
+    ])
 
     return {
       access_token: accessToken,
@@ -22,7 +35,8 @@ export class TokensService {
   }
 
   async checkValidToken(token: string) {
-    return await this.jwt.verifyAsync(token);
+    // change secret key in to env variable for accessToken
+    return await this.jwt.verifyAsync(token, {secret: 'access'});
   }
 
   async findTokenInTheDB(token: string) {
