@@ -34,7 +34,7 @@ export class TokensService {
 
   }
 
-  async checkValidToken(token: string) {
+  async validateAccessToken(token: string) {
     // change secret key in to env variable for accessToken
     return await this.jwt.verifyAsync(token, {secret: 'access'});
   }

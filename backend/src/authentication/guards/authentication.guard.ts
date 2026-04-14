@@ -1,26 +1,24 @@
+import { TokensService } from '@/tokens/tokens.service';
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/generated';
 import { Request } from 'express';
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
 
-  constructor(
-    private readonly jwt: JwtService,
-  ) { }
+  constructor(private readonly tokens: TokensService) {}
 
   async canActivate(context: ExecutionContext) {
     try {
       const request = context.switchToHttp().getRequest();
-      const access_token = this.expectTokenFromHeader(request);
-      const refresh_token = this.getRefreshTokenFromCookies(request);
+      const access_token = this.expectTokenFromHeader(request)
+      const refresh_token = this.getRefreshTokenFromCookies(request)
       if(!access_token || !refresh_token) {
         throw new UnauthorizedException();
       }
 
-      const payload = await this.checkValidToken(access_token);
-      if(!payload) {
-        throw new UnauthorizedException();
+      const validToken = await this.tokens.checkValidToken(access_token)
+
+      if(!validToken) {
+        request['user'] = validToken
       }
 
     } catch {
@@ -38,11 +36,6 @@ export class AuthenticationGuard implements CanActivate {
     const token = request.cookies['refreshToken'];
     return token ? token : undefined;
 
-  }
-
-  private async checkValidToken(token): Promise<User> {
-    console.log('1', await this.jwt.verifyAsync(token));
-    return await this.jwt.verifyAsync(token);
   }
 
 }
