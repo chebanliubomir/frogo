@@ -111,7 +111,7 @@ export class AuthenticationService {
   }
 
   async logout(token: string) {
-    const userData = await this.tokens.checkValidToken(token);
+    const userData = await this.tokens.validateAccessToken(token);
     const tokenFromDb = await this.tokens.findTokenInTheDB(token);
 
     if (tokenFromDb) {

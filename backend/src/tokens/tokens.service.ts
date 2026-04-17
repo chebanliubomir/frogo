@@ -8,7 +8,7 @@ export class TokensService {
   constructor(
     private readonly jwt: JwtService,
     private readonly prisma: PrismaService
-  ) { }
+  ) {}
 
   async generateTokens(payload): Promise<TokensType> {
 
