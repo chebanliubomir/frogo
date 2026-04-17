@@ -15,7 +15,7 @@ export class AuthenticationGuard implements CanActivate {
         throw new UnauthorizedException();
       }
 
-      const validToken = await this.tokens.checkValidToken(access_token)
+      const validToken = await this.tokens.validateAccessToken(access_token)
 
       if(!validToken) {
         request['user'] = validToken
