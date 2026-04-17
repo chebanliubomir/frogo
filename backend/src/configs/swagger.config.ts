@@ -1,7 +1,8 @@
+import { INestApplication } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 
-export const swaggerConfig = (app) => {
+export const swaggerConfig = (app: INestApplication) => {
 
   const config = new DocumentBuilder()
     .setTitle('Frogo')
