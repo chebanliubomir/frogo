@@ -39,7 +39,12 @@ export class TokensService {
     return await this.jwt.verifyAsync(token, {secret: 'access'});
   }
 
-  async findTokenInTheDB(token: string) {
+  async validateRefreshToken(token: string) {
+    // change secret key in to env variable for refreshToken
+    return await this.jwt.verifyAsync(token, {secret: 'refresh'});
+  }
+
+  async searchingTokenInDataBase(token: string) {
     return await this.prisma.session.findUnique({ where: { session: token } });
   }
 

@@ -10,7 +10,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 export class AuthenticationService {
   constructor(
     private readonly user: UserService,
-    private readonly tokens: TokensService,
+    private readonly token: TokensService,
     private readonly prisma: PrismaService
   ) { }
 
@@ -32,12 +32,12 @@ export class AuthenticationService {
       created_at: newUser.created_at,
     };
 
-    return await this.tokens.generateTokens(payload);
+    return await this.token.generateTokens(payload);
   }
 
   async login({ email, password }: LoginDto) {
 
-    const findUser = await this.user.findOneByEmail(email);
+    const findUser = await this.user.findUserByEmail(email);
     if (!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
@@ -65,7 +65,7 @@ export class AuthenticationService {
       created_at: findUser.created_at,
     };
 
-    const { access_token, refresh_token } = await this.tokens.generateTokens(payload);
+    const { access_token, refresh_token } = await this.token.generateTokens(payload);
 
     await this.prisma.session.create({
       data: {
@@ -78,15 +78,19 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async refresh(token: string) {
-    const userData = await this.tokens.validateAccessToken(token);
-    const tokenFromDb = await this.tokens.findTokenInTheDB(token);
+  async refresh(refreshToken: string) {
+    if(!refreshToken) {
+      throw new UnauthorizedException();
+    }
+
+    const userData = await this.token.validateRefreshToken(refreshToken);
+    const tokenFromDb = await this.token.searchingTokenInDataBase(refreshToken);
 
     if (!userData || !tokenFromDb) {
       throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.findUserById(userData.id);
+    const findUser = await this.user.findUserById(1);
     if (!findUser) {
       throw new UnauthorizedException();
     }
@@ -103,16 +107,16 @@ export class AuthenticationService {
       created_at: findUser.created_at,
     };
 
-    const generateTokens = await this.tokens.generateTokens(payload);
+    const generateTokens = await this.token.generateTokens(payload);
 
-    const tokens = await this.tokens.saveToken(findUser.id, generateTokens.refresh_token);
+    const tokens = await this.token.saveToken(findUser.id, generateTokens.refresh_token);
 
     return { ...tokens, user: payload };
   }
 
   async logout(token: string) {
-    const userData = await this.tokens.validateAccessToken(token);
-    const tokenFromDb = await this.tokens.findTokenInTheDB(token);
+    const userData = await this.token.validateAccessToken(token);
+    const tokenFromDb = await this.token.searchingTokenInDataBase(token);
 
     if (tokenFromDb) {
       return await this.prisma.session.deleteMany({ where: { userId: userData.id } });
