@@ -16,14 +16,11 @@ export class AuthenticationGuard implements CanActivate {
       }
 
       const validate = await this.token.validateAccessToken(access_token)
-
       if (!validate) {
         throw new UnauthorizedException();
       }
 
       request.user = validate
-
-
     } catch {
       throw new UnauthorizedException();
     }
