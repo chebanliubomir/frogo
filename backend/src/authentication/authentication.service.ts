@@ -79,7 +79,7 @@ export class AuthenticationService {
   }
 
   async refresh(refreshToken: string) {
-    if(!refreshToken) {
+    if (!refreshToken) {
       throw new UnauthorizedException();
     }
 
@@ -109,9 +109,9 @@ export class AuthenticationService {
 
     const generateTokens = await this.token.generateTokens(payload);
 
-    const tokens = await this.token.saveToken(findUser.id, generateTokens.refresh_token);
+    await this.token.saveToken(findUser.id, generateTokens.refresh_token);
 
-    return { ...tokens, user: payload };
+    return { ...generateTokens }
   }
 
   async logout(token: string) {

@@ -8,6 +8,7 @@ export const swaggerConfig = (app: INestApplication) => {
     .setTitle('Frogo')
     .setDescription('This backend parts')
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('frogo')
     .build();
 
