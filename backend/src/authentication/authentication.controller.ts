@@ -4,6 +4,7 @@ import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { ApiBearerAuth, ApiHeader, ApiSecurity } from '@nestjs/swagger';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) { }
@@ -18,7 +19,7 @@ export class AuthenticationController {
     response.cookie('refreshToken', tokens.refresh_token, {
       httpOnly: true,
       secure: false, // make to truthy for prodaction
-      maxAge: 60 * 7 * 24 * 60 * 60,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
       path: '/'
     });
 
@@ -34,7 +35,7 @@ export class AuthenticationController {
 
     response.cookie('refreshToken', tokens.refresh_token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
       path: '/'
     });
 
@@ -44,24 +45,26 @@ export class AuthenticationController {
     });
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthenticationGuard)
   @Post('refresh')
   async refresh(
     @Req() req: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const token = req.cookies['refreshToken'];
-    const data = await this.authenticationService.refresh(token);
+    const { refreshToken } = req.cookies;
+    const data = await this.authenticationService.refresh(refreshToken);
 
-    response.cookie('refreshToken', data.session, {
+    response.cookie('refreshToken', data.refresh_token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
+      maxAge: 30 * 24 * 60 * 60 * 1000,
       path: '/'
     });
 
-    response.json(data.user);
+    response.json(data.access_token);
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthenticationGuard)
   @Post('logout')
   async logout(
@@ -75,7 +78,7 @@ export class AuthenticationController {
 
     return 'Ви вийшли з аккаунту.';
 
-  } 
+  }
 
 
 }
