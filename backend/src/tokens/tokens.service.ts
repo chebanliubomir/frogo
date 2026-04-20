@@ -1,28 +1,27 @@
 import { PrismaService } from '@/prisma/prisma.service';
-import { TokensType } from '@/types/tokens.type';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class TokensService {
   constructor(
     private readonly jwt: JwtService,
-    private readonly prisma: PrismaService
-  ) {}
+    private readonly prisma: PrismaService,
+    private configService: ConfigService
+  ) { }
 
-  async generateTokens(payload): Promise<TokensType> {
+  async generateTokens(payload) {
 
     const [accessToken, refreshToken] = await Promise.all([
 
-      // change secret key in to env variable for accessToken
-      this.jwt.signAsync(payload, {
-        secret: 'access',
+      this.jwt.sign(payload, {
+        secret: this.configService.get<string>('jwt.access_secret'),
         expiresIn: '15m',
       }),
 
-      // change secret key in to env variable fror refreshToken
-      this.jwt.signAsync(payload, {
-        secret: 'refresh',
+      this.jwt.sign(payload, {
+        secret: this.configService.get<string>('jwt.refresh_secret'),
         expiresIn: '30d',
       })
     ])
@@ -35,13 +34,11 @@ export class TokensService {
   }
 
   async validateAccessToken(token: string) {
-    // change secret key in to env variable for accessToken
-    return await this.jwt.verifyAsync(token, {secret: 'access'});
+    return await this.jwt.verify(token, {secret: this.configService.get<string>('jwt.access_secret')});
   }
 
   async validateRefreshToken(token: string) {
-    // change secret key in to env variable for refreshToken
-    return await this.jwt.verifyAsync(token, {secret: 'refresh'});
+    return await this.jwt.verify(token, {secret: this.configService.get<string>('jwt.refresh_secret')});
   }
 
   async searchingTokenInDataBase(token: string) {
@@ -57,11 +54,14 @@ export class TokensService {
       where: { userId },
       update: { session: token },
       create: {
-        userId, 
+        userId,
         session: token,
         device: 'PC'
       }
     });
   }
 
+  async removeToken(token: string) {
+    return await this.prisma.session.delete({ where: { session: token } })
+  }
 }

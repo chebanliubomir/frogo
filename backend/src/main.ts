@@ -5,6 +5,7 @@ import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.f
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { swaggerConfig } from './configs/swagger.config';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,12 +18,15 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   app.use(cookieParser());
+
+  const configService = app.get(ConfigService)
+  const port = configService.get('common.port')
   
   swaggerConfig(app)
   
-  await app.listen(env("PORT"));
+  await app.listen(port);
   
-  console.log(`Server was started on URL: http://localhost:${process.env.PORT}/api`);
+  console.log(`Server was started on URL: http://localhost:${port}/api`);
 }
 
 bootstrap()

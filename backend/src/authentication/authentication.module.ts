@@ -4,13 +4,17 @@ import { AuthenticationController } from './authentication.controller';
 import { UserModule } from '../user/user.module';
 import { TokensModule } from '@/tokens/tokens.module';
 import { PrismaService } from '@/prisma/prisma.service';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  controllers: [AuthenticationController],
-  providers: [AuthenticationService, PrismaService],
   imports: [
+    JwtModule.register({
+      global: true,
+    }),
     UserModule,
     TokensModule
   ],
+  controllers: [AuthenticationController],
+  providers: [AuthenticationService, PrismaService],
 })
 export class AuthenticationModule { }
