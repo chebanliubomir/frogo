@@ -24,7 +24,7 @@ export class TokensService {
         secret: this.configService.get<string>('jwt.refresh_secret'),
         expiresIn: '30d',
       })
-    ])
+    ]);
 
     return {
       access_token: accessToken,
@@ -62,6 +62,6 @@ export class TokensService {
   }
 
   async removeToken(token: string) {
-    return await this.prisma.session.delete({ where: { session: token } })
+    return await this.prisma.session.delete({ where: { session: token } });
   }
 }

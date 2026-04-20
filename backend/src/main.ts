@@ -1,6 +1,5 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { env } from '@prisma/config';
 import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.filter';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
@@ -19,10 +18,10 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
-  const configService = app.get(ConfigService)
-  const port = configService.get('common.port')
+  const configService = app.get(ConfigService);
+  const port = configService.get('common.port');
   
-  swaggerConfig(app)
+  swaggerConfig(app);
   
   await app.listen(port);
   

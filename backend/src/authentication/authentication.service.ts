@@ -113,11 +113,11 @@ export class AuthenticationService {
 
     await this.token.saveToken(findUser.id, generateTokens.refresh_token);
 
-    return { ...generateTokens }
+    return { ...generateTokens };
   }
 
   async logout(refreshToken: string) {
-    return await this.token.removeToken(refreshToken)
+    return await this.token.removeToken(refreshToken);
   }
 
 }

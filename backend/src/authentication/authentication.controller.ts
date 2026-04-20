@@ -68,7 +68,7 @@ export class AuthenticationController {
     @Req() req: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const { refreshToken } = req.cookies
+    const { refreshToken } = req.cookies;
     const data = await this.authenticationService.logout(refreshToken);
 
     response.clearCookie('refreshToken');
