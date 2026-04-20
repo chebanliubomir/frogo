@@ -8,22 +8,19 @@ export class AuthenticationGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     try {
-      console.log('1')
-      const request = context.switchToHttp().getRequest()
+      const request = context.switchToHttp().getRequest();
 
-      const access_token = this.expectTokenFromHeader(request)
+      const access_token = this.expectTokenFromHeader(request);
       if (!access_token) {
         throw new UnauthorizedException();
       }
-      console.log('1')
 
-      const validate = await this.token.validateAccessToken(access_token)
+      const validate = await this.token.validateAccessToken(access_token);
       if (!validate) {
         throw new UnauthorizedException();
       }
-      console.log('2')
 
-      request.user = validate
+      request.user = validate;
     } catch {
       throw new UnauthorizedException();
     }

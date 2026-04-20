@@ -12,7 +12,7 @@ export class AuthenticationService {
     private readonly user: UserService,
     private readonly token: TokensService,
     private readonly prisma: PrismaService
-  ) { }
+  ) {}
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
 
@@ -32,10 +32,12 @@ export class AuthenticationService {
       created_at: newUser.created_at,
     };
 
+    //save refresh token to database
+
     return await this.token.generateTokens(payload);
   }
 
-  async login({ email, password }: LoginDto) {
+  async login({ email, password }: LoginDto): Promise<TokensType> {
 
     const findUser = await this.user.findUserByEmail(email);
     if (!findUser) {
@@ -78,7 +80,7 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async refresh(refreshToken: string) {
+  async refresh(refreshToken: string): Promise<TokensType> {
     if (!refreshToken) {
       throw new UnauthorizedException();
     }
@@ -111,17 +113,11 @@ export class AuthenticationService {
 
     await this.token.saveToken(findUser.id, generateTokens.refresh_token);
 
-    return { ...generateTokens }
+    return { ...generateTokens };
   }
 
-  async logout(token: string) {
-    const userData = await this.token.validateAccessToken(token);
-    const tokenFromDb = await this.token.searchingTokenInDataBase(token);
-
-    if (tokenFromDb) {
-      return await this.prisma.session.deleteMany({ where: { userId: userData.id } });
-    }
-
+  async logout(refreshToken: string) {
+    return await this.token.removeToken(refreshToken);
   }
 
 }
