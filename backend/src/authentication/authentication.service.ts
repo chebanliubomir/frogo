@@ -12,7 +12,7 @@ export class AuthenticationService {
     private readonly user: UserService,
     private readonly token: TokensService,
     private readonly prisma: PrismaService
-  ) {}
+  ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
 
@@ -32,9 +32,12 @@ export class AuthenticationService {
       created_at: newUser.created_at,
     };
 
-    //save refresh token to database
+    const { access_token, refresh_token } = await this.token.generateTokens(payload);
 
-    return await this.token.generateTokens(payload);
+    await this.token.saveToken(newUser.id, refresh_token);
+
+    return { access_token, refresh_token };
+
   }
 
   async login({ email, password }: LoginDto): Promise<TokensType> {
@@ -43,7 +46,7 @@ export class AuthenticationService {
     if (!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
-        message: 'Такого користувача не існує.'
+        message: 'This user does not exist.'
       });
     }
 
@@ -51,7 +54,7 @@ export class AuthenticationService {
     if (!checkPassword) {
       throw new UnauthorizedException({
         status: HttpStatus.UNAUTHORIZED,
-        message: "Невірний пароль."
+        message: "Invali password."
       });
     }
 
@@ -69,13 +72,7 @@ export class AuthenticationService {
 
     const { access_token, refresh_token } = await this.token.generateTokens(payload);
 
-    await this.prisma.session.create({
-      data: {
-        userId: findUser.id,
-        device: 'PC',
-        session: refresh_token
-      }
-    });
+    await this.token.saveToken(findUser.id, refresh_token);
 
     return { access_token, refresh_token };
   }
@@ -109,11 +106,11 @@ export class AuthenticationService {
       created_at: findUser.created_at,
     };
 
-    const generateTokens = await this.token.generateTokens(payload);
+    const { access_token, refresh_token } = await this.token.generateTokens(payload);
 
-    await this.token.saveToken(findUser.id, generateTokens.refresh_token);
+    await this.token.saveToken(findUser.id, refresh_token);
 
-    return { ...generateTokens };
+    return { access_token, refresh_token };
   }
 
   async logout(refreshToken: string) {

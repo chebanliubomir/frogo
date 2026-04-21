@@ -4,7 +4,8 @@ import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { TokensModule } from './tokens/tokens.module';
-import { commonConfig, jwtConfig } from './configs/common.config';
+import { commonConfig, jwtConfig, mailConfig } from './configs/common.config';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { commonConfig, jwtConfig } from './configs/common.config';
       isGlobal: true,
       load: [
         commonConfig,
-        jwtConfig
+        jwtConfig,
+        mailConfig
       ]
     }),
     AuthenticationModule,
@@ -21,6 +23,7 @@ import { commonConfig, jwtConfig } from './configs/common.config';
     PrismaModule,
     TokensModule,
     ConfigModule,
+    MailModule,
     ],
   controllers: [],
   providers: [],
