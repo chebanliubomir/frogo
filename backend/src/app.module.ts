@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { TokensModule } from './tokens/tokens.module';
 import { commonConfig, jwtConfig } from './configs/common.config';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { commonConfig, jwtConfig } from './configs/common.config';
     PrismaModule,
     TokensModule,
     ConfigModule,
+    MailModule,
     ],
   controllers: [],
   providers: [],
