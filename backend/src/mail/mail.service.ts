@@ -15,7 +15,7 @@ export class MailService {
       to,
       subject: 'TEST!',
       template: `http://localhost:${this.configService.get('common.port')}/api/activate/${link}`,
-    })
+    });
   }
 
 }

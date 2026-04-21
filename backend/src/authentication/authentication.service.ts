@@ -6,7 +6,6 @@ import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
 import { PrismaService } from '@/prisma/prisma.service';
-import { User } from '@prisma/generated';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -33,11 +32,11 @@ export class AuthenticationService {
       created_at: newUser.created_at,
     };
 
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const { access_token, refresh_token } = await this.token.generateTokens(payload);
 
-    await this.token.saveToken(newUser.id, refresh_token)
+    await this.token.saveToken(newUser.id, refresh_token);
 
-    return { access_token, refresh_token }
+    return { access_token, refresh_token };
 
   }
 
@@ -69,13 +68,13 @@ export class AuthenticationService {
       rule: findUser.rule,
       updated_at: findUser.updated_at,
       created_at: findUser.created_at,
-    }
+    };
 
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const { access_token, refresh_token } = await this.token.generateTokens(payload);
 
-    await this.token.saveToken(findUser.id, refresh_token)
+    await this.token.saveToken(findUser.id, refresh_token);
 
-    return { access_token, refresh_token }
+    return { access_token, refresh_token };
   }
 
   async refresh(refreshToken: string): Promise<TokensType> {
@@ -107,11 +106,11 @@ export class AuthenticationService {
       created_at: findUser.created_at,
     };
 
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const { access_token, refresh_token } = await this.token.generateTokens(payload);
 
-    await this.token.saveToken(findUser.id, refresh_token)
+    await this.token.saveToken(findUser.id, refresh_token);
 
-    return { access_token, refresh_token }
+    return { access_token, refresh_token };
   }
 
   async logout(refreshToken: string) {

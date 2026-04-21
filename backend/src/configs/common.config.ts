@@ -18,4 +18,4 @@ export const mailConfig = registerAs('mail', () => ({
   auth: process.env.SEND_MAIL_AUTH,
   user: process.env.SEND_MAIL_AUTH_USER,
   pass: process.env.SEND_MAIL_AUTH_PASS
-}))
+}));
