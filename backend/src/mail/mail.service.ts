@@ -1,26 +1,21 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { CreateMailDto } from './dto/create-mail.dto';
-import { UpdateMailDto } from './dto/update-mail.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MailService {
-  create(createMailDto: CreateMailDto) {
-    return 'This action adds a new mail';
+
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly mailerService: MailerService
+  ) { }
+
+  async endMail(to: string, link: string) {
+    await this.mailerService.sendMail({
+      to,
+      subject: 'TEST!',
+      template: `http://localhost:${this.configService.get('common.port')}/api/activate/${link}`,
+    })
   }
 
-  findAll() {
-    return `This action returns all mail`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} mail`;
-  }
-
-  update(id: number, updateMailDto: UpdateMailDto) {
-    return `This action updates a #${id} mail`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} mail`;
-  }
 }

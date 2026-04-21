@@ -4,7 +4,7 @@ import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { TokensModule } from './tokens/tokens.module';
-import { commonConfig, jwtConfig } from './configs/common.config';
+import { commonConfig, jwtConfig, mailConfig } from './configs/common.config';
 import { MailModule } from './mail/mail.module';
 
 @Module({
@@ -14,7 +14,8 @@ import { MailModule } from './mail/mail.module';
       isGlobal: true,
       load: [
         commonConfig,
-        jwtConfig
+        jwtConfig,
+        mailConfig
       ]
     }),
     AuthenticationModule,

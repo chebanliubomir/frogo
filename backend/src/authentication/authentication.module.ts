@@ -5,6 +5,7 @@ import { UserModule } from '../user/user.module';
 import { TokensModule } from '@/tokens/tokens.module';
 import { PrismaService } from '@/prisma/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
+import { MailModule } from '@/mail/mail.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { JwtModule } from '@nestjs/jwt';
       global: true,
     }),
     UserModule,
-    TokensModule
+    TokensModule,
+    MailModule
   ],
   controllers: [AuthenticationController],
   providers: [AuthenticationService, PrismaService],
