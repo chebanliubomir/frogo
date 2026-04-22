@@ -10,11 +10,13 @@ export class MailService {
     private readonly mailerService: MailerService
   ) { }
 
-  async endMail(to: string, link: string) {
+  async sendMail(to: string, link: string) {
     await this.mailerService.sendMail({
+      from: `${this.configService.get('mail.user')}`,
       to,
-      subject: 'TEST!',
-      template: `http://localhost:${this.configService.get('common.port')}/api/activate/${link}`,
+      subject: "Test mail",
+      text: "Hello world",
+      html: `${this.configService.get('common.client_url')}/api/activate/${link}`
     });
   }
 

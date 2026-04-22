@@ -1,24 +1,29 @@
 import * as bcrypt from 'bcrypt';
+import uuid  from 'uuid';
 import { HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { RegistrationDto } from './dto/registration.dto';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
-import { PrismaService } from '@/prisma/prisma.service';
+import { MailService } from '@/mail/mail.service';
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly user: UserService,
     private readonly token: TokensService,
-    private readonly prisma: PrismaService
+    private readonly mailService: MailService
   ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
 
     const hashPassword = await bcrypt.hash(password, 8);
 
-    const newUser = await this.user.create({ name, surname, email, password: hashPassword });
+    const activatedLink = uuid.v4()
+
+    const newUser = await this.user.create({ name, surname, email, password: hashPassword, activatedLink });
+
+    await this.mailService.sendMail(newUser.email, newUser.activatedLink)
 
     const payload = {
       id: newUser.id,
