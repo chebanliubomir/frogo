@@ -3,4 +3,5 @@ export interface CreateUser {
   surname: string
   email: string
   password: string
+  activatedLink: string
 }
