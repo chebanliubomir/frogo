@@ -8,8 +8,8 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule,
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.gmail.com',
-        service: process.env.SEND_MAIL_HOST,
+        service: process.env.SEND_MAIL_SERVICE,
+        host: process.env.SEND_MAIL_HOST,
         port: Number(process.env.SEND_MAIL_PORT),
         secure: false,
         auth: {

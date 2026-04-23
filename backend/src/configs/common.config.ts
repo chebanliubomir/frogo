@@ -4,6 +4,7 @@ export const commonConfig = registerAs('common', () => ({
   port: process.env.PORT,
   node_env: process.env.NODE_ENV,
   client_url: process.env.CLIENT_URL,
+  server_url: process.env.SERVER_URL,
   database_url: process.env.DATABASE_URL
 }));
 
@@ -15,7 +16,7 @@ export const jwtConfig = registerAs('jwt', () => ({
 export const mailConfig = registerAs('mail', () => ({
   host: process.env.SEND_MAIL_HOST,
   port: process.env.SEND_MAIL_PORT,
-  auth: process.env.SEND_MAIL_AUTH,
+  service: process.env.SEND_MAIL_SERVICE,
   user: process.env.SEND_MAIL_AUTH_USER,
   pass: process.env.SEND_MAIL_AUTH_PASS
 }));

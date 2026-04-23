@@ -16,7 +16,7 @@ export class MailService {
       to,
       subject: "Test mail",
       text: "Hello world",
-      html: `${this.configService.get('common.client_url')}/api/activate/${link}`
+      html: `${this.configService.get('common.server_url')}api/activate/${link}`
     });
   }
 
