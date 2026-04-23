@@ -6,7 +6,7 @@ import { PrismaService } from '../prisma/prisma.service';
 export class UserService {
   constructor(private readonly prisma: PrismaService) { }
 
-  async create({ name, surname, email, password }: CreateUser) {
+  async create({ name, surname, email, password, activatedLink }: CreateUser) {
 
     const findUser = await this.prisma.user.findUnique({ where: { email } });
 
@@ -22,7 +22,8 @@ export class UserService {
         name,
         surname,
         email,
-        password
+        password,
+        activatedLink
       }
     });
 
