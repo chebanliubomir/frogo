@@ -1,11 +1,15 @@
-import { Controller, Post, Body, Res, Req, Get } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req, Get, Param } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 @Controller('authentication')
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationService) { }
+  constructor(
+    private readonly authenticationService: AuthenticationService,
+    private readonly configService: ConfigService
+  ) { }
 
   @Post('registration')
   async registration(
@@ -43,6 +47,16 @@ export class AuthenticationController {
     response.json({
       access_token: data.access_token,
     });
+  }
+
+  @Get('activate/:link')
+  async activate(
+    @Param('link') link: string,
+    @Res() response: Response
+  ) {
+    const data = await this.authenticationService.activate(link)
+    console.log(data)
+    return response.redirect(`${this.configService.get('common.client_url')}`)
   }
 
   @Get('refresh')
