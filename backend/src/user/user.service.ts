@@ -1,6 +1,7 @@
-import { ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUser } from './interfaces/create-user.intarface';
 import { PrismaService } from '../prisma/prisma.service';
+import { contains } from 'class-validator';
 
 @Injectable()
 export class UserService {
@@ -32,6 +33,21 @@ export class UserService {
 
   async findUserById(id: number) {
     return await this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async activateUser(link: string) {
+    const user = await this.prisma.user.findFirst({ where: { activatedLink: link } })
+    if (!user) {
+      throw new BadRequestException()
+    }
+
+    const updatedUser = await this.prisma.user.update({
+      where: { activatedLink: link },
+      data: { isActivated: true },
+    })
+
+    return 'Account is activated.'
+
   }
 
   async findUserByEmail(email: string) {

@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import uuid  from 'uuid';
-import { HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { RegistrationDto } from './dto/registration.dto';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
@@ -82,6 +82,10 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
+  async activate(link: string) {
+    return await this.user.activateUser(link)
+  }
+
   async refresh(refreshToken: string): Promise<TokensType> {
     if (!refreshToken) {
       throw new UnauthorizedException();
@@ -94,7 +98,7 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.findUserById(1);
+    const findUser = await this.user.findUserById(userData.id);
     if (!findUser) {
       throw new UnauthorizedException();
     }
