@@ -9,14 +9,14 @@ datasource db {
 
 model User {
   id            Int        @id @default(autoincrement())
-  avatar        String     @default("null")
+  avatar        String     @unique @default("")
   name          String     @db.VarChar(60)
   surname       String     @db.VarChar(60)
   email         String     @unique
   password      String
   rule          Role       @default(USER)
   isActivated   Boolean    @default(false)
-  activatedLink String     @unique @default("null")
+  activatedLink String     @unique @default("")
   updated_at    DateTime   @updatedAt
   created_at    DateTime   @default(now())
   comments      Comments[]

@@ -36,17 +36,18 @@ export class UserService {
   }
 
   async activateUser(link: string) {
-    const user = await this.prisma.user.findFirst({ where: { activatedLink: link } })
+    const user = await this.prisma.user.findUnique({ where: { activatedLink: link } })
     if (!user) {
       throw new BadRequestException()
     }
 
-    const updatedUser = await this.prisma.user.update({
+    await this.prisma.user.update({
       where: { activatedLink: link },
-      data: { isActivated: true },
+      data: { 
+        activatedLink: '',
+        isActivated: true 
+      },
     })
-
-    return 'Account is activated.'
 
   }
 

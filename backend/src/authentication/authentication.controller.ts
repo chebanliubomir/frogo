@@ -54,9 +54,9 @@ export class AuthenticationController {
     @Param('link') link: string,
     @Res() response: Response
   ) {
-    const data = await this.authenticationService.activate(link)
-    console.log(data)
-    return response.redirect(`${this.configService.get('common.client_url')}`)
+    await this.authenticationService.activate(link)
+    console.log(this.configService.get('common.client_url'))
+    return response.redirect(301, `${this.configService.get('common.client_url')}`)
   }
 
   @Get('refresh')
