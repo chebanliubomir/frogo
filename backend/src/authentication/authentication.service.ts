@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import uuid  from 'uuid';
+import uuid from 'uuid';
 import { BadRequestException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { RegistrationDto } from './dto/registration.dto';
 import { UserService } from '../user/user.service';
@@ -83,7 +83,7 @@ export class AuthenticationService {
   }
 
   async activate(link: string) {
-    return await this.user.activateUser(link)
+    await this.user.activateUser(link)
   }
 
   async refresh(refreshToken: string): Promise<TokensType> {
