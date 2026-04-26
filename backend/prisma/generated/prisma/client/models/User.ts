@@ -41,6 +41,7 @@ export type UserMinAggregateOutputType = {
   surname: string | null
   email: string | null
   password: string | null
+  resetPasswordLink: string | null
   rule: $Enums.Role | null
   isActivated: boolean | null
   activatedLink: string | null
@@ -55,6 +56,7 @@ export type UserMaxAggregateOutputType = {
   surname: string | null
   email: string | null
   password: string | null
+  resetPasswordLink: string | null
   rule: $Enums.Role | null
   isActivated: boolean | null
   activatedLink: string | null
@@ -69,6 +71,7 @@ export type UserCountAggregateOutputType = {
   surname: number
   email: number
   password: number
+  resetPasswordLink: number
   rule: number
   isActivated: number
   activatedLink: number
@@ -93,6 +96,7 @@ export type UserMinAggregateInputType = {
   surname?: true
   email?: true
   password?: true
+  resetPasswordLink?: true
   rule?: true
   isActivated?: true
   activatedLink?: true
@@ -107,6 +111,7 @@ export type UserMaxAggregateInputType = {
   surname?: true
   email?: true
   password?: true
+  resetPasswordLink?: true
   rule?: true
   isActivated?: true
   activatedLink?: true
@@ -121,6 +126,7 @@ export type UserCountAggregateInputType = {
   surname?: true
   email?: true
   password?: true
+  resetPasswordLink?: true
   rule?: true
   isActivated?: true
   activatedLink?: true
@@ -222,6 +228,7 @@ export type UserGroupByOutputType = {
   surname: string
   email: string
   password: string
+  resetPasswordLink: string
   rule: $Enums.Role
   isActivated: boolean
   activatedLink: string
@@ -259,6 +266,7 @@ export type UserWhereInput = {
   surname?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  resetPasswordLink?: Prisma.StringFilter<"User"> | string
   rule?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isActivated?: Prisma.BoolFilter<"User"> | boolean
   activatedLink?: Prisma.StringFilter<"User"> | string
@@ -276,6 +284,7 @@ export type UserOrderByWithRelationInput = {
   surname?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  resetPasswordLink?: Prisma.SortOrder
   rule?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
   activatedLink?: Prisma.SortOrder
@@ -290,6 +299,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   avatar?: string
   email?: string
+  resetPasswordLink?: string
   activatedLink?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
@@ -304,7 +314,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   comments?: Prisma.CommentsListRelationFilter
   posts?: Prisma.PostListRelationFilter
   sessions?: Prisma.SessionListRelationFilter
-}, "id" | "avatar" | "email" | "activatedLink">
+}, "id" | "avatar" | "email" | "resetPasswordLink" | "activatedLink">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -313,6 +323,7 @@ export type UserOrderByWithAggregationInput = {
   surname?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  resetPasswordLink?: Prisma.SortOrder
   rule?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
   activatedLink?: Prisma.SortOrder
@@ -335,6 +346,7 @@ export type UserScalarWhereWithAggregatesInput = {
   surname?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  resetPasswordLink?: Prisma.StringWithAggregatesFilter<"User"> | string
   rule?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   isActivated?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   activatedLink?: Prisma.StringWithAggregatesFilter<"User"> | string
@@ -348,6 +360,7 @@ export type UserCreateInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -365,6 +378,7 @@ export type UserUncheckedCreateInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -381,6 +395,7 @@ export type UserUpdateInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -398,6 +413,7 @@ export type UserUncheckedUpdateInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -415,6 +431,7 @@ export type UserCreateManyInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -428,6 +445,7 @@ export type UserUpdateManyMutationInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -442,6 +460,7 @@ export type UserUncheckedUpdateManyInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -456,6 +475,7 @@ export type UserCountOrderByAggregateInput = {
   surname?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  resetPasswordLink?: Prisma.SortOrder
   rule?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
   activatedLink?: Prisma.SortOrder
@@ -474,6 +494,7 @@ export type UserMaxOrderByAggregateInput = {
   surname?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  resetPasswordLink?: Prisma.SortOrder
   rule?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
   activatedLink?: Prisma.SortOrder
@@ -488,6 +509,7 @@ export type UserMinOrderByAggregateInput = {
   surname?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  resetPasswordLink?: Prisma.SortOrder
   rule?: Prisma.SortOrder
   isActivated?: Prisma.SortOrder
   activatedLink?: Prisma.SortOrder
@@ -582,6 +604,7 @@ export type UserCreateWithoutSessionsInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -598,6 +621,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -629,6 +653,7 @@ export type UserUpdateWithoutSessionsInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -645,6 +670,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -660,6 +686,7 @@ export type UserCreateWithoutPostsInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -676,6 +703,7 @@ export type UserUncheckedCreateWithoutPostsInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -707,6 +735,7 @@ export type UserUpdateWithoutPostsInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -723,6 +752,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -738,6 +768,7 @@ export type UserCreateWithoutCommentsInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -754,6 +785,7 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   surname: string
   email: string
   password: string
+  resetPasswordLink?: string
   rule?: $Enums.Role
   isActivated?: boolean
   activatedLink?: string
@@ -785,6 +817,7 @@ export type UserUpdateWithoutCommentsInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -801,6 +834,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   surname?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  resetPasswordLink?: Prisma.StringFieldUpdateOperationsInput | string
   rule?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActivated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
@@ -866,6 +900,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   surname?: boolean
   email?: boolean
   password?: boolean
+  resetPasswordLink?: boolean
   rule?: boolean
   isActivated?: boolean
   activatedLink?: boolean
@@ -884,6 +919,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   surname?: boolean
   email?: boolean
   password?: boolean
+  resetPasswordLink?: boolean
   rule?: boolean
   isActivated?: boolean
   activatedLink?: boolean
@@ -898,6 +934,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   surname?: boolean
   email?: boolean
   password?: boolean
+  resetPasswordLink?: boolean
   rule?: boolean
   isActivated?: boolean
   activatedLink?: boolean
@@ -912,6 +949,7 @@ export type UserSelectScalar = {
   surname?: boolean
   email?: boolean
   password?: boolean
+  resetPasswordLink?: boolean
   rule?: boolean
   isActivated?: boolean
   activatedLink?: boolean
@@ -919,7 +957,7 @@ export type UserSelectScalar = {
   created_at?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "avatar" | "name" | "surname" | "email" | "password" | "rule" | "isActivated" | "activatedLink" | "updated_at" | "created_at", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "avatar" | "name" | "surname" | "email" | "password" | "resetPasswordLink" | "rule" | "isActivated" | "activatedLink" | "updated_at" | "created_at", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
@@ -943,6 +981,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     surname: string
     email: string
     password: string
+    resetPasswordLink: string
     rule: $Enums.Role
     isActivated: boolean
     activatedLink: string
@@ -1380,6 +1419,7 @@ export interface UserFieldRefs {
   readonly surname: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly resetPasswordLink: Prisma.FieldRef<"User", 'String'>
   readonly rule: Prisma.FieldRef<"User", 'Role'>
   readonly isActivated: Prisma.FieldRef<"User", 'Boolean'>
   readonly activatedLink: Prisma.FieldRef<"User", 'String'>
