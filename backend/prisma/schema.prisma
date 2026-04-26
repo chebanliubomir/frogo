@@ -8,20 +8,21 @@ datasource db {
 }
 
 model User {
-  id            Int        @id @default(autoincrement())
-  avatar        String     @unique @default("")
-  name          String     @db.VarChar(60)
-  surname       String     @db.VarChar(60)
-  email         String     @unique
-  password      String
-  rule          Role       @default(USER)
-  isActivated   Boolean    @default(false)
-  activatedLink String     @unique @default("")
-  updated_at    DateTime   @updatedAt
-  created_at    DateTime   @default(now())
-  comments      Comments[]
-  posts         Post[]
-  sessions      Session[]
+  id                Int        @id @default(autoincrement())
+  avatar            String     @unique @default("null")
+  name              String     @db.VarChar(60)
+  surname           String     @db.VarChar(60)
+  email             String     @unique
+  password          String
+  resetPasswordLink String     @unique @default("null")
+  rule              Role       @default(USER)
+  isActivated       Boolean    @default(false)
+  activatedLink     String     @unique @default("null")
+  updated_at        DateTime   @updatedAt
+  created_at        DateTime   @default(now())
+  comments          Comments[]
+  posts             Post[]
+  sessions          Session[]
 }
 
 model Session {

@@ -1,6 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { mailTypes } from './types/mail.types';
 
 @Injectable()
 export class MailService {
@@ -10,14 +11,13 @@ export class MailService {
     private readonly mailerService: MailerService
   ) { }
 
-  async sendMail(to: string, link: string) {
+  async sendMail({ to, subject, html }: mailTypes) {
     await this.mailerService.sendMail({
       from: `${this.configService.get('mail.user')}`,
       to,
-      subject: "Test mail",
-      text: "Hello world",
-      html: `${this.configService.get('common.server_url')}api/activate/${link}`
-    });
+      subject,
+      html
+    })
   }
-
 }
+

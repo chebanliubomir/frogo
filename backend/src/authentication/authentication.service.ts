@@ -7,12 +7,16 @@ import { LoginDto } from './dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
 import { MailService } from '@/mail/mail.service';
+import { ConfigService } from '@nestjs/config';
+import { PrismaService } from '@/prisma/prisma.service';
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly user: UserService,
     private readonly token: TokensService,
-    private readonly mailService: MailService
+    private readonly configService: ConfigService,
+    private readonly mailService: MailService,
+    private readonly prisma: PrismaService
   ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
@@ -23,7 +27,11 @@ export class AuthenticationService {
 
     const newUser = await this.user.create({ name, surname, email, password: hashPassword, activatedLink });
 
-    await this.mailService.sendMail(newUser.email, newUser.activatedLink)
+    await this.mailService.sendMail({
+      to: newUser.email,
+      subject: 'Activate account',
+      html: `${this.configService.get('common.server_url')}api/activate/${activatedLink}`
+    })
 
     const payload = {
       id: newUser.id,
@@ -80,6 +88,27 @@ export class AuthenticationService {
     await this.token.saveToken(findUser.id, refresh_token);
 
     return { access_token, refresh_token };
+  }
+
+  async resetPassword(email: string) {
+    const user = await this.user.findUserByEmail(email)
+    if (!user) {
+      throw new BadRequestException('User not found.')
+    }
+
+    const resetPasswordLink = uuid.v4()
+
+    await this.prisma.user.update({
+      where: { email },
+      data: { resetPasswordLink }
+    })
+
+    await this.mailService.sendMail({
+      to: user.email,
+      subject: 'Reset Password',
+      html: `${this.configService.get('common.server_url')}api/activate/${resetPasswordLink}`
+    })
+
   }
 
   async activate(link: string) {

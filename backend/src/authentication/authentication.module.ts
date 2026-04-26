@@ -6,9 +6,11 @@ import { TokensModule } from '@/tokens/tokens.module';
 import { PrismaService } from '@/prisma/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { MailModule } from '@/mail/mail.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
     JwtModule.register({
       global: true,
     }),
