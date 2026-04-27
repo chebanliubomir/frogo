@@ -106,8 +106,10 @@ export class AuthenticationService {
     await this.mailService.sendMail({
       to: user.email,
       subject: 'Reset Password',
-      html: `${this.configService.get('common.server_url')}api/activate/${resetPasswordLink}`
+      html: `${this.configService.get('common.server_url')}api/authentication/reset-password/${resetPasswordLink}`
     })
+
+    return `Letter send to ${user.email}.`
 
   }
 
