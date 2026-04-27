@@ -1,24 +1,15 @@
-import { BadRequestException, ConflictException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUser } from './interfaces/create-user.intarface';
 import { PrismaService } from '../prisma/prisma.service';
-import { contains } from 'class-validator';
+import { User } from '@prisma/generated';
+import { FindUserEnum } from './enums/find-user.enum';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) { }
 
-  async create({ name, surname, email, password, activatedLink }: CreateUser) {
-
-    const findUser = await this.prisma.user.findUnique({ where: { email } });
-
-    if (findUser) {
-      throw new ConflictException({
-        status: HttpStatus.CONFLICT,
-        message: 'Такий користувач вже існує.'
-      });
-    }
-
-    const user = await this.prisma.user.create({
+  async create({ name, surname, email, password, activatedLink }: CreateUser): Promise<User> {
+    return await this.prisma.user.create({
       data: {
         name,
         surname,
@@ -26,24 +17,23 @@ export class UserService {
         password,
         activatedLink
       }
-    });
-
-    return user;
+    })
   }
 
-  async findUser(data: number | string) {
+  async find(data: number | string, type: FindUserEnum): Promise<User | null> {
     return await this.prisma.user.findFirst({
       where: {
         OR: [
-          { id: typeof data === 'number' ? data : undefined },
-          { email: typeof data === 'string' ? data : undefined }
+          {id: type === FindUserEnum.ID ? Number(data) : undefined},
+          {email: type === FindUserEnum.EMAIL ? String(data) : undefined},
+          {activatedLink: type === FindUserEnum.ACTIVATED_LINK ? String(data) : undefined},
         ]
       }
     })
   }
 
-  async activateUser(link: string) {
-    const user = await this.prisma.user.findUnique({ where: { activatedLink: link } })
+  async activate(link: string): Promise<void> {
+    const user = await this.prisma.user.findFirst({ where: { activatedLink: link } })
     if (!user) {
       throw new BadRequestException()
     }
