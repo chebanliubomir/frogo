@@ -55,7 +55,7 @@ export class AuthenticationService {
 
   async login({ email, password }: LoginDto): Promise<TokensType> {
 
-    const findUser = await this.user.findUserByEmail(email);
+    const findUser = await this.user.findUser(email);
     if (!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
@@ -91,7 +91,7 @@ export class AuthenticationService {
   }
 
   async resetPassword(email: string) {
-    const user = await this.user.findUserByEmail(email)
+    const user = await this.user.findUser(email)
     if (!user) {
       throw new BadRequestException('User not found.')
     }
@@ -106,8 +106,10 @@ export class AuthenticationService {
     await this.mailService.sendMail({
       to: user.email,
       subject: 'Reset Password',
-      html: `${this.configService.get('common.server_url')}api/activate/${resetPasswordLink}`
+      html: `${this.configService.get('common.server_url')}api/authentication/reset-password/${resetPasswordLink}`
     })
+
+    return `Letter send to ${user.email}.`
 
   }
 
@@ -127,7 +129,7 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.findUserById(userData.id);
+    const findUser = await this.user.findUser(userData.id);
     if (!findUser) {
       throw new UnauthorizedException();
     }

@@ -31,8 +31,15 @@ export class UserService {
     return user;
   }
 
-  async findUserById(id: number) {
-    return await this.prisma.user.findUnique({ where: { id } });
+  async findUser(data: number | string) {
+    return await this.prisma.user.findFirst({
+      where: {
+        OR: [
+          { id: typeof data === 'number' ? data : undefined },
+          { email: typeof data === 'string' ? data : undefined }
+        ]
+      }
+    })
   }
 
   async activateUser(link: string) {
@@ -43,16 +50,12 @@ export class UserService {
 
     await this.prisma.user.update({
       where: { activatedLink: link },
-      data: { 
+      data: {
         activatedLink: '',
-        isActivated: true 
+        isActivated: true
       },
     })
 
-  }
-
-  async findUserByEmail(email: string) {
-    return await this.prisma.user.findUnique({ where: { email } });
   }
 
   async getAllUsers() {
