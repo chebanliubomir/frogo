@@ -121,6 +121,10 @@ export class AuthenticationService {
 
   }
 
+  async resetPasswordLink(link: string) {
+    return link
+  }
+
   async activate(link: string) {
     const user = await this.user.find(link, FindUserEnum.ACTIVATED_LINK)
     if (!user) {
