@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import uuid from 'uuid';
-import { BadRequestException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { RegistrationDto } from './dto/registration.dto';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
@@ -9,6 +9,7 @@ import { TokensType } from '@/types/tokens.type';
 import { MailService } from '@/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@/prisma/prisma.service';
+import { FindUserEnum } from '@/user/enums/find-user.enum';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -20,6 +21,13 @@ export class AuthenticationService {
   ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
+    const findUser = await this.user.find(email, FindUserEnum.EMAIL)
+    if (findUser) {
+      throw new ConflictException({
+        status: HttpStatus.CONFLICT,
+        message: 'Такий користувач вже існує.'
+      });
+    }
 
     const hashPassword = await bcrypt.hash(password, 8);
 
@@ -55,7 +63,7 @@ export class AuthenticationService {
 
   async login({ email, password }: LoginDto): Promise<TokensType> {
 
-    const findUser = await this.user.findUser(email);
+    const findUser = await this.user.find(email, FindUserEnum.EMAIL);
     if (!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
@@ -91,7 +99,7 @@ export class AuthenticationService {
   }
 
   async resetPassword(email: string) {
-    const user = await this.user.findUser(email)
+    const user = await this.user.find(email, FindUserEnum.EMAIL)
     if (!user) {
       throw new BadRequestException('User not found.')
     }
@@ -113,8 +121,17 @@ export class AuthenticationService {
 
   }
 
+  async resetPasswordLink(link: string) {
+    return link
+  }
+
   async activate(link: string) {
-    await this.user.activateUser(link)
+    const user = await this.user.find(link, FindUserEnum.ACTIVATED_LINK)
+    if (!user) {
+      throw new BadRequestException()
+    }
+
+    await this.user.activate(link)
   }
 
   async refresh(refreshToken: string): Promise<TokensType> {
@@ -129,7 +146,7 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.findUser(userData.id);
+    const findUser = await this.user.find(userData.id, FindUserEnum.ID)
     if (!findUser) {
       throw new UnauthorizedException();
     }
