@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Res, Req, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req, Get, Param, Query } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { ApiBody, ApiProperty } from '@nestjs/swagger';
 @Controller('authentication')
 export class AuthenticationController {
   constructor(
@@ -11,6 +12,7 @@ export class AuthenticationController {
     private readonly configService: ConfigService
   ) { }
 
+  @ApiBody({type: [RegistrationDto]})
   @Post('registration')
   async registration(
     @Body() registrationDto: RegistrationDto,
@@ -52,6 +54,11 @@ export class AuthenticationController {
   @Post('reset-password')
   async resetPassword(@Body('email') email: string) {
     return await this.authenticationService.resetPassword(email)
+  }
+
+  @Post('reset-passowrd/:link')
+  async resetPasswordLink(@Query('link') link: string) {
+    return await this.authenticationService.resetPasswordLink(link)
   }
 
   @Get('activate/:link')
