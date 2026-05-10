@@ -9,7 +9,6 @@ export const swaggerConfig = (app: INestApplication) => {
     .setDescription('This backend parts')
     .setVersion('1.0')
     .addBearerAuth()
-    .addTag('frogo')
     .build();
 
     const documentFactory = () => SwaggerModule.createDocument(app, config);

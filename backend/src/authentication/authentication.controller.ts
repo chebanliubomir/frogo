@@ -4,7 +4,9 @@ import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
-import { ApiBody, ApiProperty } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+
+@ApiTags('Authentication')
 @Controller('authentication')
 export class AuthenticationController {
   constructor(
@@ -12,11 +14,12 @@ export class AuthenticationController {
     private readonly configService: ConfigService
   ) { }
 
-  @ApiBody({type: [RegistrationDto]})
+  @ApiBody({ type: [RegistrationDto] })
+  @ApiOperation({ summary: 'Registration user' })
   @Post('registration')
   async registration(
-    @Body() registrationDto: RegistrationDto,
-    @Res() response: Response
+    @Res() response: Response,
+    @Body() registrationDto: RegistrationDto
   ) {
     const data = await this.authenticationService.registration(registrationDto);
 
@@ -32,10 +35,12 @@ export class AuthenticationController {
     });
   }
 
+  @ApiBody({ type: [LoginDto] })
+  @ApiOperation({ summary: 'Login user' })
   @Post('login')
   async login(
-    @Body() loginDto: LoginDto,
     @Res({ passthrough: true }) response: Response,
+    @Body() loginDto: LoginDto,
   ) {
     const data = await this.authenticationService.login(loginDto);
 
@@ -51,16 +56,19 @@ export class AuthenticationController {
     });
   }
 
+  @ApiOperation({ summary: 'Reset password user' })
   @Post('reset-password')
   async resetPassword(@Body('email') email: string) {
     return await this.authenticationService.resetPassword(email)
   }
 
+  @ApiOperation({ summary: 'Reset password link user' })
   @Post('reset-passowrd/:link')
   async resetPasswordLink(@Query('link') link: string) {
     return await this.authenticationService.resetPasswordLink(link)
   }
 
+  @ApiOperation({ summary: 'Activate user account' })
   @Get('activate/:link')
   async activate(
     @Param('link') link: string,
@@ -71,6 +79,7 @@ export class AuthenticationController {
     return response.redirect(301, `${this.configService.get('common.client_url')}`)
   }
 
+  @ApiOperation({ summary: 'Function for refresh tokens' })
   @Get('refresh')
   async refresh(
     @Req() req: Request,
@@ -89,6 +98,7 @@ export class AuthenticationController {
     response.json(data.access_token);
   }
 
+  @ApiOperation({ summary: 'Logout user' })
   @Post('logout')
   async logout(
     @Req() req: Request,
