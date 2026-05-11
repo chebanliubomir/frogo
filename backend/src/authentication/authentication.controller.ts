@@ -59,13 +59,13 @@ export class AuthenticationController {
   @ApiOperation({ summary: 'Reset password user' })
   @Post('reset-password')
   async resetPassword(@Body('email') email: string) {
-    return await this.authenticationService.resetPassword(email)
+    return await this.authenticationService.resetPassword(email);
   }
 
   @ApiOperation({ summary: 'Reset password link user' })
   @Post('reset-passowrd/:link')
   async resetPasswordLink(@Query('link') link: string) {
-    return await this.authenticationService.resetPasswordLink(link)
+    return await this.authenticationService.resetPasswordLink(link);
   }
 
   @ApiOperation({ summary: 'Activate user account' })
@@ -74,9 +74,9 @@ export class AuthenticationController {
     @Param('link') link: string,
     @Res() response: Response
   ) {
-    await this.authenticationService.activate(link)
-    console.log(this.configService.get('common.client_url'))
-    return response.redirect(301, `${this.configService.get('common.client_url')}`)
+    await this.authenticationService.activate(link);
+    console.log(this.configService.get('common.client_url'));
+    return response.redirect(301, `${this.configService.get('common.client_url')}`);
   }
 
   @ApiOperation({ summary: 'Function for refresh tokens' })

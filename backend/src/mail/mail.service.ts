@@ -17,7 +17,7 @@ export class MailService {
       to,
       subject,
       html
-    })
+    });
   }
 }
 
