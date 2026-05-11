@@ -10,6 +10,7 @@ import { MailService } from '@/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@/prisma/prisma.service';
 import { FindUserEnum } from '@/user/enums/find-user.enum';
+import { Session } from '@prisma/generated';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -21,7 +22,7 @@ export class AuthenticationService {
   ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
-    const findUser = await this.user.find(email, FindUserEnum.EMAIL)
+    const findUser = await this.user.find(email, FindUserEnum.EMAIL);
     if (findUser) {
       throw new ConflictException({
         status: HttpStatus.CONFLICT,
@@ -31,7 +32,7 @@ export class AuthenticationService {
 
     const hashPassword = await bcrypt.hash(password, 8);
 
-    const activatedLink = uuid.v4()
+    const activatedLink = uuid.v4();
 
     const newUser = await this.user.create({ name, surname, email, password: hashPassword, activatedLink });
 
@@ -39,7 +40,7 @@ export class AuthenticationService {
       to: newUser.email,
       subject: 'Activate account',
       html: `${this.configService.get('common.server_url')}api/activate/${activatedLink}`
-    })
+    });
 
     const payload = {
       id: newUser.id,
@@ -98,40 +99,42 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async resetPassword(email: string) {
-    const user = await this.user.find(email, FindUserEnum.EMAIL)
+  async resetPassword(email: string): Promise<string> {
+    const user = await this.user.find(email, FindUserEnum.EMAIL);
     if (!user) {
-      throw new BadRequestException('User not found.')
+      throw new BadRequestException('User not found.');
     }
 
-    const resetPasswordLink = uuid.v4()
+    const resetPasswordLink = uuid.v4();
 
     await this.prisma.user.update({
       where: { email },
       data: { resetPasswordLink }
-    })
+    });
 
     await this.mailService.sendMail({
       to: user.email,
       subject: 'Reset Password',
       html: `${this.configService.get('common.server_url')}api/authentication/reset-password/${resetPasswordLink}`
-    })
+    });
 
-    return `Letter send to ${user.email}.`
+    return `Letter send to ${user.email}.`;
 
   }
 
   async resetPasswordLink(link: string) {
-    return link
+    return link;
   }
 
-  async activate(link: string) {
-    const user = await this.user.find(link, FindUserEnum.ACTIVATED_LINK)
+  async activate(link: string): Promise<string> {
+    const user = await this.user.find(link, FindUserEnum.ACTIVATED_LINK);
     if (!user) {
-      throw new BadRequestException()
+      throw new BadRequestException();
     }
 
-    await this.user.activate(link)
+    await this.user.activate(link);
+
+    return 'Your account was activated.'
   }
 
   async refresh(refreshToken: string): Promise<TokensType> {
@@ -146,7 +149,7 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.find(userData.id, FindUserEnum.ID)
+    const findUser = await this.user.find(userData.id, FindUserEnum.ID);
     if (!findUser) {
       throw new UnauthorizedException();
     }
@@ -170,7 +173,7 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async logout(refreshToken: string) {
+  async logout(refreshToken: string): Promise<Session | null> {
     return await this.token.removeToken(refreshToken);
   }
 

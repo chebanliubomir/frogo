@@ -10,8 +10,6 @@ export class PrismaClientExeptionFilter extends BaseExceptionFilter {
     const response = ctx.getResponse<Response>();
     const code = exception.code;
     const message = exception.message;
-    console.log(host.getType());
-
     switch (code) {
 
       case 'P2002': {
@@ -22,6 +20,7 @@ export class PrismaClientExeptionFilter extends BaseExceptionFilter {
         });
         break;
       }
+      
       case 'P2025': {
         const status = HttpStatus.NOT_FOUND;
         response.status(status).json({

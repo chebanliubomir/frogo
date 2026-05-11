@@ -1,7 +1,9 @@
 import { PrismaService } from '@/prisma/prisma.service';
+import { TokensType } from '@/types/tokens.type';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { Session, User } from '@prisma/generated';
 
 @Injectable()
 export class TokensService {
@@ -11,7 +13,7 @@ export class TokensService {
     private configService: ConfigService
   ) { }
 
-  async generateTokens(payload) {
+  async generateTokens(payload): Promise<TokensType> {
 
     const [accessToken, refreshToken] = await Promise.all([
 
@@ -33,35 +35,35 @@ export class TokensService {
 
   }
 
-  async validateAccessToken(token: string) {
+  async validateAccessToken(token: string): Promise<User> {
     return await this.jwt.verify(token, {secret: this.configService.get<string>('jwt.access_secret')});
   }
 
-  async validateRefreshToken(token: string) {
+  async validateRefreshToken(token: string): Promise<User> {
     return await this.jwt.verify(token, {secret: this.configService.get<string>('jwt.refresh_secret')});
   }
 
-  async searchingTokenInDataBase(token: string) {
+  async searchingTokenInDataBase(token: string): Promise<Session | null> {
     return await this.prisma.session.findUnique({ where: { session: token } });
   }
 
-  async findTokenByUsingUserId(userId: number) {
+  async findTokenByUsingUserId(userId: number): Promise<Session | null> {
     return await this.prisma.session.findFirst({ where: { userId } });
   }
 
-  async saveToken(userId: number, token: string) {
+  async saveToken(userId: number, token: string): Promise<Session | null> {
     return await this.prisma.session.upsert({
       where: { userId },
       update: { session: token },
       create: {
         userId,
         session: token,
-        device: 'PC'
+        device: 'PC' // this variable is not default "PC"
       }
     });
   }
 
-  async removeToken(token: string) {
+  async removeToken(token: string): Promise<Session | null> {
     return await this.prisma.session.delete({ where: { session: token } });
   }
 }

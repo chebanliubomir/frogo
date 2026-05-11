@@ -28,8 +28,6 @@ async function bootstrap() {
   console.log(`Server was started on URL: http://localhost:${port}/api`);
 }
 
-bootstrap()
-  .then()
-  .catch(e => {
+bootstrap().catch(e => {
     console.log(`Main app bootstrap error: ${e}`);
   });

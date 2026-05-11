@@ -17,7 +17,7 @@ export class UserService {
         password,
         activatedLink
       }
-    })
+    });
   }
 
   async find(data: number | string, type: FindUserEnum): Promise<User | null> {
@@ -29,13 +29,13 @@ export class UserService {
           {activatedLink: type === FindUserEnum.ACTIVATED_LINK ? String(data) : undefined},
         ]
       }
-    })
+    });
   }
 
   async activate(link: string): Promise<void> {
-    const user = await this.prisma.user.findFirst({ where: { activatedLink: link } })
+    const user = await this.prisma.user.findFirst({ where: { activatedLink: link } });
     if (!user) {
-      throw new BadRequestException()
+      throw new BadRequestException();
     }
 
     await this.prisma.user.update({
@@ -44,11 +44,11 @@ export class UserService {
         activatedLink: '',
         isActivated: true
       },
-    })
+    });
 
   }
 
-  async getAllUsers() {
+  async getAllUsers(): Promise<User[]> {
     const allUsers = await this.prisma.user.findMany();
 
     if (allUsers.length <= 0) {
