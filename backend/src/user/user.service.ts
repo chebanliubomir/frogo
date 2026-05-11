@@ -48,7 +48,7 @@ export class UserService {
 
   }
 
-  async getAllUsers() {
+  async getAllUsers(): Promise<User[]> {
     const allUsers = await this.prisma.user.findMany();
 
     if (allUsers.length <= 0) {

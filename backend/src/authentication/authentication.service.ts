@@ -10,6 +10,7 @@ import { MailService } from '@/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@/prisma/prisma.service';
 import { FindUserEnum } from '@/user/enums/find-user.enum';
+import { Session } from '@prisma/generated';
 @Injectable()
 export class AuthenticationService {
   constructor(
@@ -98,7 +99,7 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async resetPassword(email: string) {
+  async resetPassword(email: string): Promise<string> {
     const user = await this.user.find(email, FindUserEnum.EMAIL);
     if (!user) {
       throw new BadRequestException('User not found.');
@@ -125,13 +126,15 @@ export class AuthenticationService {
     return link;
   }
 
-  async activate(link: string) {
+  async activate(link: string): Promise<string> {
     const user = await this.user.find(link, FindUserEnum.ACTIVATED_LINK);
     if (!user) {
       throw new BadRequestException();
     }
 
     await this.user.activate(link);
+
+    return 'Your account was activated.'
   }
 
   async refresh(refreshToken: string): Promise<TokensType> {
@@ -170,7 +173,7 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async logout(refreshToken: string) {
+  async logout(refreshToken: string): Promise<Session | null> {
     return await this.token.removeToken(refreshToken);
   }
 
