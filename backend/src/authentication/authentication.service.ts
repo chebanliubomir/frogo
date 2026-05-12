@@ -11,6 +11,7 @@ import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@/prisma/prisma.service';
 import { FindUserEnum } from '@/user/enums/find-user.enum';
 import { Session } from '@prisma/generated';
+
 @Injectable()
 export class AuthenticationService {
   constructor(
