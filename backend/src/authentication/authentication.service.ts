@@ -1,6 +1,12 @@
 import * as bcrypt from 'bcrypt';
 import uuid from 'uuid';
-import { BadRequestException, ConflictException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException,
+   ConflictException,
+    HttpStatus,
+     Injectable,
+      NotFoundException,
+       UnauthorizedException
+       } from '@nestjs/common';
 import { RegistrationDto } from './dto/registration.dto';
 import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
