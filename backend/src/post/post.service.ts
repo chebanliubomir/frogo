@@ -5,7 +5,8 @@ import { CreatePostDto } from './dto/create-post.dto';
 export class PostService {
   
   async create(post: CreatePostDto) {
-    return 'The post was received'
+    console.log(post);
+    return 'The post was received';
   }
 
   async update() {}

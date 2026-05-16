@@ -12,31 +12,31 @@ export class PostController {
   @ApiOperation({ summary: 'Create post' })
   @Post('create')
   async create(@Body() post: CreatePostDto) {
-    return this.postService.create(post)
+    return this.postService.create(post);
   }
 
   @ApiOperation({ summary: 'Update post' })
   @Patch('update')
   async update() {
-    return this.postService.update()
+    return this.postService.update();
   }
 
   @ApiOperation({ summary: 'Remove post' })
   @Delete('remove')
   async remove() {
-    return this.postService.remove()
+    return this.postService.remove();
   }
 
   @ApiOperation({ summary: 'Get only one post' })
   @Get('get-one')
   async getOne() {
-    return this.postService.getOne()
+    return this.postService.getOne();
   }
 
   @ApiOperation({ summary: 'Get all posts' })
   @Get('get-all')
   async getAll() {
-    return this.postService.getAll()
+    return this.postService.getAll();
   }
 
 }
