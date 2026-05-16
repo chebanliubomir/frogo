@@ -142,7 +142,7 @@ export class AuthenticationService {
 
     await this.user.activate(link);
 
-    return 'Your account was activated.'
+    return 'Your account was activated.';
   }
 
   async refresh(refreshToken: string): Promise<TokensType> {
