@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { CreatePostDto } from './dto/create-post.dto';
 
 @Injectable()
 export class PostService {
   
-  async create() {}
+  async create(post: CreatePostDto) {
+    return 'The post was received'
+  }
 
   async update() {}
 
