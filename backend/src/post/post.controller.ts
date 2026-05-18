@@ -1,26 +1,25 @@
-import { Body, Controller, Delete, Get, Patch, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Req, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { PostService } from './post.service';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dto/create-post.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import "multer"
 
 @ApiTags('Post')
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) { }
 
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: CreatePostDto })
-  @ApiOperation({ summary: 'Create post' })
   @Post('create')
-  @UseInterceptors(FileInterceptor('files'))
+  @ApiBody({ type: CreatePostDto })
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: 'Create post' })
+  @UseInterceptors(FileInterceptor('file'))
   async create(
     @Body() post: CreatePostDto,
-    @UploadedFiles() files
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(files)
-    // const { title, description, userId } = post
-    // return this.postService.create({ title, description, userId });
+    return this.postService.create(post, file);
   }
 
   @ApiOperation({ summary: 'Update post' })

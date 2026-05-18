@@ -4,8 +4,9 @@ import { CreatePostDto } from './dto/create-post.dto';
 @Injectable()
 export class PostService {
   
-  async create(post: CreatePostDto) {
-    console.log(post);
+  async create(post: CreatePostDto, file: Express.Multer.File) {
+    console.log(post)
+    console.log(file)
     return 'The post was received';
   }
 
