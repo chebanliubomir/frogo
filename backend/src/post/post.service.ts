@@ -10,12 +10,25 @@ export class PostService {
     return 'The post was received';
   }
 
-  async update() {}
+  async update(post: CreatePostDto, file: Express.Multer.File) {
+    console.log(post)
+    console.log(file)
+    return 'The updated post was received';
+  }
 
-  async remove() {}
+  async remove(postId: number) {
+    console.log(postId)
+    return 'The post was removed';
+  }
 
-  async getOne() {}
+  async getOne(postId: number) {
+    console.log(postId)
+    return 'The post was getting';
 
-  async getAll() {}
+  }
+
+  async getAll() {
+    return 'The posts was all getting';
+  }
 
 }
