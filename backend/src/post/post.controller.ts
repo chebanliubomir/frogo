@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, Req, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Query, Req, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { PostService } from './post.service';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -24,20 +24,23 @@ export class PostController {
 
   @ApiOperation({ summary: 'Update post' })
   @Patch('update')
-  async update() {
-    return this.postService.update();
+  async update(
+    @Body() post: CreatePostDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.postService.update(post, file);
   }
 
   @ApiOperation({ summary: 'Remove post' })
   @Delete('remove')
-  async remove() {
-    return this.postService.remove();
+  async remove(@Query('postId') postId: number) {
+    return this.postService.remove(postId);
   }
 
   @ApiOperation({ summary: 'Get only one post' })
   @Get('get-one')
-  async getOne() {
-    return this.postService.getOne();
+  async getOne(@Query('postId') postId: number) {
+    return this.postService.getOne(postId);
   }
 
   @ApiOperation({ summary: 'Get all posts' })
