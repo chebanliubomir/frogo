@@ -36,27 +36,17 @@ model Session {
 }
 
 model Post {
-  id          Int          @id @default(autoincrement())
-  title       String       @db.VarChar(100)
-  description String       @db.VarChar(1000)
-  views       Int          @default(0)
-  edited      Boolean      @default(false)
-  file        String       @unique
-  updated_at  DateTime     @updatedAt
-  created_at  DateTime     @default(now())
-  userId      Int?
-  comments    Comments[]
-  user        User?        @relation(fields: [userId], references: [id])
-  post_images Post_Image[]
-}
-
-model Post_Image {
-  id         Int      @id @default(autoincrement())
-  image      String
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
-  postId     Int?
-  post       Post?    @relation(fields: [postId], references: [id])
+  id           Int        @id @default(autoincrement())
+  title        String     @db.VarChar(100)
+  description  String     @db.VarChar(1000)
+  views        Int        @default(0)
+  edited       Boolean    @default(false)
+  presentation String     @unique
+  updated_at   DateTime   @updatedAt
+  created_at   DateTime   @default(now())
+  userId       Int?
+  comments     Comments[]
+  user         User?      @relation(fields: [userId], references: [id])
 }
 
 model Comments {

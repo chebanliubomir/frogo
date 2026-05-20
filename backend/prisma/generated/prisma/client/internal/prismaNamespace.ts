@@ -387,7 +387,6 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Post: 'Post',
-  Post_Image: 'Post_Image',
   Comments: 'Comments'
 } as const
 
@@ -404,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "post" | "post_Image" | "comments"
+    modelProps: "user" | "session" | "post" | "comments"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -630,80 +629,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Post_Image: {
-      payload: Prisma.$Post_ImagePayload<ExtArgs>
-      fields: Prisma.Post_ImageFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.Post_ImageFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.Post_ImageFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
-        }
-        findFirst: {
-          args: Prisma.Post_ImageFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.Post_ImageFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
-        }
-        findMany: {
-          args: Prisma.Post_ImageFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>[]
-        }
-        create: {
-          args: Prisma.Post_ImageCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
-        }
-        createMany: {
-          args: Prisma.Post_ImageCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.Post_ImageCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>[]
-        }
-        delete: {
-          args: Prisma.Post_ImageDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
-        }
-        update: {
-          args: Prisma.Post_ImageUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
-        }
-        deleteMany: {
-          args: Prisma.Post_ImageDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.Post_ImageUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.Post_ImageUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>[]
-        }
-        upsert: {
-          args: Prisma.Post_ImageUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$Post_ImagePayload>
-        }
-        aggregate: {
-          args: Prisma.Post_ImageAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePost_Image>
-        }
-        groupBy: {
-          args: Prisma.Post_ImageGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Post_ImageGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.Post_ImageCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Post_ImageCountAggregateOutputType> | number
-        }
-      }
-    }
     Comments: {
       payload: Prisma.$CommentsPayload<ExtArgs>
       fields: Prisma.CommentsFieldRefs
@@ -853,24 +778,13 @@ export const PostScalarFieldEnum = {
   description: 'description',
   views: 'views',
   edited: 'edited',
-  file: 'file',
+  presentation: 'presentation',
   updated_at: 'updated_at',
   created_at: 'created_at',
   userId: 'userId'
 } as const
 
 export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
-
-
-export const Post_ImageScalarFieldEnum = {
-  id: 'id',
-  image: 'image',
-  updated_at: 'updated_at',
-  created_at: 'created_at',
-  postId: 'postId'
-} as const
-
-export type Post_ImageScalarFieldEnum = (typeof Post_ImageScalarFieldEnum)[keyof typeof Post_ImageScalarFieldEnum]
 
 
 export const CommentsScalarFieldEnum = {
@@ -1089,7 +1003,6 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   session?: Prisma.SessionOmit
   post?: Prisma.PostOmit
-  post_Image?: Prisma.Post_ImageOmit
   comments?: Prisma.CommentsOmit
 }
 

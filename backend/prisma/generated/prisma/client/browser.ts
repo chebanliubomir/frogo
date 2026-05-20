@@ -33,11 +33,6 @@ export type Session = Prisma.SessionModel
  */
 export type Post = Prisma.PostModel
 /**
- * Model Post_Image
- * 
- */
-export type Post_Image = Prisma.Post_ImageModel
-/**
  * Model Comments
  * 
  */

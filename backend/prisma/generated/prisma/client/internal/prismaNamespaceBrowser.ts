@@ -54,7 +54,6 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Post: 'Post',
-  Post_Image: 'Post_Image',
   Comments: 'Comments'
 } as const
 
@@ -110,24 +109,13 @@ export const PostScalarFieldEnum = {
   description: 'description',
   views: 'views',
   edited: 'edited',
-  file: 'file',
+  presentation: 'presentation',
   updated_at: 'updated_at',
   created_at: 'created_at',
   userId: 'userId'
 } as const
 
 export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
-
-
-export const Post_ImageScalarFieldEnum = {
-  id: 'id',
-  image: 'image',
-  updated_at: 'updated_at',
-  created_at: 'created_at',
-  postId: 'postId'
-} as const
-
-export type Post_ImageScalarFieldEnum = (typeof Post_ImageScalarFieldEnum)[keyof typeof Post_ImageScalarFieldEnum]
 
 
 export const CommentsScalarFieldEnum = {
