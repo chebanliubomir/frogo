@@ -1,13 +1,13 @@
+import "multer"
 import { Body, Controller, Delete, Get, Patch, Post, Query, Req, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { PostService } from './post.service';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dto/create-post.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import "multer"
-
 @ApiTags('Post')
 @Controller('post')
 export class PostController {
+
   constructor(private readonly postService: PostService) { }
 
   @Post('create')
