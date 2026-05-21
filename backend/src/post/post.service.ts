@@ -1,42 +1,54 @@
+import uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PrismaService } from '@/prisma/prisma.service';
-import uuid from 'uuid'
 @Injectable()
 export class PostService {
 
-  constructor(
-    private readonly prisma: PrismaService
-  ) { }
+  constructor(private readonly prisma: PrismaService) { }
 
-  async create(post: CreatePostDto, file: Express.Multer.File) {
-    const { title, description } = post
+  async create(post: CreatePostDto, presentation: Express.Multer.File) {
+    const { userId, title, description } = post
 
-    const createPost = await this.prisma.post.create({ data: {
-      title,
-      description,
-      presentation,
-    } })
-}
+    const presentationName = uuid.v4()
+
+    const createPost = await this.prisma.post.create({
+      data: {
+        userId,
+        title,
+        description,
+        presentation: presentationName
+      }
+    })
+
+    console.log({
+      createPost,
+      presentation
+    })
+
+    return 'Presentation has been created'
+
+  }
 
   async update(post: CreatePostDto, file: Express.Multer.File) {
-  const { userId, title, description } = post
-
-}
+    console.log('post', { ...post })
+    console.log('file', file)
+    return 'The post was updated.'
+  }
 
   async remove(postId: number) {
-  console.log(postId)
-  return 'The post was removed';
-}
+    console.log(postId)
+    return 'The post was removed';
+  }
 
   async getOne(postId: number) {
-  console.log(postId)
-  return 'The post was getting';
+    console.log(postId)
+    return 'The post was getting';
 
-}
+  }
 
   async getAll() {
-  return 'The posts was all getting';
-}
+    return 'The posts was all getting';
+  }
 
 }
