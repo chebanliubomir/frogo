@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 import "multer"
 export class CreatePostDto {
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ default: 1 })
-  userId: number;
+  userId: string;
 
   @IsString()
   @IsNotEmpty()

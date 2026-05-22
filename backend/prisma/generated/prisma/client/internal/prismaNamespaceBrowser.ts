@@ -110,6 +110,8 @@ export const PostScalarFieldEnum = {
   views: 'views',
   edited: 'edited',
   presentation: 'presentation',
+  weight_presentation: 'weight_presentation',
+  buy: 'buy',
   updated_at: 'updated_at',
   created_at: 'created_at',
   userId: 'userId'
