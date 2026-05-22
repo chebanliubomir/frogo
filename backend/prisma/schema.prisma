@@ -36,17 +36,19 @@ model Session {
 }
 
 model Post {
-  id           Int        @id @default(autoincrement())
-  title        String     @db.VarChar(100)
-  description  String     @db.VarChar(1000)
-  views        Int        @default(0)
-  edited       Boolean    @default(false)
-  presentation String     @unique
-  updated_at   DateTime   @updatedAt
-  created_at   DateTime   @default(now())
-  userId       Int?
-  comments     Comments[]
-  user         User?      @relation(fields: [userId], references: [id])
+  id                  Int        @id @default(autoincrement())
+  title               String     @db.VarChar(100)
+  description         String     @db.VarChar(1000)
+  views               Int        @default(0)
+  edited              Boolean    @default(false)
+  presentation        String     @unique
+  weight_presentation Int        @default(0)
+  buy                 Int        @default(0)
+  updated_at          DateTime   @updatedAt
+  created_at          DateTime   @default(now())
+  userId              Int
+  comments            Comments[]
+  user                User       @relation(fields: [userId], references: [id])
 }
 
 model Comments {
