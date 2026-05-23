@@ -14,10 +14,12 @@ export class PostService {
 
     const createPost = await this.prisma.post.create({
       data: {
-        // userId: +userId,
+        userId: +userId,
         title,
         description,
-        presentation: presentationName
+        presentation: presentationName,
+        weight_presentation: 0,
+        buy: 0
       }
     })
 
