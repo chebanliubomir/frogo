@@ -22,17 +22,16 @@ model User {
   created_at        DateTime   @default(now())
   posts             Post[]
   comments          Comments[]
-  sessions          Session[]
+  token             Token[]
 }
 
-model Session {
+model Token {
   id         Int      @id @default(autoincrement())
-  session    String   @unique
-  device     String
-  user       User?    @relation(fields: [userId], references: [id])
-  userId     Int?     @unique
+  token      String   @unique
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int      @unique
 }
 
 model Post {
