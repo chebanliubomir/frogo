@@ -20,8 +20,8 @@ model User {
   activatedLink     String     @unique @default("null")
   updated_at        DateTime   @updatedAt
   created_at        DateTime   @default(now())
-  comments          Comments[]
   posts             Post[]
+  comments          Comments[]
   sessions          Session[]
 }
 
@@ -36,19 +36,27 @@ model Session {
 }
 
 model Post {
-  id                  Int        @id @default(autoincrement())
-  title               String     @db.VarChar(100)
-  description         String     @db.VarChar(1000)
-  views               Int        @default(0)
-  edited              Boolean    @default(false)
-  presentation        String     @unique
-  weight_presentation Int        @default(0)
-  buy                 Int        @default(0)
-  updated_at          DateTime   @updatedAt
-  created_at          DateTime   @default(now())
-  userId              Int
-  comments            Comments[]
-  user                User       @relation(fields: [userId], references: [id])
+  id             Int          @id @default(autoincrement())
+  title          String       @db.VarChar(100)
+  description    String       @db.VarChar(1000)
+  views          Int          @default(0)
+  edited         Boolean      @default(false)
+  purchase       Int          @default(0)
+  updated_at     DateTime     @updatedAt
+  created_at     DateTime     @default(now())
+  userId         Int
+  comments       Comments[]
+  user           User         @relation(fields: [userId], references: [id])
+  presentation   Presentation @relation(fields: [presentationId], references: [id])
+  presentationId Int
+}
+
+model Presentation {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  weight Int    @default(0)
+  postId Int
+  posts  Post[]
 }
 
 model Comments {
