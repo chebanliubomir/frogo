@@ -7,6 +7,11 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
   id                Int        @id @default(autoincrement())
   avatar            String     @unique @default("null")
@@ -35,27 +40,42 @@ model Token {
 }
 
 model Post {
-  id             Int          @id @default(autoincrement())
-  title          String       @db.VarChar(100)
-  description    String       @db.VarChar(1000)
-  views          Int          @default(0)
-  edited         Boolean      @default(false)
-  purchase       Int          @default(0)
-  updated_at     DateTime     @updatedAt
-  created_at     DateTime     @default(now())
-  userId         Int
-  comments       Comments[]
-  user           User         @relation(fields: [userId], references: [id])
-  presentation   Presentation @relation(fields: [presentationId], references: [id])
-  presentationId Int
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(100)
+  description String   @db.VarChar(1000)
+  views       Int      @default(0)
+  edited      Boolean  @default(false)
+  purchase    Int      @default(0)
+  updated_at  DateTime @updatedAt
+  created_at  DateTime @default(now())
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  post_images  Post_images[]
+  presentation Presentation?
+  comments     Comments[]
+}
+
+model Post_images {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
 }
 
 model Presentation {
-  id     Int    @id @default(autoincrement())
-  name   String @unique
-  weight Int    @default(0)
-  postId Int
-  posts  Post[]
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  weight     Int      @default(0)
+  sales      Int      @default(0)
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     Int      @unique
 }
 
 model Comments {
@@ -63,13 +83,8 @@ model Comments {
   text       String   @db.VarChar(255)
   updated_at DateTime @updatedAt
   created_at DateTime @default(now())
-  postId     Int?
-  userId     Int?
-  post       Post?    @relation(fields: [postId], references: [id])
-  user       User?    @relation(fields: [userId], references: [id])
-}
-
-enum Role {
-  USER
-  ADMIN
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     Int
 }

@@ -14,7 +14,11 @@ export class PostController {
   @ApiBody({ type: CreatePostDto })
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Create post' })
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file', {
+    storage: {
+      destination: '../uploads',
+    }
+  }))
   async create(
     @Body() post: CreatePostDto,
     @UploadedFile() file: Express.Multer.File,
