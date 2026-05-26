@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PrismaService } from '@/prisma/prisma.service';
@@ -10,16 +9,11 @@ export class PostService {
   async create(post: CreatePostDto, presentation: Express.Multer.File) {
     const { userId, title, description } = post
 
-    const presentationName = uuid.v4()
-
     const createPost = await this.prisma.post.create({
       data: {
         userId: +userId,
         title,
-        description,
-        presentation: presentationName,
-        weight_presentation: 0,
-        buy: 0
+        description
       }
     })
 

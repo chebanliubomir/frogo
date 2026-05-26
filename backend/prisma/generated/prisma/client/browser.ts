@@ -23,17 +23,27 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
- * Model Session
+ * Model Token
  * 
  */
-export type Session = Prisma.SessionModel
+export type Token = Prisma.TokenModel
 /**
  * Model Post
  * 
  */
 export type Post = Prisma.PostModel
 /**
- * Model Comments
+ * Model Post_images
  * 
  */
-export type Comments = Prisma.CommentsModel
+export type Post_images = Prisma.Post_imagesModel
+/**
+ * Model Presentation
+ * 
+ */
+export type Presentation = Prisma.PresentationModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel

@@ -3,7 +3,7 @@ import { TokensType } from '@/types/tokens.type';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Session, User } from '@prisma/generated';
+import { Token, User } from '@prisma/generated';
 
 @Injectable()
 export class TokensService {
@@ -43,27 +43,26 @@ export class TokensService {
     return await this.jwt.verify(token, {secret: this.configService.get<string>('jwt.refresh_secret')});
   }
 
-  async searchingTokenInDataBase(token: string): Promise<Session | null> {
-    return await this.prisma.session.findUnique({ where: { session: token } });
+  async searchingTokenInDataBase(token: string): Promise<Token | null> {
+    return await this.prisma.token.findUnique({ where: { token: token } });
   }
 
-  async findTokenByUsingUserId(userId: number): Promise<Session | null> {
-    return await this.prisma.session.findFirst({ where: { userId } });
+  async findTokenByUsingUserId(userId: number): Promise<Token | null> {
+    return await this.prisma.token.findFirst({ where: { userId } });
   }
 
-  async saveToken(userId: number, token: string): Promise<Session | null> {
-    return await this.prisma.session.upsert({
+  async saveToken(userId: number, token: string): Promise<Token | null> {
+    return await this.prisma.token.upsert({
       where: { userId },
-      update: { session: token },
+      update: { token: token },
       create: {
         userId,
-        session: token,
-        device: 'PC' // this variable is not default "PC"
+        token: token,
       }
     });
   }
 
-  async removeToken(token: string): Promise<Session | null> {
-    return await this.prisma.session.delete({ where: { session: token } });
+  async removeToken(token: string): Promise<Token | null> {
+    return await this.prisma.token.delete({ where: { token: token } });
   }
 }

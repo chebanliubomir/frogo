@@ -272,9 +272,9 @@ export type UserWhereInput = {
   activatedLink?: Prisma.StringFilter<"User"> | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
-  comments?: Prisma.CommentsListRelationFilter
   posts?: Prisma.PostListRelationFilter
-  sessions?: Prisma.SessionListRelationFilter
+  token?: Prisma.TokenListRelationFilter
+  comments?: Prisma.CommentListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -290,9 +290,9 @@ export type UserOrderByWithRelationInput = {
   activatedLink?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
-  comments?: Prisma.CommentsOrderByRelationAggregateInput
   posts?: Prisma.PostOrderByRelationAggregateInput
-  sessions?: Prisma.SessionOrderByRelationAggregateInput
+  token?: Prisma.TokenOrderByRelationAggregateInput
+  comments?: Prisma.CommentOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -311,9 +311,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isActivated?: Prisma.BoolFilter<"User"> | boolean
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
-  comments?: Prisma.CommentsListRelationFilter
   posts?: Prisma.PostListRelationFilter
-  sessions?: Prisma.SessionListRelationFilter
+  token?: Prisma.TokenListRelationFilter
+  comments?: Prisma.CommentListRelationFilter
 }, "id" | "avatar" | "email" | "resetPasswordLink" | "activatedLink">
 
 export type UserOrderByWithAggregationInput = {
@@ -355,38 +355,38 @@ export type UserScalarWhereWithAggregatesInput = {
 }
 
 export type UserCreateInput = {
-  avatar?: string
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
-  comments?: Prisma.CommentsCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  token?: Prisma.TokenCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: number
-  avatar?: string
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
-  comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  token?: Prisma.TokenUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -401,9 +401,9 @@ export type UserUpdateInput = {
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  comments?: Prisma.CommentsUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  token?: Prisma.TokenUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -419,22 +419,22 @@ export type UserUncheckedUpdateInput = {
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  comments?: Prisma.CommentsUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  token?: Prisma.TokenUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: number
-  avatar?: string
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
 }
@@ -521,11 +521,6 @@ export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
-}
-
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
@@ -555,20 +550,18 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type UserCreateNestedOneWithoutSessionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionsInput
+export type UserCreateNestedOneWithoutTokenInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTokenInput, Prisma.UserUncheckedCreateWithoutTokenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTokenInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutSessionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionsInput
-  upsert?: Prisma.UserUpsertWithoutSessionsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
+export type UserUpdateOneRequiredWithoutTokenNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTokenInput, Prisma.UserUncheckedCreateWithoutTokenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTokenInput
+  upsert?: Prisma.UserUpsertWithoutTokenInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionsInput, Prisma.UserUpdateWithoutSessionsInput>, Prisma.UserUncheckedUpdateWithoutSessionsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTokenInput, Prisma.UserUpdateWithoutTokenInput>, Prisma.UserUncheckedUpdateWithoutTokenInput>
 }
 
 export type UserCreateNestedOneWithoutPostsInput = {
@@ -591,66 +584,64 @@ export type UserCreateNestedOneWithoutCommentsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutCommentsNestedInput = {
+export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCommentsInput, Prisma.UserUncheckedCreateWithoutCommentsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCommentsInput
   upsert?: Prisma.UserUpsertWithoutCommentsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCommentsInput, Prisma.UserUpdateWithoutCommentsInput>, Prisma.UserUncheckedUpdateWithoutCommentsInput>
 }
 
-export type UserCreateWithoutSessionsInput = {
-  avatar?: string
+export type UserCreateWithoutTokenInput = {
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
-  comments?: Prisma.CommentsCreateNestedManyWithoutUserInput
   posts?: Prisma.PostCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutSessionsInput = {
+export type UserUncheckedCreateWithoutTokenInput = {
   id?: number
-  avatar?: string
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
-  comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutUserInput
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutSessionsInput = {
+export type UserCreateOrConnectWithoutTokenInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTokenInput, Prisma.UserUncheckedCreateWithoutTokenInput>
 }
 
-export type UserUpsertWithoutSessionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSessionsInput, Prisma.UserUncheckedUpdateWithoutSessionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSessionsInput, Prisma.UserUncheckedCreateWithoutSessionsInput>
+export type UserUpsertWithoutTokenInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTokenInput, Prisma.UserUncheckedUpdateWithoutTokenInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTokenInput, Prisma.UserUncheckedCreateWithoutTokenInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutSessionsInput = {
+export type UserUpdateToOneWithWhereWithoutTokenInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSessionsInput, Prisma.UserUncheckedUpdateWithoutSessionsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTokenInput, Prisma.UserUncheckedUpdateWithoutTokenInput>
 }
 
-export type UserUpdateWithoutSessionsInput = {
+export type UserUpdateWithoutTokenInput = {
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   surname?: Prisma.StringFieldUpdateOperationsInput | string
@@ -662,11 +653,11 @@ export type UserUpdateWithoutSessionsInput = {
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  comments?: Prisma.CommentsUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutSessionsInput = {
+export type UserUncheckedUpdateWithoutTokenInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -679,41 +670,41 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  comments?: Prisma.CommentsUncheckedUpdateManyWithoutUserNestedInput
   posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPostsInput = {
-  avatar?: string
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
-  comments?: Prisma.CommentsCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  token?: Prisma.TokenCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPostsInput = {
   id?: number
-  avatar?: string
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
-  comments?: Prisma.CommentsUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  token?: Prisma.TokenUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPostsInput = {
@@ -744,8 +735,8 @@ export type UserUpdateWithoutPostsInput = {
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  comments?: Prisma.CommentsUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  token?: Prisma.TokenUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPostsInput = {
@@ -761,41 +752,41 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   activatedLink?: Prisma.StringFieldUpdateOperationsInput | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  comments?: Prisma.CommentsUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  token?: Prisma.TokenUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCommentsInput = {
-  avatar?: string
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
   posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  token?: Prisma.TokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCommentsInput = {
   id?: number
-  avatar?: string
+  avatar: string
   name: string
   surname: string
   email: string
   password: string
-  resetPasswordLink?: string
+  resetPasswordLink: string
   rule?: $Enums.Role
   isActivated?: boolean
-  activatedLink?: string
+  activatedLink: string
   updated_at?: Date | string
   created_at?: Date | string
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  token?: Prisma.TokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCommentsInput = {
@@ -827,7 +818,7 @@ export type UserUpdateWithoutCommentsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  token?: Prisma.TokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -844,7 +835,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  token?: Prisma.TokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -853,15 +844,15 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
  */
 
 export type UserCountOutputType = {
-  comments: number
   posts: number
-  sessions: number
+  token: number
+  comments: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  comments?: boolean | UserCountOutputTypeCountCommentsArgs
   posts?: boolean | UserCountOutputTypeCountPostsArgs
-  sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  token?: boolean | UserCountOutputTypeCountTokenArgs
+  comments?: boolean | UserCountOutputTypeCountCommentsArgs
 }
 
 /**
@@ -877,13 +868,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CommentsWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PostWhereInput
 }
@@ -891,8 +875,15 @@ export type UserCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Exte
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SessionWhereInput
+export type UserCountOutputTypeCountTokenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TokenWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CommentWhereInput
 }
 
 
@@ -909,9 +900,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   activatedLink?: boolean
   updated_at?: boolean
   created_at?: boolean
-  comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
-  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  token?: boolean | Prisma.User$tokenArgs<ExtArgs>
+  comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -962,9 +953,9 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "avatar" | "name" | "surname" | "email" | "password" | "resetPasswordLink" | "rule" | "isActivated" | "activatedLink" | "updated_at" | "created_at", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
-  sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  token?: boolean | Prisma.User$tokenArgs<ExtArgs>
+  comments?: boolean | Prisma.User$commentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -973,9 +964,9 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    comments: Prisma.$CommentsPayload<ExtArgs>[]
     posts: Prisma.$PostPayload<ExtArgs>[]
-    sessions: Prisma.$SessionPayload<ExtArgs>[]
+    token: Prisma.$TokenPayload<ExtArgs>[]
+    comments: Prisma.$CommentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1384,9 +1375,9 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  comments<T extends Prisma.User$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   posts<T extends Prisma.User$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  token<T extends Prisma.User$tokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tokenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  comments<T extends Prisma.User$commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1816,30 +1807,6 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.comments
- */
-export type User$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Comments
-   */
-  select?: Prisma.CommentsSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Comments
-   */
-  omit?: Prisma.CommentsOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CommentsInclude<ExtArgs> | null
-  where?: Prisma.CommentsWhereInput
-  orderBy?: Prisma.CommentsOrderByWithRelationInput | Prisma.CommentsOrderByWithRelationInput[]
-  cursor?: Prisma.CommentsWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CommentsScalarFieldEnum | Prisma.CommentsScalarFieldEnum[]
-}
-
-/**
  * User.posts
  */
 export type User$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1864,27 +1831,51 @@ export type User$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 }
 
 /**
- * User.sessions
+ * User.token
  */
-export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$tokenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Session
+   * Select specific fields to fetch from the Token
    */
-  select?: Prisma.SessionSelect<ExtArgs> | null
+  select?: Prisma.TokenSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Session
+   * Omit specific fields from the Token
    */
-  omit?: Prisma.SessionOmit<ExtArgs> | null
+  omit?: Prisma.TokenOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SessionInclude<ExtArgs> | null
-  where?: Prisma.SessionWhereInput
-  orderBy?: Prisma.SessionOrderByWithRelationInput | Prisma.SessionOrderByWithRelationInput[]
-  cursor?: Prisma.SessionWhereUniqueInput
+  include?: Prisma.TokenInclude<ExtArgs> | null
+  where?: Prisma.TokenWhereInput
+  orderBy?: Prisma.TokenOrderByWithRelationInput | Prisma.TokenOrderByWithRelationInput[]
+  cursor?: Prisma.TokenWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+  distinct?: Prisma.TokenScalarFieldEnum | Prisma.TokenScalarFieldEnum[]
+}
+
+/**
+ * User.comments
+ */
+export type User$commentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Comment
+   */
+  select?: Prisma.CommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Comment
+   */
+  omit?: Prisma.CommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CommentInclude<ExtArgs> | null
+  where?: Prisma.CommentWhereInput
+  orderBy?: Prisma.CommentOrderByWithRelationInput | Prisma.CommentOrderByWithRelationInput[]
+  cursor?: Prisma.CommentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CommentScalarFieldEnum | Prisma.CommentScalarFieldEnum[]
 }
 
 /**
