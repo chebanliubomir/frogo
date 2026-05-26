@@ -52,9 +52,11 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Session: 'Session',
+  Token: 'Token',
   Post: 'Post',
-  Comments: 'Comments'
+  Post_images: 'Post_images',
+  Presentation: 'Presentation',
+  Comment: 'Comment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -91,16 +93,15 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const SessionScalarFieldEnum = {
+export const TokenScalarFieldEnum = {
   id: 'id',
-  session: 'session',
-  device: 'device',
-  userId: 'userId',
+  token: 'token',
   updated_at: 'updated_at',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  userId: 'userId'
 } as const
 
-export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
 
 
 export const PostScalarFieldEnum = {
@@ -109,9 +110,7 @@ export const PostScalarFieldEnum = {
   description: 'description',
   views: 'views',
   edited: 'edited',
-  presentation: 'presentation',
-  weight_presentation: 'weight_presentation',
-  buy: 'buy',
+  purchase: 'purchase',
   updated_at: 'updated_at',
   created_at: 'created_at',
   userId: 'userId'
@@ -120,16 +119,40 @@ export const PostScalarFieldEnum = {
 export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
 
 
-export const CommentsScalarFieldEnum = {
+export const Post_imagesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  updated_at: 'updated_at',
+  created_at: 'created_at',
+  postId: 'postId'
+} as const
+
+export type Post_imagesScalarFieldEnum = (typeof Post_imagesScalarFieldEnum)[keyof typeof Post_imagesScalarFieldEnum]
+
+
+export const PresentationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  weight: 'weight',
+  sales: 'sales',
+  updated_at: 'updated_at',
+  created_at: 'created_at',
+  postId: 'postId'
+} as const
+
+export type PresentationScalarFieldEnum = (typeof PresentationScalarFieldEnum)[keyof typeof PresentationScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
   id: 'id',
   text: 'text',
   updated_at: 'updated_at',
   created_at: 'created_at',
-  postId: 'postId',
-  userId: 'userId'
+  userId: 'userId',
+  postId: 'postId'
 } as const
 
-export type CommentsScalarFieldEnum = (typeof CommentsScalarFieldEnum)[keyof typeof CommentsScalarFieldEnum]
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -146,12 +169,4 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

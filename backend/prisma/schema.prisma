@@ -13,21 +13,23 @@ enum Role {
 }
 
 model User {
-  id                Int        @id @default(autoincrement())
-  avatar            String     @unique @default("null")
-  name              String     @db.VarChar(60)
-  surname           String     @db.VarChar(60)
-  email             String     @unique
+  id                Int       @id @default(autoincrement())
+  avatar            String    @unique
+  name              String    @db.VarChar(60)
+  surname           String    @db.VarChar(60)
+  email             String    @unique
   password          String
-  resetPasswordLink String     @unique @default("null")
-  rule              Role       @default(USER)
-  isActivated       Boolean    @default(false)
-  activatedLink     String     @unique @default("null")
-  updated_at        DateTime   @updatedAt
-  created_at        DateTime   @default(now())
+  resetPasswordLink String    @unique
+  rule              Role      @default(USER)
+  isActivated       Boolean   @default(false)
+  activatedLink     String    @unique
+  updated_at        DateTime  @updatedAt
+  created_at        DateTime  @default(now())
   posts             Post[]
-  comments          Comments[]
   token             Token[]
+  comments          Comment[]
+
+  @@map("users")
 }
 
 model Token {
@@ -37,6 +39,8 @@ model Token {
   created_at DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id])
   userId     Int      @unique
+
+  @@map("tokens")
 }
 
 model Post {
@@ -52,9 +56,11 @@ model Post {
   user   User @relation(fields: [userId], references: [id])
   userId Int
 
-  post_images  Post_images[]
   presentation Presentation?
-  comments     Comments[]
+  post_images  Post_images[]
+  comments     Comment[]
+
+  @@map("posts")
 }
 
 model Post_images {
@@ -65,6 +71,8 @@ model Post_images {
 
   post   Post @relation(fields: [postId], references: [id])
   postId Int
+
+  @@map("post_images")
 }
 
 model Presentation {
@@ -76,9 +84,11 @@ model Presentation {
   created_at DateTime @default(now())
   post       Post     @relation(fields: [postId], references: [id])
   postId     Int      @unique
+
+  @@map("product_presentations")
 }
 
-model Comments {
+model Comment {
   id         Int      @id @default(autoincrement())
   text       String   @db.VarChar(255)
   updated_at DateTime @updatedAt
@@ -87,4 +97,6 @@ model Comments {
   userId     Int
   post       Post     @relation(fields: [postId], references: [id])
   postId     Int
+
+  @@map("comments")
 }

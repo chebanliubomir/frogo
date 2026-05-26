@@ -17,7 +17,7 @@ import { MailService } from '@/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '@/prisma/prisma.service';
 import { FindUserEnum } from '@/user/enums/find-user.enum';
-import { Session } from '@prisma/generated';
+import { Token } from '@prisma/generated';
 
 @Injectable()
 export class AuthenticationService {
@@ -181,7 +181,7 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async logout(refreshToken: string): Promise<Session | null> {
+  async logout(refreshToken: string): Promise<Token | null> {
     return await this.token.removeToken(refreshToken);
   }
 
