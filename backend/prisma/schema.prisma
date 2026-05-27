@@ -14,15 +14,15 @@ enum Role {
 
 model User {
   id                Int       @id @default(autoincrement())
-  avatar            String    @unique
+  avatar            String    @unique @default("default-avatar.png")
   name              String    @db.VarChar(60)
   surname           String    @db.VarChar(60)
   email             String    @unique
   password          String
-  resetPasswordLink String    @unique
+  resetPasswordLink String?   @unique
   rule              Role      @default(USER)
   isActivated       Boolean   @default(false)
-  activatedLink     String    @unique
+  activatedLink     String?   @unique
   updated_at        DateTime  @updatedAt
   created_at        DateTime  @default(now())
   posts             Post[]
