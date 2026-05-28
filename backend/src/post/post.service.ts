@@ -7,7 +7,7 @@ export class PostService {
   constructor(private readonly prisma: PrismaService) { }
 
   async create(post: CreatePostDto, presentation: Express.Multer.File) {
-    const { userId, title, description } = post
+    const { userId, title, description } = post;
 
     const createPost = await this.prisma.post.create({
       data: {
@@ -15,30 +15,30 @@ export class PostService {
         title,
         description
       }
-    })
+    });
 
     console.log({
       createPost,
       presentation
-    })
+    });
 
-    return 'Presentation has been created'
+    return 'Presentation has been created';
 
   }
 
   async update(post: CreatePostDto, file: Express.Multer.File) {
-    console.log('post', { ...post })
-    console.log('file', file)
-    return 'The post was updated.'
+    console.log('post', { ...post });
+    console.log('file', file);
+    return 'The post was updated.';
   }
 
   async remove(postId: number) {
-    console.log(postId)
+    console.log(postId);
     return 'The post was removed';
   }
 
   async getOne(postId: number) {
-    console.log(postId)
+    console.log(postId);
     return 'The post was getting';
 
   }
