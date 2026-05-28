@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
-import "multer"
+import "multer";
 export class CreatePostDto {
 
   @IsString()
@@ -23,5 +23,5 @@ export class CreatePostDto {
     format: 'binary',
     description: 'upload presentation',
   })
-  file: Express.Multer.File
+  file: Express.Multer.File;
 }
