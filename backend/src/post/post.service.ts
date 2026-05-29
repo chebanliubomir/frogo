@@ -17,10 +17,14 @@ export class PostService {
       }
     });
 
-    console.log({
-      createPost,
-      presentation
-    });
+    await this.prisma.presentation.create({
+      data: {
+        name: '',
+        weight: 0,
+        sales: 0,
+        postId: createPost.id
+      }
+    })
 
     return 'Presentation has been created';
 
