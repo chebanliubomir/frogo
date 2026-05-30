@@ -130,8 +130,13 @@ export class AuthenticationService {
 
   }
 
-  async resetPasswordLink(link: string) {
-    return link;
+  async resetPasswordLink(link: string): Promise<string> {
+    if(!link) {
+      throw new BadRequestException('Link is not valid.');
+    } 
+
+    return 'Link'
+
   }
 
   async activate(link: string): Promise<string> {
