@@ -14,7 +14,7 @@ export class AuthenticationController {
     private readonly configService: ConfigService
   ) { }
 
-  @ApiBody({ type: [RegistrationDto] })
+  @ApiBody({ type: RegistrationDto })
   @ApiOperation({ summary: 'Registration user' })
   @Post('registration')
   async registration(
@@ -35,7 +35,7 @@ export class AuthenticationController {
     });
   }
 
-  @ApiBody({ type: [LoginDto] })
+  @ApiBody({ type: LoginDto })
   @ApiOperation({ summary: 'Login user' })
   @Post('login')
   async login(
@@ -56,6 +56,15 @@ export class AuthenticationController {
     });
   }
 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        email: { type: 'string', example: 'qwerty@gmail.com' }
+      },
+      required: ['email']
+    }
+  })
   @ApiOperation({ summary: 'Reset password user' })
   @Post('reset-password')
   async resetPassword(@Body('email') email: string) {

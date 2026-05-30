@@ -14,7 +14,7 @@ enum Role {
 
 model User {
   id                Int       @id @default(autoincrement())
-  avatar            String    @unique @default("default-avatar.png")
+  avatar            String    @default("default-avatar.png")
   name              String    @db.VarChar(60)
   surname           String    @db.VarChar(60)
   email             String    @unique
