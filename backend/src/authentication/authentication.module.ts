@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './services/authentication.service';
 import { AuthenticationController } from './authentication.controller';
 import { UserModule } from '../user/user.module';
 import { TokensModule } from '@/tokens/tokens.module';
@@ -7,6 +7,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { MailModule } from '@/mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
+import { ResetPasswordService } from './services/reset-password.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { ConfigModule } from '@nestjs/config';
     MailModule
   ],
   controllers: [AuthenticationController],
-  providers: [AuthenticationService, PrismaService],
+  providers: [AuthenticationService, PrismaService, ResetPasswordService],
 })
 export class AuthenticationModule { }

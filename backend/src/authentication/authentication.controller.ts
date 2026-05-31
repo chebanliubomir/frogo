@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Res, Req, Get, Param, Query } from '@nestjs/common';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './services/authentication.service';
+import { ResetPasswordService } from './services/reset-password.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
@@ -11,6 +12,7 @@ import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 export class AuthenticationController {
   constructor(
     private readonly authenticationService: AuthenticationService,
+    private readonly resetPasswordService: ResetPasswordService,
     private readonly configService: ConfigService
   ) { }
 
@@ -59,13 +61,13 @@ export class AuthenticationController {
   @ApiOperation({ summary: 'Reset password user' })
   @Post('reset-password')
   async resetPassword(@Body('email') email: string) {
-    return await this.authenticationService.resetPassword(email);
+    return await this.resetPasswordService.resetPassword(email);
   }
 
   @ApiOperation({ summary: 'Reset password link user' })
   @Post('reset-passowrd/:link')
   async resetPasswordLink(@Query('link') link: string) {
-    return await this.authenticationService.resetPasswordLink(link);
+    return await this.resetPasswordService.resetPasswordLink(link);
   }
 
   @ApiOperation({ summary: 'Activate user account' })
