@@ -24,7 +24,9 @@ export class PostService {
         sales: 0,
         postId: createPost.id
       }
-    })
+    });
+
+    console.log(presentation)
 
     return 'Presentation has been created';
 

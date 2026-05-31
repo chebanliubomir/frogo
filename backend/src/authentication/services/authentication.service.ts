@@ -8,15 +8,14 @@ import {
   NotFoundException,
   UnauthorizedException
 } from '@nestjs/common';
-import { RegistrationDto } from './dto/registration.dto';
-import { UserService } from '../user/user.service';
-import { LoginDto } from './dto/login.dto';
+import { RegistrationDto } from '../dto/registration.dto';
+import { UserService } from '../../user/user.service';
+import { LoginDto } from '../dto/login.dto';
 import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
 import { MailService } from '@/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
-import { PrismaService } from '@/prisma/prisma.service';
-import { FindUserEnum } from '@/user/enums/find-user.enum';
+import { FindUserEnum } from '@/types/find-user.enum';
 import { Token } from '@prisma/generated';
 
 @Injectable()
@@ -25,8 +24,7 @@ export class AuthenticationService {
     private readonly user: UserService,
     private readonly token: TokensService,
     private readonly configService: ConfigService,
-    private readonly mailService: MailService,
-    private readonly prisma: PrismaService
+    private readonly mailService: MailService
   ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
@@ -71,7 +69,6 @@ export class AuthenticationService {
   }
 
   async login({ email, password }: LoginDto): Promise<TokensType> {
-
     const findUser = await this.user.find(email, FindUserEnum.EMAIL);
     if (!findUser) {
       throw new NotFoundException({
@@ -105,38 +102,6 @@ export class AuthenticationService {
     await this.token.saveToken(findUser.id, refresh_token);
 
     return { access_token, refresh_token };
-  }
-
-  async resetPassword(email: string): Promise<string> {
-    const user = await this.user.find(email, FindUserEnum.EMAIL);
-    if (!user) {
-      throw new BadRequestException('User not found.');
-    }
-
-    const resetPasswordLink = uuid.v4();
-
-    await this.prisma.user.update({
-      where: { email },
-      data: { resetPasswordLink }
-    });
-
-    await this.mailService.sendMail({
-      to: user.email,
-      subject: 'Reset Password',
-      html: `${this.configService.get('common.server_url')}api/authentication/reset-password/${resetPasswordLink}`
-    });
-
-    return `Letter send to ${user.email}.`;
-
-  }
-
-  async resetPasswordLink(link: string): Promise<string> {
-    if(!link) {
-      throw new BadRequestException('Link is not valid.');
-    } 
-
-    return 'Link'
-
   }
 
   async activate(link: string): Promise<string> {

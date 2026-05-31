@@ -2,7 +2,7 @@ import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '
 import { CreateUser } from './interfaces/create-user.intarface';
 import { PrismaService } from '../prisma/prisma.service';
 import { User } from '@prisma/generated';
-import { FindUserEnum } from './enums/find-user.enum';
+import { FindUserEnum } from '../types/find-user.enum';
 
 @Injectable()
 export class UserService {
