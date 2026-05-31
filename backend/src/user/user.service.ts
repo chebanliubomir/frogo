@@ -24,9 +24,9 @@ export class UserService {
     return await this.prisma.user.findFirst({
       where: {
         OR: [
-          {id: type === FindUserEnum.ID ? Number(data) : undefined},
-          {email: type === FindUserEnum.EMAIL ? String(data) : undefined},
-          {activatedLink: type === FindUserEnum.ACTIVATED_LINK ? String(data) : undefined},
+          { id: type === FindUserEnum.ID ? Number(data) : undefined },
+          { email: type === FindUserEnum.EMAIL ? String(data) : undefined },
+          { activatedLink: type === FindUserEnum.ACTIVATED_LINK ? String(data) : undefined },
         ]
       }
     });

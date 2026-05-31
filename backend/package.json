@@ -12,7 +12,7 @@
     "backend:start:debug": "nest start --debug --watch",
     "backend:start:prod": "node dist/main",
     "backend:prisma:generate": "yarn prisma generate",
-    "backend:prisma:migrate": "yarn prisma migrate dev --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
+    "backend:prisma:migrate": "yarn prisma migrate dev init --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
     "backend:prisma:studio": "yarn prisma studio --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
     "backend:prisma:db:push": "yarn prisma db push --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
     "backend:prisma:seed": "dotenv -e .env.development -- npx tsx prisma/seed/seed.ts"
@@ -43,7 +43,8 @@
     "@nestjs/testing": "^11.0.1",
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
-    "@types/express": "^5.0.0",
+    "@types/express": "^5.0.6",
+    "@types/multer": "^2.1.0",
     "@types/node": "^25.3.5",
     "@types/nodemailer": "^8.0.0",
     "@types/pg": "^8",

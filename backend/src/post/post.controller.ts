@@ -1,36 +1,50 @@
-import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import "multer";
+import { Body, Controller, Delete, Get, Patch, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { PostService } from './post.service';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dto/create-post.dto';
-
-@ApiTags('Post ')
+import { FileInterceptor } from '@nestjs/platform-express';
+@ApiTags('Post')
 @Controller('post')
 export class PostController {
+
   constructor(private readonly postService: PostService) { }
 
-  @ApiBody({ type: CreatePostDto })
-  @ApiOperation({ summary: 'Create post' })
   @Post('create')
-  async create(@Body() post: CreatePostDto) {
-    return this.postService.create(post);
+  @ApiBody({ type: CreatePostDto })
+  @ApiConsumes('multipart/form-data')
+  @ApiOperation({ summary: 'Create post' })
+  @UseInterceptors(FileInterceptor('file', {
+    storage: {
+      destination: '../uploads',
+    }
+  }))
+  async create(
+    @Body() post: CreatePostDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.postService.create(post, file);
   }
 
   @ApiOperation({ summary: 'Update post' })
   @Patch('update')
-  async update() {
-    return this.postService.update();
+  async update(
+    @Body() post: CreatePostDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.postService.update(post, file);
   }
 
   @ApiOperation({ summary: 'Remove post' })
   @Delete('remove')
-  async remove() {
-    return this.postService.remove();
+  async remove(@Query('postId') postId: number) {
+    return this.postService.remove(postId);
   }
 
   @ApiOperation({ summary: 'Get only one post' })
   @Get('get-one')
-  async getOne() {
-    return this.postService.getOne();
+  async getOne(@Query('postId') postId: number) {
+    return this.postService.getOne(postId);
   }
 
   @ApiOperation({ summary: 'Get all posts' })

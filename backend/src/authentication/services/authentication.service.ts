@@ -15,8 +15,8 @@ import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
 import { MailService } from '@/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
-import { Session } from '@prisma/generated';
 import { FindUserEnum } from '@/types/find-user.enum';
+import { Token } from '@prisma/generated';
 
 @Injectable()
 export class AuthenticationService {
@@ -25,7 +25,7 @@ export class AuthenticationService {
     private readonly token: TokensService,
     private readonly configService: ConfigService,
     private readonly mailService: MailService
-  ) {}
+  ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
     const findUser = await this.user.find(email, FindUserEnum.EMAIL);
@@ -151,7 +151,7 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async logout(refreshToken: string): Promise<Session | null> {
+  async logout(refreshToken: string): Promise<Token | null> {
     return await this.token.removeToken(refreshToken);
   }
 

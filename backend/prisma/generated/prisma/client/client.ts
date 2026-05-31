@@ -45,22 +45,27 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model Session
+ * Model Token
  * 
  */
-export type Session = Prisma.SessionModel
+export type Token = Prisma.TokenModel
 /**
  * Model Post
  * 
  */
 export type Post = Prisma.PostModel
 /**
- * Model Post_Image
+ * Model Post_images
  * 
  */
-export type Post_Image = Prisma.Post_ImageModel
+export type Post_images = Prisma.Post_imagesModel
 /**
- * Model Comments
+ * Model Presentation
  * 
  */
-export type Comments = Prisma.CommentsModel
+export type Presentation = Prisma.PresentationModel
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel
