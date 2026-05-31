@@ -24,8 +24,8 @@ export class AuthenticationService {
     private readonly user: UserService,
     private readonly token: TokensService,
     private readonly configService: ConfigService,
-    private readonly mailService: MailService,
-  ) { }
+    private readonly mailService: MailService
+  ) {}
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
     const findUser = await this.user.find(email, FindUserEnum.EMAIL);
@@ -69,7 +69,6 @@ export class AuthenticationService {
   }
 
   async login({ email, password }: LoginDto): Promise<TokensType> {
-
     const findUser = await this.user.find(email, FindUserEnum.EMAIL);
     if (!findUser) {
       throw new NotFoundException({
