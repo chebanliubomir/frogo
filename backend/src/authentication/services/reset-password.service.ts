@@ -1,4 +1,5 @@
 import * as uuid from 'uuid';
+import * as bcrypt from 'bcrypt';
 import { MailService } from '@/mail/mail.service';
 import { PrismaService } from '@/prisma/prisma.service';
 import { FindUserEnum } from '@/types/find-user.enum';
@@ -9,12 +10,12 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class ResetPasswordService {
 
-    constructor(
-      private readonly user: UserService,
-      private readonly configService: ConfigService,
-      private readonly mailService: MailService,
-      private readonly prisma: PrismaService
-    ) { }
+  constructor(
+    private readonly user: UserService,
+    private readonly configService: ConfigService,
+    private readonly mailService: MailService,
+    private readonly prisma: PrismaService
+  ) { }
 
   async resetPassword(email: string): Promise<string> {
     const user = await this.user.find(email, FindUserEnum.EMAIL);
@@ -39,8 +40,25 @@ export class ResetPasswordService {
 
   }
 
-  async resetPasswordLink(link: string) {
-    return link;
+  async resetPasswordLink(link: string, password: string) {
+    const findUser = await this.user.find(link, FindUserEnum.RESET_PASSWORD_LINK)
+    console.log(findUser)
+    if (!findUser) {
+      throw new BadRequestException('The link is not valid.');
+    }
+
+    const newHashPassword = await bcrypt.hash(password, 8);
+
+    await this.prisma.user.update({
+      where: { resetPasswordLink: link },
+      data: {
+        resetPasswordLink: null,
+        password: newHashPassword
+      }
+    })
+
+    return 'The password has been successfully changed.'
+
   }
 
 }

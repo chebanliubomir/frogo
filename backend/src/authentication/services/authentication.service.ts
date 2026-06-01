@@ -105,7 +105,7 @@ export class AuthenticationService {
   }
 
   async activate(link: string): Promise<string> {
-    const user = await this.user.find(link, FindUserEnum.ACTIVATED_LINK);
+    const user = await this.user.find(link, FindUserEnum.RESET_PASSWORD_LINK);
     if (!user) {
       throw new BadRequestException();
     }
