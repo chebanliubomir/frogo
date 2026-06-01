@@ -73,10 +73,22 @@ export class AuthenticationController {
     return await this.resetPasswordService.resetPassword(email);
   }
 
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        password: { type: 'string', example: '' }
+      },
+      required: ['password']
+    }
+  })
   @ApiOperation({ summary: 'Reset password link user' })
   @Post('reset-passowrd/:link')
-  async resetPasswordLink(@Query('link') link: string) {
-    return await this.resetPasswordService.resetPasswordLink(link);
+  async resetPasswordLink(
+    @Query('link') link: string,
+    @Body('password') password: string
+  ) {
+    return await this.resetPasswordService.resetPasswordLink(link, password);
   }
 
   @ApiOperation({ summary: 'Activate user account' })
