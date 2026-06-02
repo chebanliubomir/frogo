@@ -26,6 +26,7 @@ export class UserService {
         OR: [
           { id: type === FindUserEnum.ID ? Number(data) : undefined },
           { email: type === FindUserEnum.EMAIL ? String(data) : undefined },
+          { activatedLink: type === FindUserEnum.ACTIVATED_ACCOUNT_LINK ? String(data) : undefined },
           { resetPasswordLink: type === FindUserEnum.RESET_PASSWORD_LINK ? String(data) : undefined },
         ]
       }
@@ -41,7 +42,7 @@ export class UserService {
     await this.prisma.user.update({
       where: { activatedLink: link },
       data: {
-        activatedLink: '',
+        activatedLink: null,
         isActivated: true
       },
     });

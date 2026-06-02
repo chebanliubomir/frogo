@@ -45,7 +45,10 @@ export class AuthenticationService {
     await this.mailService.sendMail({
       to: newUser.email,
       subject: 'Activate account',
-      html: `${this.configService.get('common.server_url')}api/activate/${activatedLink}`
+      html: `
+      <a href="${this.configService.get('common.server_url')}api/activate/${activatedLink}">
+        <button>activate account</button>
+      </a>`
     });
 
     const payload = {
@@ -105,7 +108,7 @@ export class AuthenticationService {
   }
 
   async activate(link: string): Promise<string> {
-    const user = await this.user.find(link, FindUserEnum.RESET_PASSWORD_LINK);
+    const user = await this.user.find(link, FindUserEnum.ACTIVATED_ACCOUNT_LINK);
     if (!user) {
       throw new BadRequestException();
     }
