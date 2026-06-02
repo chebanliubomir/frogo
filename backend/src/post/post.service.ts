@@ -26,7 +26,7 @@ export class PostService {
       }
     });
 
-    console.log(presentation)
+    console.log(presentation);
 
     return 'Presentation has been created';
 

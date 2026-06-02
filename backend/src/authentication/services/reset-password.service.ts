@@ -41,10 +41,14 @@ export class ResetPasswordService {
   }
 
   async resetPasswordLink(link: string, password: string) {
-    const findUser = await this.user.find(link, FindUserEnum.RESET_PASSWORD_LINK)
-    console.log(findUser)
+    const findUser = await this.user.find(link, FindUserEnum.RESET_PASSWORD_LINK);
     if (!findUser) {
       throw new BadRequestException('The link is not valid.');
+    }
+
+    const comparisionPasswords = await bcrypt.compare(password, findUser.password);
+    if(comparisionPasswords) {
+      throw new BadRequestException('the password cannot be the same as the current one');
     }
 
     const newHashPassword = await bcrypt.hash(password, 8);
@@ -55,9 +59,9 @@ export class ResetPasswordService {
         resetPasswordLink: null,
         password: newHashPassword
       }
-    })
+    });
 
-    return 'The password has been successfully changed.'
+    return 'The password has been successfully changed.';
 
   }
 
