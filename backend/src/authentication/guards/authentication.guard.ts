@@ -29,6 +29,7 @@ export class AuthenticationGuard implements CanActivate {
 
   private expectTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    console.log(request.headers.authorization)
     return type === "Bearer" ? token : undefined;
   }
 
