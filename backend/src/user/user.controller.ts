@@ -3,18 +3,18 @@ import { UserService } from './user.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthenticationGuard } from '@/authentication/guards/authentication.guard';
 import { Role } from '@prisma/generated';
-import { Roles } from './decorator/roles.decorator';
 import { UserRolesGuard } from './guards/user-roles.guard';
+import { UserRoles } from './decorator/user-roles.decorator';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
 
   constructor(private readonly userService: UserService) {}
 
-  @Roles(Role.ADMIN)
-  @ApiOperation({ summary: 'Get list all users' })
-  @UseGuards(AuthenticationGuard, UserRolesGuard)
   @Get('all')
+  @UserRoles(Role.ADMIN)
+  @UseGuards(AuthenticationGuard, UserRolesGuard)
+  @ApiOperation({ summary: 'Get list all users' })
   getAllUsers() {
     return this.userService.getAllUsers();
   }

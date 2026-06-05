@@ -1,21 +1,24 @@
 import { TokensService } from '@/tokens/tokens.service';
 import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from '@prisma/generated';
 import { Request } from 'express';
+import { UserService } from '../user.service';
+import { FindUserEnum } from '@/types/find-user.enum';
+import { UserRoles } from '../decorator/user-roles.decorator';
 
 @Injectable()
 export class UserRolesGuard implements CanActivate {
 
   constructor(
     private reflector: Reflector,
+    private user: UserService,
     private readonly token: TokensService
   ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
-      const roles = this.reflector.get(Role, context.getHandler())
-      console.log(roles)
+      const roles = this.reflector.get(UserRoles, context.getHandler())
+
       const request = context.switchToHttp().getRequest()
 
       const token = this.expectTokenFromHeader(request)
@@ -23,11 +26,15 @@ export class UserRolesGuard implements CanActivate {
         throw new UnauthorizedException()
       }
 
-      //use userId from access token for find user in database and detection user role
-
       const checkValidToken = await this.token.validateAccessToken(token)
+      const findUser = await this.user.find(checkValidToken.id, FindUserEnum.ID)
+      if(!findUser) {
+        throw new UnauthorizedException()
+      }
 
-      console.log('role', checkValidToken.rule)
+      if(findUser.rule !== roles) {
+        return false
+      }
 
       return true
 
@@ -38,7 +45,6 @@ export class UserRolesGuard implements CanActivate {
 
   private expectTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    console.log(request.headers)
     return type === "Bearer" ? token : undefined;
   }
 }
