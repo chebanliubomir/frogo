@@ -2,6 +2,7 @@ import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '
 import { CreateUser } from './interfaces/create-user.intarface';
 import { PrismaService } from '../prisma/prisma.service';
 import { User } from '@prisma/generated';
+import { UserEntity } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
@@ -51,7 +52,7 @@ export class UserService {
 
   }
 
-  async getAllUsers(): Promise<User[]> {
+  async getAllUsers(): Promise<UserEntity[]> {
     const allUsers = await this.prisma.user.findMany();
 
     if (allUsers.length <= 0) {
@@ -61,7 +62,7 @@ export class UserService {
       });
     }
 
-    return allUsers;
+    return allUsers.map((user) => new UserEntity(user));
   }
 
 }

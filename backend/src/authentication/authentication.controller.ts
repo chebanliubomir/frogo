@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, Req, Get, Param, Query } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { AuthenticationService } from './services/authentication.service';
 import { ResetPasswordService } from './services/reset-password.service';
 import { RegistrationDto } from './dto/registration.dto';
@@ -104,6 +104,7 @@ export class AuthenticationController {
     return response.redirect(301, `${this.configService.get('common.client_url')}`);
   }
 
+  @UseGuards(ActivateAccountUserService)
   @ApiOperation({ summary: 'Function for refresh tokens' })
   @Get('refresh')
   async refresh(
@@ -123,6 +124,7 @@ export class AuthenticationController {
     response.json(data.access_token);
   }
 
+  @UseGuards(ActivateAccountUserService)
   @ApiOperation({ summary: 'Logout user' })
   @Post('logout')
   async logout(
