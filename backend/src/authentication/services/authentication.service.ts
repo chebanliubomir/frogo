@@ -106,17 +106,6 @@ export class AuthenticationService {
     return { access_token, refresh_token };
   }
 
-  async activate(link: string): Promise<string> {
-    const user = await this.user.findUserActivatedLink(link)
-    if (!user) {
-      throw new BadRequestException();
-    }
-
-    await this.user.activate(link);
-
-    return 'Your account was activated.';
-  }
-
   async refresh(refreshToken: string): Promise<TokensType> {
     if (!refreshToken) {
       throw new UnauthorizedException();
