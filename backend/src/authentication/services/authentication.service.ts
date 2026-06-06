@@ -15,7 +15,6 @@ import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
 import { MailService } from '@/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
-import { FindUserEnum } from '@/types/find-user.enum';
 import { Token } from '@prisma/generated';
 
 @Injectable()
@@ -28,7 +27,7 @@ export class AuthenticationService {
   ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
-    const findUser = await this.user.find(email, FindUserEnum.EMAIL);
+    const findUser = await this.user.findUserEmail(email);
     if (findUser) {
       throw new ConflictException({
         status: HttpStatus.CONFLICT,
@@ -72,7 +71,7 @@ export class AuthenticationService {
   }
 
   async login({ email, password }: LoginDto): Promise<TokensType> {
-    const findUser = await this.user.find(email, FindUserEnum.EMAIL);
+    const findUser = await this.user.findUserEmail(email)
     if (!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
@@ -108,7 +107,7 @@ export class AuthenticationService {
   }
 
   async activate(link: string): Promise<string> {
-    const user = await this.user.find(link, FindUserEnum.ACTIVATED_ACCOUNT_LINK);
+    const user = await this.user.findUserActivatedLink(link)
     if (!user) {
       throw new BadRequestException();
     }
@@ -130,7 +129,7 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.find(userData.id, FindUserEnum.ID);
+    const findUser = await this.user.findUserId(userData.id)
     if (!findUser) {
       throw new UnauthorizedException();
     }

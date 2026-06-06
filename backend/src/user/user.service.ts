@@ -2,7 +2,6 @@ import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '
 import { CreateUser } from './interfaces/create-user.intarface';
 import { PrismaService } from '../prisma/prisma.service';
 import { User } from '@prisma/generated';
-import { FindUserEnum } from '../types/find-user.enum';
 
 @Injectable()
 export class UserService {
@@ -20,17 +19,20 @@ export class UserService {
     });
   }
 
-  async find(data: number | string, type: FindUserEnum): Promise<User | null> {
-    return await this.prisma.user.findFirst({
-      where: {
-        OR: [
-          { id: type === FindUserEnum.ID ? Number(data) : undefined },
-          { email: type === FindUserEnum.EMAIL ? String(data) : undefined },
-          { activatedLink: type === FindUserEnum.ACTIVATED_ACCOUNT_LINK ? String(data) : undefined },
-          { resetPasswordLink: type === FindUserEnum.RESET_PASSWORD_LINK ? String(data) : undefined },
-        ]
-      }
-    });
+  async findUserId(userId: number): Promise<User | null> {
+    return await this.prisma.user.findFirst({ where: { id: userId } })
+  }
+
+  async findUserEmail(email: string): Promise<User | null> {
+    return await this.prisma.user.findFirst({ where: { email } })
+  }
+
+  async findUserActivatedLink(link: string): Promise<User | null> {
+    return await this.prisma.user.findFirst({ where: { activatedLink: link } })
+  }
+
+  async findUserResetPasswordLink(link: string): Promise<User | null> {
+    return await this.prisma.user.findFirst({ where: { resetPasswordLink: link } })
   }
 
   async activate(link: string): Promise<void> {

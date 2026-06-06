@@ -10,6 +10,7 @@ import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags('Authentication')
 @Controller('authentication')
 export class AuthenticationController {
+  
   constructor(
     private readonly authenticationService: AuthenticationService,
     private readonly resetPasswordService: ResetPasswordService,

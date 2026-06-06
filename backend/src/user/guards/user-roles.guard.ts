@@ -3,7 +3,6 @@ import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, U
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import { UserService } from '../user.service';
-import { FindUserEnum } from '@/types/find-user.enum';
 import { UserRoles } from '../decorator/user-roles.decorator';
 
 @Injectable()
@@ -27,7 +26,7 @@ export class UserRolesGuard implements CanActivate {
       }
 
       const checkValidToken = await this.token.validateAccessToken(token)
-      const findUser = await this.user.find(checkValidToken.id, FindUserEnum.ID)
+      const findUser = await this.user.findUserId(checkValidToken.id)
       if(!findUser) {
         throw new UnauthorizedException()
       }
@@ -38,7 +37,7 @@ export class UserRolesGuard implements CanActivate {
 
       return true
 
-    } catch (e) {
+    } catch {
       throw new HttpException('No access', HttpStatus.FORBIDDEN)
     }
   }
