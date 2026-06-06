@@ -1,7 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import uuid from 'uuid';
 import {
-  BadRequestException,
   ConflictException,
   HttpStatus,
   Injectable,
