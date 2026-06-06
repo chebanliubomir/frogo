@@ -14,7 +14,7 @@ export class RegistrationDto {
 
   @IsEmail()
   @IsString()
-  @ApiProperty({ default: 'qwerty@gmail.com' })
+  @ApiProperty({ default: 'qwqzx1485@gmail.com' })
   email: string;
 
   @IsString()
