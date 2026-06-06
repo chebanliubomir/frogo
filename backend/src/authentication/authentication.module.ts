@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { MailModule } from '@/mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
 import { ResetPasswordService } from './services/reset-password.service';
+import { ActivateAccountUserService } from './services/activate-account-user.service';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { ResetPasswordService } from './services/reset-password.service';
     MailModule
   ],
   controllers: [AuthenticationController],
-  providers: [AuthenticationService, PrismaService, ResetPasswordService],
+  providers: [AuthenticationService, PrismaService, ResetPasswordService, ActivateAccountUserService],
 })
 export class AuthenticationModule { }

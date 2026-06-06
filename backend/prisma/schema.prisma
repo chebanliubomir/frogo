@@ -20,7 +20,7 @@ model User {
   email             String    @unique
   password          String
   resetPasswordLink String?   @unique
-  rule              Role      @default(USER)
+  role              Role      @default(USER)
   isActivated       Boolean   @default(false)
   activatedLink     String?   @unique
   updated_at        DateTime  @updatedAt

@@ -2,7 +2,6 @@ import * as uuid from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { MailService } from '@/mail/mail.service';
 import { PrismaService } from '@/prisma/prisma.service';
-import { FindUserEnum } from '@/types/find-user.enum';
 import { UserService } from '@/user/user.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -18,7 +17,7 @@ export class ResetPasswordService {
   ) { }
 
   async resetPassword(email: string): Promise<string> {
-    const user = await this.user.find(email, FindUserEnum.EMAIL);
+    const user = await this.user.findUserEmail(email);
     if (!user) {
       throw new BadRequestException('User not found.');
     }
@@ -41,7 +40,7 @@ export class ResetPasswordService {
   }
 
   async resetPasswordLink(link: string, password: string) {
-    const findUser = await this.user.find(link, FindUserEnum.RESET_PASSWORD_LINK);
+    const findUser = await this.user.findUserResetPasswordLink(link);
     if (!findUser) {
       throw new BadRequestException('The link is not valid.');
     }

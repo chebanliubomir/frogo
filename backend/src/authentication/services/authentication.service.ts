@@ -1,7 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import uuid from 'uuid';
 import {
-  BadRequestException,
   ConflictException,
   HttpStatus,
   Injectable,
@@ -15,7 +14,6 @@ import { TokensService } from '@/tokens/tokens.service';
 import { TokensType } from '@/types/tokens.type';
 import { MailService } from '@/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
-import { FindUserEnum } from '@/types/find-user.enum';
 import { Token } from '@prisma/generated';
 
 @Injectable()
@@ -28,7 +26,7 @@ export class AuthenticationService {
   ) { }
 
   async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
-    const findUser = await this.user.find(email, FindUserEnum.EMAIL);
+    const findUser = await this.user.findUserEmail(email);
     if (findUser) {
       throw new ConflictException({
         status: HttpStatus.CONFLICT,
@@ -58,7 +56,7 @@ export class AuthenticationService {
       surname: newUser.surname,
       email: newUser.email,
       activatedLink: newUser.activatedLink,
-      rule: newUser.rule,
+      role: newUser.role,
       updated_at: newUser.updated_at,
       created_at: newUser.created_at,
     };
@@ -72,7 +70,7 @@ export class AuthenticationService {
   }
 
   async login({ email, password }: LoginDto): Promise<TokensType> {
-    const findUser = await this.user.find(email, FindUserEnum.EMAIL);
+    const findUser = await this.user.findUserEmail(email);
     if (!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
@@ -95,7 +93,7 @@ export class AuthenticationService {
       surname: findUser.surname,
       email: findUser.email,
       activatedLink: findUser.activatedLink,
-      rule: findUser.rule,
+      role: findUser.role,
       updated_at: findUser.updated_at,
       created_at: findUser.created_at,
     };
@@ -105,17 +103,6 @@ export class AuthenticationService {
     await this.token.saveToken(findUser.id, refresh_token);
 
     return { access_token, refresh_token };
-  }
-
-  async activate(link: string): Promise<string> {
-    const user = await this.user.find(link, FindUserEnum.ACTIVATED_ACCOUNT_LINK);
-    if (!user) {
-      throw new BadRequestException();
-    }
-
-    await this.user.activate(link);
-
-    return 'Your account was activated.';
   }
 
   async refresh(refreshToken: string): Promise<TokensType> {
@@ -130,7 +117,7 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.find(userData.id, FindUserEnum.ID);
+    const findUser = await this.user.findUserId(userData.id);
     if (!findUser) {
       throw new UnauthorizedException();
     }
@@ -142,7 +129,7 @@ export class AuthenticationService {
       surname: findUser.surname,
       email: findUser.email,
       activatedLink: findUser.activatedLink,
-      rule: findUser.rule,
+      role: findUser.role,
       updated_at: findUser.updated_at,
       created_at: findUser.created_at,
     };

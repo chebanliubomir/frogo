@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Res, Req, Get, Param, Query } from '@nestjs/common';
+import { Controller, Post, Body, Res, Req, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { AuthenticationService } from './services/authentication.service';
 import { ResetPasswordService } from './services/reset-password.service';
 import { RegistrationDto } from './dto/registration.dto';
@@ -6,13 +6,16 @@ import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ActivateAccountUserService } from './services/activate-account-user.service';
 
 @ApiTags('Authentication')
 @Controller('authentication')
 export class AuthenticationController {
+
   constructor(
     private readonly authenticationService: AuthenticationService,
     private readonly resetPasswordService: ResetPasswordService,
+    private readonly activateAccountUserService: ActivateAccountUserService,
     private readonly configService: ConfigService
   ) { }
 
@@ -94,14 +97,14 @@ export class AuthenticationController {
   @ApiOperation({ summary: 'Activate user account' })
   @Get('activate/:link')
   async activate(
-    @Param('link') link: string,
-    @Res() response: Response
+    @Res() response: Response,
+    @Param('link') link: string
   ) {
-    await this.authenticationService.activate(link);
-    console.log(this.configService.get('common.client_url'));
+    await this.activateAccountUserService.activate(link);
     return response.redirect(301, `${this.configService.get('common.client_url')}`);
   }
 
+  @UseGuards(ActivateAccountUserService)
   @ApiOperation({ summary: 'Function for refresh tokens' })
   @Get('refresh')
   async refresh(
@@ -121,6 +124,7 @@ export class AuthenticationController {
     response.json(data.access_token);
   }
 
+  @UseGuards(ActivateAccountUserService)
   @ApiOperation({ summary: 'Logout user' })
   @Post('logout')
   async logout(
