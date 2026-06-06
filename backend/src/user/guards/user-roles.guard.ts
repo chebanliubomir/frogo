@@ -31,7 +31,7 @@ export class UserRolesGuard implements CanActivate {
         throw new UnauthorizedException()
       }
 
-      if(findUser.rule !== roles) {
+      if(findUser.role !== roles) {
         return false
       }
 

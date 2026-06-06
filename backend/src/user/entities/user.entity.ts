@@ -30,7 +30,7 @@ export class UserEntity implements User {
   resetPasswordLink: string | null;
   @ApiProperty()
 
-  rule: Role; 
+  role: Role; 
   @ApiProperty()
 
   created_at: Date;

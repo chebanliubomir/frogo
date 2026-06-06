@@ -57,7 +57,7 @@ export class AuthenticationService {
       surname: newUser.surname,
       email: newUser.email,
       activatedLink: newUser.activatedLink,
-      rule: newUser.rule,
+      role: newUser.role,
       updated_at: newUser.updated_at,
       created_at: newUser.created_at,
     };
@@ -94,7 +94,7 @@ export class AuthenticationService {
       surname: findUser.surname,
       email: findUser.email,
       activatedLink: findUser.activatedLink,
-      rule: findUser.rule,
+      role: findUser.role,
       updated_at: findUser.updated_at,
       created_at: findUser.created_at,
     };
@@ -130,7 +130,7 @@ export class AuthenticationService {
       surname: findUser.surname,
       email: findUser.email,
       activatedLink: findUser.activatedLink,
-      rule: findUser.rule,
+      role: findUser.role,
       updated_at: findUser.updated_at,
       created_at: findUser.created_at,
     };
