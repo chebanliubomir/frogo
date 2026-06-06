@@ -71,7 +71,7 @@ export class AuthenticationService {
   }
 
   async login({ email, password }: LoginDto): Promise<TokensType> {
-    const findUser = await this.user.findUserEmail(email)
+    const findUser = await this.user.findUserEmail(email);
     if (!findUser) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
@@ -118,7 +118,7 @@ export class AuthenticationService {
       throw new UnauthorizedException();
     }
 
-    const findUser = await this.user.findUserId(userData.id)
+    const findUser = await this.user.findUserId(userData.id);
     if (!findUser) {
       throw new UnauthorizedException();
     }

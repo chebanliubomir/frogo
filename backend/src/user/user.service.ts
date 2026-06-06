@@ -21,19 +21,19 @@ export class UserService {
   }
 
   async findUserId(userId: number): Promise<User | null> {
-    return await this.prisma.user.findFirst({ where: { id: userId } })
+    return await this.prisma.user.findFirst({ where: { id: userId } });
   }
 
   async findUserEmail(email: string): Promise<User | null> {
-    return await this.prisma.user.findFirst({ where: { email } })
+    return await this.prisma.user.findFirst({ where: { email } });
   }
 
   async findUserActivatedLink(link: string): Promise<User | null> {
-    return await this.prisma.user.findFirst({ where: { activatedLink: link } })
+    return await this.prisma.user.findFirst({ where: { activatedLink: link } });
   }
 
   async findUserResetPasswordLink(link: string): Promise<User | null> {
-    return await this.prisma.user.findFirst({ where: { resetPasswordLink: link } })
+    return await this.prisma.user.findFirst({ where: { resetPasswordLink: link } });
   }
 
   async activate(link: string): Promise<void> {

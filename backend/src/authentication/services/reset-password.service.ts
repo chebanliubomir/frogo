@@ -17,7 +17,7 @@ export class ResetPasswordService {
   ) { }
 
   async resetPassword(email: string): Promise<string> {
-    const user = await this.user.findUserEmail(email)
+    const user = await this.user.findUserEmail(email);
     if (!user) {
       throw new BadRequestException('User not found.');
     }
@@ -40,9 +40,9 @@ export class ResetPasswordService {
   }
 
   async resetPasswordLink(link: string, password: string) {
-    const findUser = await this.user.findUserResetPasswordLink(link)
+    const findUser = await this.user.findUserResetPasswordLink(link);
     if (!findUser) {
-      throw new BadRequestException('The link is not valid.')
+      throw new BadRequestException('The link is not valid.');
     }
 
     const comparisionPasswords = await bcrypt.compare(password, findUser.password);

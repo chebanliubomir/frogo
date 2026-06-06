@@ -16,29 +16,29 @@ export class UserRolesGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
-      const roles = this.reflector.get(UserRoles, context.getHandler())
+      const roles = this.reflector.get(UserRoles, context.getHandler());
 
-      const request = context.switchToHttp().getRequest()
+      const request = context.switchToHttp().getRequest();
 
-      const token = this.expectTokenFromHeader(request)
+      const token = this.expectTokenFromHeader(request);
       if(!token) {
-        throw new UnauthorizedException()
+        throw new UnauthorizedException();
       }
 
-      const checkValidToken = await this.token.validateAccessToken(token)
-      const findUser = await this.user.findUserId(checkValidToken.id)
+      const checkValidToken = await this.token.validateAccessToken(token);
+      const findUser = await this.user.findUserId(checkValidToken.id);
       if(!findUser) {
-        throw new UnauthorizedException()
+        throw new UnauthorizedException();
       }
 
       if(findUser.role !== roles) {
-        return false
+        return false;
       }
 
-      return true
+      return true;
 
     } catch {
-      throw new HttpException('No access', HttpStatus.FORBIDDEN)
+      throw new HttpException('No access', HttpStatus.FORBIDDEN);
     }
   }
 

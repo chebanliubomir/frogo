@@ -11,7 +11,7 @@ export class ActivateAccountUserService {
   ) { }
 
   async activate(link: string): Promise<string> {
-    const user = await this.user.findUserActivatedLink(link)
+    const user = await this.user.findUserActivatedLink(link);
     if (!user) {
       throw new BadRequestException();
     }
