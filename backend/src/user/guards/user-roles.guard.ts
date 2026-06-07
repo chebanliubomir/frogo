@@ -17,9 +17,11 @@ export class UserRolesGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
       const roles = this.reflector.get(UserRoles, context.getHandler());
+      if(!roles) {
+        return true
+      }
 
       const request = context.switchToHttp().getRequest();
-
       const token = this.expectTokenFromHeader(request);
       if(!token) {
         throw new UnauthorizedException();
@@ -27,7 +29,7 @@ export class UserRolesGuard implements CanActivate {
 
       const checkValidToken = await this.token.validateAccessToken(token);
       const findUser = await this.user.findUserId(checkValidToken.id);
-      if(!findUser) {
+      if(!checkValidToken || !findUser) {
         throw new UnauthorizedException();
       }
 
