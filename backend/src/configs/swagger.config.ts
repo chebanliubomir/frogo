@@ -6,7 +6,7 @@ export const swaggerConfig = (app: INestApplication) => {
 
   const config = new DocumentBuilder()
     .setTitle('Frogo')
-    .setDescription('This backend parts')
+    .setDescription('backend API')
     .setVersion('1.0')
     .addBearerAuth()
     .build();
