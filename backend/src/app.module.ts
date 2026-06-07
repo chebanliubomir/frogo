@@ -6,7 +6,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { TokensModule } from './tokens/tokens.module';
 import { commonConfig, jwtConfig, mailConfig } from './configs/common.config';
 import { MailModule } from './mail/mail.module';
-import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -25,9 +24,8 @@ import { PostModule } from './post/post.module';
     TokensModule,
     ConfigModule,
     MailModule,
-    PostModule,
-    ],
+  ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
