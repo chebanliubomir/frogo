@@ -4,7 +4,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostService {
-  create(createPostDto: CreatePostDto) {
+  create(createPostDto: CreatePostDto, presentation: Express.Multer.File) {
     return 'This action adds a new post';
   }
 

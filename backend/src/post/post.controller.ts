@@ -1,12 +1,15 @@
 import 'multer';
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 @Controller('post')
 export class PostController {
-  constructor(private readonly postService: PostService) {}
+  constructor(private readonly postService: PostService) { }
 
   @Post('create')
   @UseInterceptors(FileInterceptor('presentation'))
@@ -14,9 +17,7 @@ export class PostController {
     @Body() createPostDto: CreatePostDto,
     @UploadedFile() presentation: Express.Multer.File
   ) {
-    console.log(createPostDto)
-    console.log(presentation)
-    return this.postService.create(createPostDto);
+    return this.postService.create(createPostDto, presentation);
   }
 
   @Get()
