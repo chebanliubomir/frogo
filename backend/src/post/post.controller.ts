@@ -1,56 +1,39 @@
-import "multer";
-import { Body, Controller, Delete, Get, Patch, Post, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
+import 'multer';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { PostService } from './post.service';
-import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-@ApiTags('Post')
 @Controller('post')
 export class PostController {
-
   constructor(private readonly postService: PostService) { }
 
   @Post('create')
-  @ApiBody({ type: CreatePostDto })
-  @ApiConsumes('multipart/form-data')
-  @ApiOperation({ summary: 'Create post' })
-  @UseInterceptors(FileInterceptor('file', {
-    storage: {
-      destination: '../uploads',
-    }
-  }))
-  async create(
-    @Body() post: CreatePostDto,
-    @UploadedFile() file: Express.Multer.File,
+  @UseInterceptors(FileInterceptor('presentation'))
+  create(
+    @Body() createPostDto: CreatePostDto,
+    @UploadedFile() presentation: Express.Multer.File
   ) {
-    return this.postService.create(post, file);
+    return this.postService.create(createPostDto, presentation);
   }
 
-  @ApiOperation({ summary: 'Update post' })
-  @Patch('update')
-  async update(
-    @Body() post: CreatePostDto,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    return this.postService.update(post, file);
+  @Get()
+  findAll() {
+    return this.postService.findAll();
   }
 
-  @ApiOperation({ summary: 'Remove post' })
-  @Delete('remove')
-  async remove(@Query('postId') postId: number) {
-    return this.postService.remove(postId);
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.postService.findOne(+id);
   }
 
-  @ApiOperation({ summary: 'Get only one post' })
-  @Get('get-one')
-  async getOne(@Query('postId') postId: number) {
-    return this.postService.getOne(postId);
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    return this.postService.update(+id, updatePostDto);
   }
 
-  @ApiOperation({ summary: 'Get all posts' })
-  @Get('get-all')
-  async getAll() {
-    return this.postService.getAll();
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.postService.remove(+id);
   }
-
 }

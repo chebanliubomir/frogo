@@ -26,8 +26,8 @@ import { PostModule } from './post/post.module';
     ConfigModule,
     MailModule,
     PostModule,
-    ],
+  ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
