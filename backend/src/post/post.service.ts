@@ -5,6 +5,8 @@ import { UpdatePostDto } from './dto/update-post.dto';
 @Injectable()
 export class PostService {
   create(createPostDto: CreatePostDto, presentation: Express.Multer.File) {
+    console.log(createPostDto);
+    console.log(presentation);
     return 'This action adds a new post';
   }
 
@@ -17,6 +19,7 @@ export class PostService {
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
+    console.log(updatePostDto);
     return `This action updates a #${id} post`;
   }
 
