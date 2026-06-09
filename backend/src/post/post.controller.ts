@@ -4,12 +4,21 @@ import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { editFileName } from './utils/file-name.utils';
+import { imageFileFilter } from './utils/file-filter.utils';
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) { }
 
   @Post('create')
-  @UseInterceptors(FileInterceptor('presentation'))
+  @UseInterceptors(FileInterceptor('presentation', {
+    storage: diskStorage({
+      destination: './uploads',
+      filename: editFileName
+    }),
+    fileFilter: imageFileFilter
+  }))
   create(
     @Body() createPostDto: CreatePostDto,
     @UploadedFile() presentation: Express.Multer.File
