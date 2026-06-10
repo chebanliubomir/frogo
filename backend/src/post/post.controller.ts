@@ -14,10 +14,10 @@ export class PostController {
   @Post('create')
   @UseInterceptors(FileInterceptor('presentation', {
     storage: diskStorage({
-      destination: './uploads',
+      destination: './uploads/',
       filename: editFileName
     }),
-    fileFilter: imageFileFilter
+    // fileFilter: imageFileFilter
   }))
   create(
     @Body() createPostDto: CreatePostDto,
