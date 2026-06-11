@@ -17,7 +17,7 @@ export class PostController {
       destination: './uploads/',
       filename: editFileName
     }),
-    // fileFilter: imageFileFilter
+    fileFilter: imageFileFilter
   }))
   create(
     @Body() createPostDto: CreatePostDto,
