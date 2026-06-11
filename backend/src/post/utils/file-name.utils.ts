@@ -1,5 +1,5 @@
 import { extname } from "path";
-import { v4 as uuidv4 } from 'uuid'; // ПРАВИЛЬНЫЙ ИМПОРТ
+import { v4 as uuidv4 } from 'uuid';
 
 export const editFileName = (req, file, callback) => {
   const name = file.originalname.split('.')[0];
