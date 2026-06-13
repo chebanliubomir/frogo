@@ -6,7 +6,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName } from './utils/file-name.utils';
-import { imageFileFilter } from './utils/file-filter.utils';
+import { presentationFileFilter } from './utils/file-filter.utils';
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) { }
@@ -17,7 +17,7 @@ export class PostController {
       destination: './uploads/',
       filename: editFileName
     }),
-    fileFilter: imageFileFilter
+    fileFilter: presentationFileFilter
   }))
   create(
     @Body() createPostDto: CreatePostDto,

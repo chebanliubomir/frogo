@@ -1,10 +1,8 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
 
-export const imageFileFilter = (req, file, callback) => {
-  const regExpFormatFile = /\.(jpg|jpeg|png|gif)$/
-
-  if (!file.originalname.match(regExpFormatFile)) {
-    return callback(new HttpException('Only image files are allowed!', HttpStatus.BAD_REQUEST,), false)
+export const presentationFileFilter = (req, file, callback) => {
+  if (!file.originalname.match(/\.(ppt|pptx)$/)) {
+    return callback(new HttpException('Only file in presentation format (ppt, pptx).', HttpStatus.BAD_REQUEST,), false)
   }
   callback(null, true)
 }
