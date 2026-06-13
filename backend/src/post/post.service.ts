@@ -8,17 +8,14 @@ export class PostService {
 
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(createPostDto: CreatePostDto, presentation: Express.Multer.File) {
+  async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
     const createPost = await this.prismaService.post.create({
       data: {
         title: createPostDto.title,
         description: createPostDto.description,
-        userId: 1
+        userId: userId
       }
-    })
-
-    console.log(createPost)
-    console.log(presentation)
+    });
 
     return 'This action adds a new post';
   }

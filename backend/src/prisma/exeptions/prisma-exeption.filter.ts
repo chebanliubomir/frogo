@@ -6,10 +6,10 @@ import { Response } from 'express';
 @Catch(PrismaClientKnownRequestError)
 export class PrismaClientExeptionFilter extends BaseExceptionFilter {
   catch(exception: PrismaClientKnownRequestError, host: ArgumentsHost) {
-    const ctx = host.switchToHttp()
-    const response = ctx.getResponse<Response>()
-    const code = exception.code
-    const message = exception.message
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+    const code = exception.code;
+    const message = exception.message;
     switch (code) {
 
       case 'P2002': {
@@ -18,7 +18,7 @@ export class PrismaClientExeptionFilter extends BaseExceptionFilter {
           statusCode: status,
           message: message,
         });
-        break
+        break;
       }
       
       case 'P2025': {
@@ -27,11 +27,11 @@ export class PrismaClientExeptionFilter extends BaseExceptionFilter {
           statusCode: status,
           message: message,
         });
-        break
+        break;
       }
       default:
-        super.catch(exception, host)
-        break
+        super.catch(exception, host);
+        break;
     }
   }
 
