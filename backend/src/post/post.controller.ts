@@ -1,23 +1,29 @@
 import 'multer';
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { editFileName } from './utils/file-name.utils';
-import { imageFileFilter } from './utils/file-filter.utils';
+import { presentationFileFilter } from './utils/file-filter.utils';
+import { AuthenticationGuard } from '@/authentication/guards/authentication.guard';
+import { UserRolesGuard } from '@/user/guards/user-roles.guard';
+import { UserRoles } from '@/user/decorator/user-roles.decorator';
+import { Role } from '@prisma/generated';
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) { }
 
   @Post('create')
+  @UserRoles(Role.ADMIN)
+  @UseGuards(AuthenticationGuard, UserRolesGuard)
   @UseInterceptors(FileInterceptor('presentation', {
     storage: diskStorage({
       destination: './uploads/',
       filename: editFileName
     }),
-    fileFilter: imageFileFilter
+    fileFilter: presentationFileFilter
   }))
   create(
     @Body() createPostDto: CreatePostDto,
