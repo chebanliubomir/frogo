@@ -16,10 +16,13 @@ services:
           target: /app/
           ignore:
             - node_modules/
+            - uploads/
         - path: ./backend/package.json
           action: rebuild
         - path: ./backend/yarn.lock
           action: rebuild
+    volumes:
+      - "./backend/uploads:/app/uploads"
     depends_on:
       - postgres_db
 
@@ -40,4 +43,4 @@ services:
 
 volumes:
   postgres:
-  backend:
+  uploads:
