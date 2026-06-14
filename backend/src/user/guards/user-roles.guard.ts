@@ -1,9 +1,9 @@
-import { TokensService } from '@/tokens/tokens.service';
-import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { Request } from 'express';
-import { UserService } from '../user.service';
-import { UserRoles } from '../decorator/user-roles.decorator';
+import { TokensService } from '@/tokens/tokens.service'
+import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common'
+import { Reflector } from '@nestjs/core'
+import { Request } from 'express'
+import { UserService } from '../user.service'
+import { UserRoles } from '../decorator/user-roles.decorator'
 
 @Injectable()
 export class UserRolesGuard implements CanActivate {
@@ -16,36 +16,36 @@ export class UserRolesGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
-      const roles = this.reflector.get(UserRoles, context.getHandler());
+      const roles = this.reflector.get(UserRoles, context.getHandler())
       if(!roles) {
-        return true;
+        return true
       }
 
-      const request = context.switchToHttp().getRequest();
-      const token = this.expectTokenFromHeader(request);
+      const request = context.switchToHttp().getRequest()
+      const token = this.expectTokenFromHeader(request)
       if(!token) {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException()
       }
 
-      const checkValidToken = await this.token.validateAccessToken(token);
-      const findUser = await this.user.findUserId(checkValidToken.id);
+      const checkValidToken = await this.token.validateAccessToken(token)
+      const findUser = await this.user.findUserId(checkValidToken.id)
       if(!checkValidToken || !findUser) {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException()
       }
 
       if(findUser.role !== roles) {
-        return false;
+        return false
       }
 
-      return true;
+      return true
 
     } catch {
-      throw new HttpException('No access', HttpStatus.FORBIDDEN);
+      throw new HttpException('No access', HttpStatus.FORBIDDEN)
     }
   }
 
   private expectTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === "Bearer" ? token : undefined;
+    const [type, token] = request.headers.authorization?.split(' ') ?? []
+    return type === "Bearer" ? token : undefined
   }
 }

@@ -1,8 +1,8 @@
 import {
   BadRequestException,
   Injectable,
-} from '@nestjs/common';
-import { UserService } from '../../user/user.service';
+} from '@nestjs/common'
+import { UserService } from '../../user/user.service'
 
 @Injectable()
 export class ActivateAccountUserService {
@@ -11,14 +11,14 @@ export class ActivateAccountUserService {
   ) { }
 
   async activate(link: string): Promise<string> {
-    const user = await this.user.findUserActivatedLink(link);
+    const user = await this.user.findUserActivatedLink(link)
     if (!user) {
-      throw new BadRequestException();
+      throw new BadRequestException()
     }
 
-    await this.user.activate(link);
+    await this.user.activate(link)
 
-    return 'Your account was activated.';
+    return 'Your account was activated.'
   }
 
 }
