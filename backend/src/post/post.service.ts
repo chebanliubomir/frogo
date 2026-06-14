@@ -49,6 +49,11 @@ export class PostService {
   }
 
   async update(id: number, updatePostDto: UpdatePostDto) {
+
+    if (!updatePostDto) {
+      throw new BadRequestException()
+    }
+
     const updatePost = await this.prismaService.post.update({
       where: { id },
       data: {
@@ -57,15 +62,19 @@ export class PostService {
       }
     })
 
-    if(!updatePost) {
-      throw new BadRequestException()
-    }
-
     return updatePost
 
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number) {
+    if (!id) {
+      throw new BadRequestException()
+    }
+
+    await this.prismaService.presentation.delete({ where: { postId: id} })
+    await this.prismaService.post.delete({ where: { id } })
+
+
+    return 'Post was remove.'
   }
 }

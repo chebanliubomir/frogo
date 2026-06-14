@@ -56,7 +56,7 @@ export class PostController {
   @Delete('remove/:id')
   @UserRoles(Role.ADMIN)
   @UseGuards(AuthenticationGuard, UserRolesGuard)
-  remove(@Param('id') id: number) {
-    return this.postService.remove(id)
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await this.postService.remove(id)
   }
 }
