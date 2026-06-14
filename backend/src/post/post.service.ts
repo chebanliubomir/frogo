@@ -35,22 +35,34 @@ export class PostService {
 
   async getOne(id: number) {
     const post = await this.prismaService.post.findUnique({ where: { id } })
-    if(!post) {
+    if (!post) {
       throw new BadRequestException()
     }
 
-    const presentation = await this.prismaService.presentation.findUnique({where: {postId: post.id}})
+    const presentation = await this.prismaService.presentation.findUnique({ where: { postId: post.id } })
 
     return {
-      ...post, 
+      ...post,
       presentation
     }
 
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    console.log(updatePostDto);
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    const updatePost = await this.prismaService.post.update({
+      where: { id },
+      data: {
+        title: updatePostDto.title,
+        description: updatePostDto.description
+      }
+    })
+
+    if(!updatePost) {
+      throw new BadRequestException()
+    }
+
+    return updatePost
+
   }
 
   remove(id: number) {

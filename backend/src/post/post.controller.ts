@@ -1,5 +1,5 @@
 import 'multer';
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards, Req, ParseIntPipe } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -13,7 +13,7 @@ import { UserRoles } from '@/user/decorator/user-roles.decorator';
 import { Role } from '@prisma/generated';
 import { Request } from 'express';
 import { CastomRequest } from './interfaces/castom-request.interface';
-@Controller('post')
+@Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) { }
 
@@ -36,18 +36,21 @@ export class PostController {
     return await this.postService.create(createPostDto, presentation, userId);
   }
 
-  @Get('/:id')
+  @Get('post/:id')
   @UseGuards(AuthenticationGuard)
-  async getOne(@Param('id') id: number) {
+  async getOne(@Param('id', ParseIntPipe) id: number) {
     console.log(id)
     return await this.postService.getOne(+id)
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   @UserRoles(Role.ADMIN)
   @UseGuards(AuthenticationGuard, UserRolesGuard)
-  update(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(id, updatePostDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePostDto: UpdatePostDto
+  ) {
+    return await this.postService.update(id, updatePostDto)
   }
 
   @Delete('remove/:id')
