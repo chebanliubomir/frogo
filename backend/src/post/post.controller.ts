@@ -11,7 +11,6 @@ import { AuthenticationGuard } from '@/authentication/guards/authentication.guar
 import { UserRolesGuard } from '@/user/guards/user-roles.guard';
 import { UserRoles } from '@/user/decorator/user-roles.decorator';
 import { Role } from '@prisma/generated';
-import { Request } from 'express';
 import { CastomRequest } from './interfaces/castom-request.interface';
 @Controller('posts')
 export class PostController {
@@ -32,15 +31,15 @@ export class PostController {
     @Body() createPostDto: CreatePostDto,
     @UploadedFile() presentation: Express.Multer.File
   ) {
-    const userId: number = req.user.id
+    const userId: number = req.user.id;
     return await this.postService.create(createPostDto, presentation, userId);
   }
 
   @Get('post/:id')
   @UseGuards(AuthenticationGuard)
   async getOne(@Param('id', ParseIntPipe) id: number) {
-    console.log(id)
-    return await this.postService.getOne(+id)
+    console.log(id);
+    return await this.postService.getOne(+id);
   }
 
   @Patch('update/:id')
@@ -50,13 +49,13 @@ export class PostController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePostDto: UpdatePostDto
   ) {
-    return await this.postService.update(id, updatePostDto)
+    return await this.postService.update(id, updatePostDto);
   }
 
   @Delete('remove/:id')
   @UserRoles(Role.ADMIN)
   @UseGuards(AuthenticationGuard, UserRolesGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
-    return await this.postService.remove(id)
+    return await this.postService.remove(id);
   }
 }
