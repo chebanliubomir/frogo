@@ -36,18 +36,24 @@ export class PostController {
     return await this.postService.create(createPostDto, presentation, userId);
   }
 
-  @Get('post/:id')
-  findOne(@Param('id') id: number) {
-    return this.postService.findOne(id);
+  @Get('/:id')
+  @UseGuards(AuthenticationGuard)
+  async getOne(@Param('id') id: number) {
+    console.log(id)
+    return await this.postService.getOne(+id)
   }
 
   @Patch(':id')
+  @UserRoles(Role.ADMIN)
+  @UseGuards(AuthenticationGuard, UserRolesGuard)
   update(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
     return this.postService.update(id, updatePostDto);
   }
 
   @Delete('remove/:id')
+  @UserRoles(Role.ADMIN)
+  @UseGuards(AuthenticationGuard, UserRolesGuard)
   remove(@Param('id') id: number) {
-    return this.postService.remove(id);
+    return this.postService.remove(id)
   }
 }

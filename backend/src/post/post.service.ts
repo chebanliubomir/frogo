@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PrismaService } from '@/prisma/prisma.service';
@@ -6,7 +6,7 @@ import { PrismaService } from '@/prisma/prisma.service';
 @Injectable()
 export class PostService {
 
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) { }
 
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
     const createPost = await this.prismaService.post.create({
@@ -33,8 +33,19 @@ export class PostService {
 
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async getOne(id: number) {
+    const post = await this.prismaService.post.findUnique({ where: { id } })
+    if(!post) {
+      throw new BadRequestException()
+    }
+
+    const presentation = await this.prismaService.presentation.findUnique({where: {postId: post.id}})
+
+    return {
+      ...post, 
+      presentation
+    }
+
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
