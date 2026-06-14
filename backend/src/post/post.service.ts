@@ -17,7 +17,20 @@ export class PostService {
       }
     });
 
-    return 'This action adds a new post';
+    const createPresentation = await this.prismaService.presentation.create({
+      data: {
+        name: presentation.filename,
+        weight: presentation.size,
+        postId: createPost.id
+      }
+    })
+
+
+    return {
+      ...createPost,
+      presentation: createPresentation
+    }
+
   }
 
   findOne(id: number) {
