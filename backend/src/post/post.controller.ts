@@ -1,5 +1,5 @@
 import 'multer';
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards, Req, ParseIntPipe } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -11,7 +11,8 @@ import { AuthenticationGuard } from '@/authentication/guards/authentication.guar
 import { UserRolesGuard } from '@/user/guards/user-roles.guard';
 import { UserRoles } from '@/user/decorator/user-roles.decorator';
 import { Role } from '@prisma/generated';
-@Controller('post')
+import { CastomRequest } from './interfaces/castom-request.interface';
+@Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) { }
 
@@ -25,25 +26,36 @@ export class PostController {
     }),
     fileFilter: presentationFileFilter
   }))
-  create(
+  async create(
+    @Req() req: CastomRequest,
     @Body() createPostDto: CreatePostDto,
     @UploadedFile() presentation: Express.Multer.File
   ) {
-    return this.postService.create(createPostDto, presentation);
+    const userId: number = req.user.id;
+    return await this.postService.create(createPostDto, presentation, userId);
   }
 
   @Get('post/:id')
-  findOne(@Param('id') id: number) {
-    return this.postService.findOne(id);
+  @UseGuards(AuthenticationGuard)
+  async getOne(@Param('id', ParseIntPipe) id: number) {
+    console.log(id);
+    return await this.postService.getOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(id, updatePostDto)
+  @Patch('update/:id')
+  @UserRoles(Role.ADMIN)
+  @UseGuards(AuthenticationGuard, UserRolesGuard)
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePostDto: UpdatePostDto
+  ) {
+    return await this.postService.update(id, updatePostDto);
   }
 
   @Delete('remove/:id')
-  remove(@Param('id') id: number) {
-    return this.postService.remove(id)
+  @UserRoles(Role.ADMIN)
+  @UseGuards(AuthenticationGuard, UserRolesGuard)
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await this.postService.remove(id);
   }
 }

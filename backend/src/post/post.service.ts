@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PrismaService } from '@/prisma/prisma.service';
@@ -6,33 +6,75 @@ import { PrismaService } from '@/prisma/prisma.service';
 @Injectable()
 export class PostService {
 
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) { }
 
-  async create(createPostDto: CreatePostDto, presentation: Express.Multer.File) {
+  async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
     const createPost = await this.prismaService.post.create({
       data: {
         title: createPostDto.title,
         description: createPostDto.description,
-        userId: 1
+        userId: userId
       }
-    })
+    });
 
-    console.log(createPost)
-    console.log(presentation)
+    const createPresentation = await this.prismaService.presentation.create({
+      data: {
+        name: presentation.filename,
+        weight: presentation.size,
+        postId: createPost.id
+      }
+    });
 
-    return 'This action adds a new post';
+
+    return {
+      ...createPost,
+      presentation: createPresentation
+    };
+
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async getOne(id: number) {
+    const post = await this.prismaService.post.findUnique({ where: { id } });
+    if (!post) {
+      throw new BadRequestException();
+    }
+
+    const presentation = await this.prismaService.presentation.findUnique({ where: { postId: post.id } });
+
+    return {
+      ...post,
+      presentation
+    };
+
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    console.log(updatePostDto);
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+
+    if (!updatePostDto) {
+      throw new BadRequestException();
+    }
+
+    const updatePost = await this.prismaService.post.update({
+      where: { id },
+      data: {
+        title: updatePostDto.title,
+        description: updatePostDto.description
+      }
+    });
+
+    return updatePost;
+
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number) {
+    if (!id) {
+      throw new BadRequestException();
+    }
+
+    await this.prismaService.presentation.delete({ where: { postId: id} });
+    await this.prismaService.post.delete({ where: { id } });
+
+
+    return 'Post was remove.';
   }
 }
