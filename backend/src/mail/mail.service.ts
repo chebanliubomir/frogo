@@ -1,7 +1,7 @@
-import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { mailTypes } from './types/mail.types';
+import { MailerService } from '@nestjs-modules/mailer'
+import { Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { mailTypes } from './types/mail.types'
 
 @Injectable()
 export class MailService {
@@ -17,7 +17,7 @@ export class MailService {
       to,
       subject,
       html
-    });
+    })
   }
 }
 

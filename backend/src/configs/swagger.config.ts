@@ -1,5 +1,5 @@
-import { INestApplication } from "@nestjs/common";
-import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { INestApplication } from "@nestjs/common"
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger"
 
 
 export const swaggerConfig = (app: INestApplication) => {
@@ -9,10 +9,10 @@ export const swaggerConfig = (app: INestApplication) => {
     .setDescription('backend API')
     .setVersion('1.0')
     .addBearerAuth()
-    .build();
+    .build()
 
-    const documentFactory = () => SwaggerModule.createDocument(app, config);
+    const documentFactory = () => SwaggerModule.createDocument(app, config)
 
-    SwaggerModule.setup('api', app, documentFactory);
+    SwaggerModule.setup('api', app, documentFactory)
 
-};
+}

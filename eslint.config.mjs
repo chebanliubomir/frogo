@@ -52,7 +52,7 @@ export default defineConfig([
       },
     },
     rules: {
-      "semi": ["error", "always"],
+      "semi": ["error", "never"],
       "eqeqeq": ["error", "always"],
       "no-unused-vars": ["warn"],
       "no-console": ["warn"],
