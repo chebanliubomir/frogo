@@ -7,6 +7,7 @@ import { TokensModule } from './tokens/tokens.module'
 import { commonConfig, jwtConfig, mailConfig } from './configs/common.config'
 import { MailModule } from './mail/mail.module'
 import { PostModule } from './post/post.module'
+import { ExtractorModule } from './extractor/extractor.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { PostModule } from './post/post.module'
     ConfigModule,
     MailModule,
     PostModule,
+    ExtractorModule,
   ],
   controllers: [],
   providers: [],

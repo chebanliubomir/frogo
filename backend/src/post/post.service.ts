@@ -2,13 +2,22 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
 import { PrismaService } from '@/prisma/prisma.service'
+import { ExtractorModule } from '@/extractor/extractor.module'
+import { ExtractorService } from '@/extractor/extractor.service'
 
 @Injectable()
 export class PostService {
 
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly extractorService: ExtractorService
+  ) { }
 
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
+
+    const file = await this.extractorService.extract(presentation)
+    console.log(file)
+
     const createPost = await this.prismaService.post.create({
       data: {
         title: createPostDto.title,
