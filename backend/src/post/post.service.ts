@@ -14,7 +14,7 @@ export class PostService {
 
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
 
-    const file = await this.extractorService.extract('../../uploads/backend/uploads/Minecraft- автоматизація Р-a494fd9d-a124-4b72-acf0-68400867af55.pptx')
+    const file = await this.extractorService.extract('../../../uploads/backend/uploads/Minecraft- автоматизація Р-a494fd9d-a124-4b72-acf0-68400867af55.pptx')
     console.log(file)
 
     const createPost = await this.prismaService.post.create({
