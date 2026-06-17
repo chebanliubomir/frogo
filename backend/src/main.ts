@@ -1,10 +1,13 @@
-import { HttpAdapterHost, NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
-import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.filter'
 import { ValidationPipe } from '@nestjs/common'
-import cookieParser from 'cookie-parser'
-import { swaggerConfig } from './configs/swagger.config'
 import { ConfigService } from '@nestjs/config'
+import { HttpAdapterHost, NestFactory } from '@nestjs/core'
+import cookieParser from 'cookie-parser'
+
+import { AppModule } from './app.module'
+import { swaggerConfig } from './configs/swagger.config'
+import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.filter'
+
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)

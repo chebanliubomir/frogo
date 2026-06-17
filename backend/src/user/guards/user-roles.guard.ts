@@ -1,9 +1,11 @@
-import { TokensService } from '@/tokens/tokens.service'
 import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Request } from 'express'
-import { UserService } from '../user.service'
+
+import { TokensService } from '@/tokens/tokens.service'
+
 import { UserRoles } from '../decorator/user-roles.decorator'
+import { UserService } from '../user.service'
 
 @Injectable()
 export class UserRolesGuard implements CanActivate {

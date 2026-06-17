@@ -1,6 +1,7 @@
-import { TokensService } from '@/tokens/tokens.service'
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common'
 import { Request } from 'express'
+
+import { TokensService } from '@/tokens/tokens.service'
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
 

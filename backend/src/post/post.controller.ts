@@ -1,17 +1,19 @@
-import 'multer'
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards, Req, ParseIntPipe } from '@nestjs/common'
-import { PostService } from './post.service'
-import { CreatePostDto } from './dto/create-post.dto'
-import { UpdatePostDto } from './dto/update-post.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { diskStorage } from 'multer'
-import { editFileName } from './utils/file-name.utils'
-import { presentationFileFilter } from './utils/file-filter.utils'
+
+
 import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
-import { UserRolesGuard } from '@/user/guards/user-roles.guard'
 import { UserRoles } from '@/user/decorator/user-roles.decorator'
+import { UserRolesGuard } from '@/user/guards/user-roles.guard'
 import { Role } from '@prisma/generated'
+
+import { CreatePostDto } from './dto/create-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
 import { CastomRequest } from './interfaces/castom-request.interface'
+import { PostService } from './post.service'
+import { presentationFileFilter } from './utils/file-filter.utils'
+import { editFileName } from './utils/file-name.utils'
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) { }

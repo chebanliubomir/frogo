@@ -1,10 +1,12 @@
-import * as uuid from 'uuid'
+import { BadRequestException, Injectable } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import * as bcrypt from 'bcrypt'
+import * as uuid from 'uuid'
+
 import { MailService } from '@/mail/mail.service'
 import { PrismaService } from '@/prisma/prisma.service'
 import { UserService } from '@/user/user.service'
-import { BadRequestException, Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
+
 
 @Injectable()
 export class ResetPasswordService {

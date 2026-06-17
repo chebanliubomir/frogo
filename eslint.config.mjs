@@ -2,6 +2,7 @@ import globals from 'globals';
 import {defineConfig} from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import js from "@eslint/js";
+import importPlugin from "eslint-plugin-import"
 
 export default defineConfig([
   //root
@@ -34,11 +35,24 @@ export default defineConfig([
   //   },
   //   rules: {},
   // },
+  
   //backend
   {
     files: ["backend/**/*.{ts,mts,cts}"],
     plugins: {
+      import: importPlugin,
       "@typescript-eslint": tseslint.plugin,
+    },
+    settings: {
+      'import/parsers': {
+        '@typescript-eslint/parser': ['.ts', '.mts', '.cts'],
+      },
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './backend/tsconfig.json',
+        },
+      },
     },
     languageOptions: {
       parser: tseslint.parser,
@@ -57,6 +71,17 @@ export default defineConfig([
       "no-unused-vars": ["warn"],
       "no-console": ["warn"],
       "no-empty-function": ["warn"],
+      ...importPlugin.configs.recommended.rules,
+      "import/no-cycle": "warn",
+      "import/no-unresolved": "error",
+      "import/order": [
+        "error",
+        {
+          "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+          "newlines-between": "always",
+          "alphabetize": { "order": "asc", "caseInsensitive": true }
+        }
+      ]
     },
   },
 ]);
