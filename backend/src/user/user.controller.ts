@@ -1,11 +1,11 @@
-import { ClassSerializerInterceptor, Controller, Get, UseGuards, UseInterceptors } from '@nestjs/common';
-import { UserService } from './user.service';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AuthenticationGuard } from '@/authentication/guards/authentication.guard';
-import { Role } from '@prisma/generated';
-import { UserRolesGuard } from './guards/user-roles.guard';
-import { UserRoles } from './decorator/user-roles.decorator';
-import { UserEntity } from './entities/user.entity';
+import { ClassSerializerInterceptor, Controller, Get, UseGuards, UseInterceptors } from '@nestjs/common'
+import { UserService } from './user.service'
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
+import { Role } from '@prisma/generated'
+import { UserRolesGuard } from './guards/user-roles.guard'
+import { UserRoles } from './decorator/user-roles.decorator'
+import { UserEntity } from './entities/user.entity'
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -19,7 +19,7 @@ export class UserController {
   @ApiOkResponse({ type: UserEntity })
   @UseInterceptors(ClassSerializerInterceptor)
   getAllUsers() {
-    return this.userService.getAllUsers();
+    return this.userService.getAllUsers()
   }
 
 }
