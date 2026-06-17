@@ -26,10 +26,10 @@ export class PostService {
     });
 
 
-    return {
-      ...createPost,
-      presentation: createPresentation
-    };
+    // return {
+    //   ...createPost,
+    //   presentation: createPresentation
+    // };
 
   }
 
