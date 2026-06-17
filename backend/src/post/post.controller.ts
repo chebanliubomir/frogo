@@ -38,8 +38,8 @@ export class PostController {
   @Get('post/:id')
   @UseGuards(AuthenticationGuard)
   async getOne(@Param('id', ParseIntPipe) id: number) {
-    console.log(id)
-    return await this.postService.getOne(+id)
+    console.log(id);
+    return await this.postService.getOne(id)
   }
 
   @Patch('update/:id')
