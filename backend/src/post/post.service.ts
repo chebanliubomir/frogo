@@ -1,6 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
+<<<<<<< HEAD
 
 import { ExtractorModule } from '@/extractor/extractor.module'
+=======
+import { CreatePostDto } from './dto/create-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
+import { PrismaService } from '@/prisma/prisma.service'
+>>>>>>> a8ed49bb6b85f609d9ddbbe1e6d1b95b5fae82d0
 import { ExtractorService } from '@/extractor/extractor.service'
 import { PrismaService } from '@/prisma/prisma.service'
 
@@ -17,7 +23,7 @@ export class PostService {
 
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
 
-    const file = await this.extractorService.extract(presentation)
+    const file = await this.extractorService.extract('../../../uploads/backend/uploads/Minecraft- автоматизація Р-a494fd9d-a124-4b72-acf0-68400867af55.pptx')
     console.log(file)
 
     const createPost = await this.prismaService.post.create({
@@ -37,10 +43,10 @@ export class PostService {
     })
 
 
-    return {
-      ...createPost,
-      presentation: createPresentation
-    }
+    // return {
+    //   ...createPost,
+    //   presentation: createPresentation
+    // };
 
   }
 
