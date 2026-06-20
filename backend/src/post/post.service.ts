@@ -1,18 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
-<<<<<<< HEAD
-
-import { ExtractorModule } from '@/extractor/extractor.module'
-=======
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
 import { PrismaService } from '@/prisma/prisma.service'
->>>>>>> a8ed49bb6b85f609d9ddbbe1e6d1b95b5fae82d0
 import { ExtractorService } from '@/extractor/extractor.service'
-import { PrismaService } from '@/prisma/prisma.service'
-
-import { CreatePostDto } from './dto/create-post.dto'
-import { UpdatePostDto } from './dto/update-post.dto'
-
 @Injectable()
 export class PostService {
 
@@ -43,10 +33,10 @@ export class PostService {
     })
 
 
-    // return {
-    //   ...createPost,
-    //   presentation: createPresentation
-    // };
+    return {
+      ...createPost,
+      presentation: createPresentation
+    }
 
   }
 
