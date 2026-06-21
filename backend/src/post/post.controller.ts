@@ -1,12 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards, Req, ParseIntPipe } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { diskStorage } from 'multer'
-
-
-import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
-import { UserRoles } from '@/user/decorator/user-roles.decorator'
-import { UserRolesGuard } from '@/user/guards/user-roles.guard'
 import { Role } from '@prisma/generated'
+import { diskStorage } from 'multer'
 
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
@@ -14,6 +9,10 @@ import { CastomRequest } from './interfaces/castom-request.interface'
 import { PostService } from './post.service'
 import { presentationFileFilter } from './utils/file-filter.utils'
 import { editFileName } from './utils/file-name.utils'
+
+import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
+import { UserRoles } from '@/user/decorator/user-roles.decorator'
+import { UserRolesGuard } from '@/user/guards/user-roles.guard'
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) { }

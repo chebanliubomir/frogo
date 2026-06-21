@@ -6,17 +6,18 @@ import {
   UnauthorizedException
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { Token } from '@prisma/generated'
 import * as bcrypt from 'bcrypt'
 import uuid from 'uuid'
-
-import { MailService } from '@/mail/mail.service'
-import { TokensService } from '@/tokens/tokens.service'
-import { TokensType } from '@/types/tokens.type'
-import { Token } from '@prisma/generated'
 
 import { UserService } from '../../user/user.service'
 import { LoginDto } from '../dto/login.dto'
 import { RegistrationDto } from '../dto/registration.dto'
+
+import { MailService } from '@/mail/mail.service'
+import { TokensService } from '@/tokens/tokens.service'
+import { TokensType } from '@/types/tokens.type'
+
 
 @Injectable()
 export class AuthenticationService {

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
+import { Token, User } from '@prisma/generated'
 
 import { PrismaService } from '@/prisma/prisma.service'
 import { TokensType } from '@/types/tokens.type'
-import { Token, User } from '@prisma/generated'
 
 @Injectable()
 export class TokensService {

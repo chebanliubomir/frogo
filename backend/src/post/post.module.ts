@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common'
 import { MulterModule } from '@nestjs/platform-express'
 
+import { PostController } from './post.controller'
+import { PostService } from './post.service'
+
 import { ExtractorService } from '@/extractor/extractor.service'
 import { PrismaService } from '@/prisma/prisma.service'
 import { TokensService } from '@/tokens/tokens.service'
 import { UserService } from '@/user/user.service'
 
-import { PostController } from './post.controller'
-import { PostService } from './post.service'
 
 @Module({
   imports: [
