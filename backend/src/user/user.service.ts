@@ -1,9 +1,7 @@
 import { BadRequestException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common'
-
 import { User } from '@prisma/generated'
 
 import { PrismaService } from '../prisma/prisma.service'
-
 import { UserEntity } from './entities/user.entity'
 import { CreateUser } from './interfaces/create-user.intarface'
 
