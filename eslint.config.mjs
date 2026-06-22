@@ -29,6 +29,7 @@ export default defineConfig([
     },
     rules: {
       semi: ['warn', 'never'],
+      eqeqeq: 'error',
       'import-x/order': [
         'error',
         {
