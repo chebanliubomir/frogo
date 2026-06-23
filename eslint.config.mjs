@@ -25,6 +25,7 @@ export default defineConfig([
       },
     },
     plugins: {
+      
       'import-x': importPlugin,
     },
     rules: {
