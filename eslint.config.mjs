@@ -25,10 +25,10 @@ export default defineConfig([
       },
     },
     plugins: {
+      
       'import-x': importPlugin,
     },
     rules: {
-      semi: ['warn', 'never'],
       eqeqeq: 'error',
       'import-x/order': [
         'error',
