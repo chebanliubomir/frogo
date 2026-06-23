@@ -3,20 +3,15 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
 
-import { ExtractorService } from '@/extractor/extractor.service'
 import { PrismaService } from '@/prisma/prisma.service'
 @Injectable()
 export class PostService {
 
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly extractorService: ExtractorService
   ) { }
 
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
-
-    const file = await this.extractorService.extract('../../../uploads/backend/uploads/Minecraft- автоматизація Р-a494fd9d-a124-4b72-acf0-68400867af55.pptx')
-    console.log(file)
 
     const createPost = await this.prismaService.post.create({
       data: {
@@ -80,7 +75,7 @@ export class PostService {
       throw new BadRequestException()
     }
 
-    await this.prismaService.presentation.delete({ where: { postId: id} })
+    await this.prismaService.presentation.delete({ where: { postId: id } })
     await this.prismaService.post.delete({ where: { id } })
 
 

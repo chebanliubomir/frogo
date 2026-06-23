@@ -28,7 +28,6 @@ export default defineConfig([
       'import-x': importPlugin,
     },
     rules: {
-      semi: ['warn', 'never'],
       eqeqeq: 'error',
       'import-x/order': [
         'error',
