@@ -49,6 +49,6 @@ export class UserRolesGuard implements CanActivate {
 
   private expectTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? []
-    return type === "Bearer" ? token : undefined
+    return type === 'Bearer' ? token : undefined
   }
 }
