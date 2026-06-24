@@ -85,7 +85,7 @@ export class AuthenticationService {
     if (!checkPassword) {
       throw new UnauthorizedException({
         status: HttpStatus.UNAUTHORIZED,
-        message: "Invali password."
+        message: 'Invali password.'
       })
     }
 

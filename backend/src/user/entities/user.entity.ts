@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger"
-import { Role, User } from "@prisma/generated"
+import { ApiProperty } from '@nestjs/swagger'
+import { Role, User } from '@prisma/generated'
 import { Exclude } from 'class-transformer'
 
 
