@@ -4,7 +4,6 @@ import { MulterModule } from '@nestjs/platform-express'
 import { PostController } from './post.controller'
 import { PostService } from './post.service'
 
-import { ExtractorService } from '@/extractor/extractor.service'
 import { PrismaService } from '@/prisma/prisma.service'
 import { TokensService } from '@/tokens/tokens.service'
 import { UserService } from '@/user/user.service'
@@ -17,6 +16,6 @@ import { UserService } from '@/user/user.service'
     }),
   ],
   controllers: [PostController],
-  providers: [PostService, TokensService, PrismaService, UserService, ExtractorService],
+  providers: [PostService, TokensService, PrismaService, UserService],
 })
 export class PostModule {}
