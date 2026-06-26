@@ -13,12 +13,15 @@ import { editFileName } from './utils/file-name.utils'
 import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
 import { UserRoles } from '@/user/decorator/user-roles.decorator'
 import { UserRolesGuard } from '@/user/guards/user-roles.guard'
+import { ApiBody, ApiOperation } from '@nestjs/swagger'
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) { }
 
   @Post('create')
   @UserRoles(Role.ADMIN)
+  @ApiBody({ type: CreatePostDto })
+  @ApiOperation({ summary: 'Create post' })
   @UseGuards(AuthenticationGuard, UserRolesGuard)
   @UseInterceptors(FileInterceptor('presentation', {
     storage: diskStorage({
@@ -37,14 +40,16 @@ export class PostController {
   }
 
   @Get('post/:id')
+  @ApiOperation({ summary: 'Get one post' })
   @UseGuards(AuthenticationGuard)
   async getOne(@Param('id', ParseIntPipe) id: number) {
-    console.log(id)
     return await this.postService.getOne(id)
   }
 
   @Patch('update/:id')
   @UserRoles(Role.ADMIN)
+  @ApiBody({ type: UpdatePostDto })
+  @ApiOperation({ summary: 'Update post' })
   @UseGuards(AuthenticationGuard, UserRolesGuard)
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -55,6 +60,7 @@ export class PostController {
 
   @Delete('remove/:id')
   @UserRoles(Role.ADMIN)
+  @ApiOperation({ summary: 'Remove post' })
   @UseGuards(AuthenticationGuard, UserRolesGuard)
   async remove(@Param('id', ParseIntPipe) id: number) {
     return await this.postService.remove(id)
