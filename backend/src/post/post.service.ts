@@ -13,6 +13,8 @@ export class PostService {
 
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
 
+    if(!createPostDto) throw new BadRequestException()
+
     const createPost = await this.prismaService.post.create({
       data: {
         title: createPostDto.title,
