@@ -8,6 +8,7 @@ import { PostModule } from './post/post.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { TokensModule } from './tokens/tokens.module'
 import { UserModule } from './user/user.module'
+import { ExtractionModule } from './extraction/extraction.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UserModule } from './user/user.module'
     ConfigModule,
     MailModule,
     PostModule,
+    ExtractionModule,
   ],
   controllers: [],
   providers: [],
