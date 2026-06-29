@@ -7,6 +7,8 @@ import { PostService } from './post.service'
 import { PrismaService } from '@/prisma/prisma.service'
 import { TokensService } from '@/tokens/tokens.service'
 import { UserService } from '@/user/user.service'
+import { ExtractionModule } from '@/extraction/extraction.module'
+import { ExtractionService } from '@/extraction/extraction.service'
 
 
 @Module({
@@ -14,8 +16,9 @@ import { UserService } from '@/user/user.service'
     MulterModule.register({
       dest: './uploads/',
     }),
+    ExtractionModule
   ],
   controllers: [PostController],
-  providers: [PostService, TokensService, PrismaService, UserService],
+  providers: [PostService, TokensService, PrismaService, UserService, ExtractionService],
 })
 export class PostModule {}
