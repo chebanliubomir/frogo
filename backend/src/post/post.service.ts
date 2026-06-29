@@ -1,87 +1,86 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common';
 
-import { CreatePostDto } from './dto/create-post.dto'
-import { UpdatePostDto } from './dto/update-post.dto'
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
-import { PrismaService } from '@/prisma/prisma.service'
+import { PrismaService } from '@/prisma/prisma.service';
+import { ExtractionService } from '@/extraction/extraction.service';
+
+
+
 @Injectable()
 export class PostService {
-
   constructor(
     private readonly prismaService: PrismaService,
+    private readonly extractionService: ExtractionService
   ) { }
 
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
 
-    if(!createPostDto) throw new BadRequestException()
+    const extractJpgFromPPTX = this.extractionService.extractionImagesFromPPTX(presentation)
 
     const createPost = await this.prismaService.post.create({
       data: {
         title: createPostDto.title,
         description: createPostDto.description,
-        userId: userId
-      }
-    })
+        userId: userId,
+      },
+    });
 
     const createPresentation = await this.prismaService.presentation.create({
       data: {
         name: presentation.filename,
         weight: presentation.size,
-        postId: createPost.id
-      }
-    })
-
-    
+        postId: createPost.id,
+      },
+    });
 
     return {
       ...createPost,
-      presentation: createPresentation
-    }
-
+      presentation: createPresentation,
+    };
   }
 
   async getOne(id: number) {
-    const post = await this.prismaService.post.findUnique({ where: { id } })
+    const post = await this.prismaService.post.findUnique({ where: { id } });
     if (!post) {
-      throw new BadRequestException()
+      throw new BadRequestException();
     }
 
-    const presentation = await this.prismaService.presentation.findUnique({ where: { postId: post.id } })
+    const presentation = await this.prismaService.presentation.findUnique({
+      where: { postId: post.id },
+    });
 
     return {
       ...post,
-      presentation
-    }
-
+      presentation,
+    };
   }
 
   async update(id: number, updatePostDto: UpdatePostDto) {
-
     if (!updatePostDto) {
-      throw new BadRequestException()
+      throw new BadRequestException();
     }
 
     const updatePost = await this.prismaService.post.update({
       where: { id },
       data: {
         title: updatePostDto.title,
-        description: updatePostDto.description
-      }
-    })
+        description: updatePostDto.description,
+      },
+    });
 
-    return updatePost
-
+    return updatePost;
   }
 
   async remove(id: number) {
     if (!id) {
-      throw new BadRequestException()
+      throw new BadRequestException();
     }
 
-    await this.prismaService.presentation.delete({ where: { postId: id } })
-    await this.prismaService.post.delete({ where: { id } })
+    await this.prismaService.presentation.delete({ where: { postId: id } });
+    await this.prismaService.post.delete({ where: { id } });
 
-
-    return 'Post was remove.'
+    return 'Post was remove.';
   }
 }
