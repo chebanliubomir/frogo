@@ -3,8 +3,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
-import { PrismaService } from '@/prisma/prisma.service';
 import { ExtractionService } from '@/extraction/extraction.service';
+import { PrismaService } from '@/prisma/prisma.service';
 
 
 
@@ -18,6 +18,8 @@ export class PostService {
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
 
     const extractJpgFromPPTX = this.extractionService.extractionImagesFromPPTX(presentation)
+
+    console.log(extractJpgFromPPTX)
 
     const createPost = await this.prismaService.post.create({
       data: {
