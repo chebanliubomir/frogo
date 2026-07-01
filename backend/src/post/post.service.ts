@@ -17,10 +17,6 @@ export class PostService {
 
   async create(createPostDto: CreatePostDto, presentation: Express.Multer.File, userId: number) {
 
-    const extractJpgFromPPTX = this.extractionService.extractionImagesFromPPTX(presentation)
-
-    console.log(extractJpgFromPPTX)
-
     const createPost = await this.prismaService.post.create({
       data: {
         title: createPostDto.title,
@@ -28,6 +24,10 @@ export class PostService {
         userId: userId,
       },
     });
+
+    const extractJpgFromPPTX = this.extractionService.extractionImagesFromPPTX(presentation, createPost.id)
+
+    console.log(extractJpgFromPPTX)
 
     const createPresentation = await this.prismaService.presentation.create({
       data: {
