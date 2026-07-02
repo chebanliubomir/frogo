@@ -25,7 +25,7 @@ export class PostService {
       },
     });
 
-    const extractJpgFromPPTX = this.extractionService.extractionImagesFromPPTX(presentation, createPost.id)
+    const extractJpgFromPPTX = await this.extractionService.extractionImagesFromPPTX(presentation, createPost.id)
 
     console.log(extractJpgFromPPTX)
 
