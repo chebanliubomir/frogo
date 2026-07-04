@@ -27,8 +27,6 @@ export class PostService {
 
     const extractJpgFromPPTX = await this.extractionService.extractionImagesFromPPTX(presentation, createPost.id)
 
-    console.log(extractJpgFromPPTX)
-
     const createPresentation = await this.prismaService.presentation.create({
       data: {
         name: presentation.filename,
