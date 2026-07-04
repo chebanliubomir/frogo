@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common'
-import * as libre from 'libreoffice-convert'
 import * as fs from 'fs/promises'
 import * as path from 'path'
+
+import { Injectable } from '@nestjs/common'
+import * as libre from 'libreoffice-convert'
 @Injectable()
 export class ExtractionService {
 
   async extractionImagesFromPPTX(file: Express.Multer.File, postId: number) {
 
     const fileRead = await fs.readFile(file.path)
+
+    console.log(postId)
 
     const result = await new Promise<Buffer>((resolve, reject) => {
       libre.convert(fileRead, '.pdf', undefined, (err, done) => {
