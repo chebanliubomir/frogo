@@ -13,14 +13,11 @@ export class ExtractionService {
     console.log(postId)
 
     const result = await new Promise<Buffer>((resolve, reject) => {
-
       libre.convert(fileRead, '.pdf', undefined, (err, done) => {
         if (err) return reject(err)
-          
         resolve(done)
-      });
-
-    });
+      })
+    })
 
     const uploadDir = path.join(process.cwd(), 'uploads', 'pdf')
 
