@@ -10,8 +10,6 @@ export class ExtractionService {
 
     const fileRead = await fs.readFile(file.path)
 
-    console.log(postId)
-
     const result = await new Promise<Buffer>((resolve, reject) => {
       libre.convert(fileRead, '.pdf', undefined, (err, done) => {
         if (err) return reject(err)
@@ -23,10 +21,8 @@ export class ExtractionService {
 
     await fs.mkdir(uploadDir, { recursive: true })
 
-    const baseName = path.parse(file.originalname).name
-    const fileName = `${baseName}-${Date.now()}.pdf`
-    const fullPath = path.join(uploadDir, fileName)
+    const fileName = path.parse(file.originalname).name + postId
 
-    await fs.writeFile(fullPath, result)
+    await fs.writeFile(fileName, result)
   }
 }
