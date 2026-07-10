@@ -5,7 +5,6 @@ import {
   NotFoundException,
   UnauthorizedException
 } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { Token } from '@prisma/generated'
 import * as bcrypt from 'bcrypt'
 import uuid from 'uuid'
@@ -24,7 +23,6 @@ export class AuthenticationService {
   constructor(
     private readonly user: UserService,
     private readonly token: TokensService,
-    private readonly configService: ConfigService,
     private readonly mailService: MailService
   ) { }
 
@@ -47,7 +45,7 @@ export class AuthenticationService {
       to: newUser.email,
       subject: 'Activate account',
       html: `
-      <a href="${this.configService.get('common.server_url')}api/activate/${activatedLink}">
+      <a href="${process.env.SERVER_URL}api/activate/${activatedLink}">
         <button>activate account</button>
       </a>`
     })

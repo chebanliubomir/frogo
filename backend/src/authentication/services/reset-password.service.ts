@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import * as bcrypt from 'bcrypt'
 import * as uuid from 'uuid'
 
@@ -13,7 +12,6 @@ export class ResetPasswordService {
 
   constructor(
     private readonly user: UserService,
-    private readonly configService: ConfigService,
     private readonly mailService: MailService,
     private readonly prisma: PrismaService
   ) { }
@@ -34,7 +32,7 @@ export class ResetPasswordService {
     await this.mailService.sendMail({
       to: user.email,
       subject: 'Reset Password',
-      html: `${this.configService.get('common.server_url')}api/authentication/reset-password/${resetPasswordLink}`
+      html: `${process.env.SERVER_URL}api/authentication/reset-password/${resetPasswordLink}`
     })
 
     return `Letter send to ${user.email}.`
