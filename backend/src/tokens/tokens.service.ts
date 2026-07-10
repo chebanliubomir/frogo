@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { Token, User } from '@prisma/generated'
 
@@ -11,7 +10,6 @@ export class TokensService {
   constructor(
     private readonly jwt: JwtService,
     private readonly prisma: PrismaService,
-    private configService: ConfigService
   ) { }
 
   async generateTokens(payload): Promise<TokensType> {
@@ -19,12 +17,12 @@ export class TokensService {
     const [accessToken, refreshToken] = await Promise.all([
 
       this.jwt.sign(payload, {
-        secret: this.configService.get<string>('jwt.access_secret'),
+        secret: process.env.JWT_ACCESS_SECRET_KEY,
         expiresIn: '15m',
       }),
 
       this.jwt.sign(payload, {
-        secret: this.configService.get<string>('jwt.refresh_secret'),
+        secret: process.env.JWT_REFRESH_SECRET_KEY,
         expiresIn: '30d',
       })
     ])
@@ -37,11 +35,11 @@ export class TokensService {
   }
 
   async validateAccessToken(token: string): Promise<User> {
-    return await this.jwt.verify(token, {secret: this.configService.get<string>('jwt.access_secret')})
+    return await this.jwt.verify(token, {secret: process.env.JWT_ACCESS_SECRET_KEY})
   }
 
   async validateRefreshToken(token: string): Promise<User> {
-    return await this.jwt.verify(token, {secret: this.configService.get<string>('jwt.refresh_secret')})
+    return await this.jwt.verify(token, {secret: process.env.JWT_ACCESS_SECRET_KEY})
   }
 
   async searchingTokenInDataBase(token: string): Promise<Token | null> {

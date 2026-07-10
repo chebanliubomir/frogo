@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
 import { AuthenticationModule } from './authentication/authentication.module'
-import { commonConfig, jwtConfig, mailConfig } from './configs/common.config'
 import { MailModule } from './mail/mail.module'
 import { PrismaModule } from './prisma/prisma.module'
 import { TokensModule } from './tokens/tokens.module'
@@ -12,12 +11,7 @@ import { UserModule } from './user/user.module'
   imports: [
     ConfigModule.forRoot({
       envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
-      isGlobal: true,
-      load: [
-        commonConfig,
-        jwtConfig,
-        mailConfig
-      ]
+      isGlobal: true
     }),
     AuthenticationModule,
     UserModule,

@@ -3,7 +3,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import type { INestApplication } from '@nestjs/common'
 
 
-export const swaggerConfig = (app: INestApplication) => {
+export const swaggerConfig = (app: INestApplication, environment: string | undefined) => {
+
+  if(!environment || environment === 'production') {
+    return
+  }
 
   const config = new DocumentBuilder()
     .setTitle('Frogo')
