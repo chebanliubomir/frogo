@@ -10,6 +10,11 @@ import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.f
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
+  app.enableCors({
+    // origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
+  })
+
   app.setGlobalPrefix('api')
 
   const { httpAdapter } = app.get(HttpAdapterHost)
@@ -20,14 +25,16 @@ async function bootstrap() {
   app.use(cookieParser())
 
   const port = process.env.PORT || 7000
-  
+
+  console.log(process.env.NODE_ENV)
+
   swaggerConfig(app, process.env.NODE_ENV)
-  
+
   await app.listen(port)
-  
+
   console.log(`Server was started on URL: http://localhost:${port}/api`)
 }
 
 bootstrap().catch(e => {
-    console.log(`Main app bootstrap error: ${e}`)
-  })
+  console.log(`Main app bootstrap error: ${e}`)
+})
