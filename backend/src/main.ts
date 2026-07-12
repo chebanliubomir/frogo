@@ -11,7 +11,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   app.enableCors({
-    // origin: 'http://localhost:3000',
+    credential: true,
+    origin: 'http://localhost:5000/api',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
   })
 
@@ -19,14 +20,12 @@ async function bootstrap() {
 
   const { httpAdapter } = app.get(HttpAdapterHost)
   app.useGlobalFilters(new PrismaClientExeptionFilter(httpAdapter))
-
+  
   app.useGlobalPipes(new ValidationPipe())
 
   app.use(cookieParser())
 
   const port = process.env.PORT || 7000
-
-  console.log(process.env.NODE_ENV)
 
   swaggerConfig(app, process.env.NODE_ENV)
 

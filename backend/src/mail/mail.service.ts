@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
 import { MailerService } from '@nestjs-modules/mailer'
 
 import { mailTypes } from './types/mail.types'
@@ -8,13 +7,12 @@ import { mailTypes } from './types/mail.types'
 export class MailService {
 
   constructor(
-    private readonly configService: ConfigService,
     private readonly mailerService: MailerService
   ) { }
 
   async sendMail({ to, subject, html }: mailTypes) {
     await this.mailerService.sendMail({
-      from: `${this.configService.get('mail.user')}`,
+      from: process.env.SEND_MAIL_AUTH_USER,
       to,
       subject,
       html

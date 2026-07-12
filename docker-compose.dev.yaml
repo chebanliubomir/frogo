@@ -6,7 +6,7 @@ services:
       context: ./backend/
       dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000"
+      - "5000:5000"
     env_file:
       - ./backend/.env.development
     develop:
