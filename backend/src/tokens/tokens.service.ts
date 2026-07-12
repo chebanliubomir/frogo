@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Token, User } from '@prisma/generated'
 
@@ -18,12 +18,12 @@ export class TokensService {
 
       this.jwt.sign(payload, {
         secret: process.env.JWT_ACCESS_SECRET_KEY,
-        expiresIn: '15m',
+        expiresIn: '1m',
       }),
 
       this.jwt.sign(payload, {
         secret: process.env.JWT_REFRESH_SECRET_KEY,
-        expiresIn: '30d',
+        expiresIn: '1m',
       })
     ])
 
@@ -39,7 +39,11 @@ export class TokensService {
   }
 
   async validateRefreshToken(token: string): Promise<User> {
-    return await this.jwt.verify(token, {secret: process.env.JWT_ACCESS_SECRET_KEY})
+    const validate = await this.jwt.verify(token, {secret: process.env.JWT_REFRESH_SECRET_KEY})
+    if(!validate) {
+      throw new UnauthorizedException()
+    }
+    return validate
   }
 
   async searchingTokenInDataBase(token: string): Promise<Token | null> {

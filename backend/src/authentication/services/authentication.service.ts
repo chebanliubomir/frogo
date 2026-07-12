@@ -111,17 +111,23 @@ export class AuthenticationService {
       throw new UnauthorizedException()
     }
 
+    console.log(1)
+
     const userData = await this.token.validateRefreshToken(refreshToken)
     const tokenFromDb = await this.token.searchingTokenInDataBase(refreshToken)
 
+    console.log(3)
     if (!userData || !tokenFromDb) {
       throw new UnauthorizedException()
     }
 
+    console.log(4)
     const findUser = await this.user.findUserId(userData.id)
     if (!findUser) {
       throw new UnauthorizedException()
     }
+
+    console.log(5)
 
     const payload = {
       id: findUser.id,

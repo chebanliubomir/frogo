@@ -36,12 +36,7 @@ export class UserService {
     return await this.prisma.user.findFirst({ where: { resetPasswordLink: link } })
   }
 
-  async activate(link: string): Promise<void> {
-    const user = await this.prisma.user.findFirst({ where: { activatedLink: link } })
-    if (!user) {
-      throw new BadRequestException()
-    }
-
+  async activateAccount(link: string): Promise<void> {
     await this.prisma.user.update({
       where: { activatedLink: link },
       data: {
@@ -49,7 +44,6 @@ export class UserService {
         isActivated: true
       },
     })
-
   }
 
   async getAllUsers() {
