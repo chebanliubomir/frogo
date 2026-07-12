@@ -14,12 +14,12 @@ export class ActivateAccountUserService {
   async activate(link: string): Promise<string> {
     const user = await this.user.findUserActivatedLink(link)
     if (!user) {
-      throw new BadRequestException()
+      throw new BadRequestException({message: 'Account not found'})
     }
 
-    await this.user.activate(link)
+    await this.user.activateAccount(link)
 
-    return 'Your account was activated.'
+    return 'Your account was activated'
   }
 
 }
