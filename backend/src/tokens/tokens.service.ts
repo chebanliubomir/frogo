@@ -39,11 +39,7 @@ export class TokensService {
   }
 
   async validateRefreshToken(token: string): Promise<User> {
-    const validate = await this.jwt.verify(token, {secret: process.env.JWT_REFRESH_SECRET_KEY})
-    if(!validate) {
-      throw new UnauthorizedException()
-    }
-    return validate
+    return await this.jwt.verify(token, {secret: process.env.JWT_REFRESH_SECRET_KEY})
   }
 
   async searchingTokenInDataBase(token: string): Promise<Token | null> {
