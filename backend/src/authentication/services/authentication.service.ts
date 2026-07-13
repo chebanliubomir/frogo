@@ -108,26 +108,20 @@ export class AuthenticationService {
 
   async refresh(refreshToken: string): Promise<TokensType> {
     if (!refreshToken) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException({ message: 'User is not authorized' })
     }
-
-    console.log(1)
 
     const userData = await this.token.validateRefreshToken(refreshToken)
     const tokenFromDb = await this.token.searchingTokenInDataBase(refreshToken)
 
-    console.log(3)
     if (!userData || !tokenFromDb) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException({ message: 'User is not authorized' })
     }
 
-    console.log(4)
     const findUser = await this.user.findUserId(userData.id)
     if (!findUser) {
-      throw new UnauthorizedException()
+      throw new UnauthorizedException({ message: 'User is not authorized' })
     }
-
-    console.log(5)
 
     const payload = {
       id: findUser.id,
