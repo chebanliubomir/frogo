@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import { AppModule } from './app.module'
 import { swaggerConfig } from './configs/swagger.config'
 import { PrismaClientExeptionFilter } from './prisma/exeptions/prisma-exeption.filter'
+import { JwtExeptionFilter } from './tokens/exeptions/jwt-exeption.filter'
 
 
 async function bootstrap() {
@@ -20,6 +21,7 @@ async function bootstrap() {
 
   const { httpAdapter } = app.get(HttpAdapterHost)
   app.useGlobalFilters(new PrismaClientExeptionFilter(httpAdapter))
+  app.useGlobalFilters(new JwtExeptionFilter())
   
   app.useGlobalPipes(new ValidationPipe())
 
