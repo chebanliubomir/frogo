@@ -11,11 +11,11 @@ import { JwtExeptionFilter } from './tokens/exeptions/jwt-exeption.filter'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  app.enableCors({
-    credential: true,
-    origin: 'http://localhost:5000/api',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
-  })
+  // app.enableCors({
+  //   credential: true,
+  //   origin: 'http://localhost:5000/api',
+  //   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
+  // })
 
   app.setGlobalPrefix('api')
 
