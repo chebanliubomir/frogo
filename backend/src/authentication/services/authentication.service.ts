@@ -16,6 +16,8 @@ import { RegistrationDto } from '../dto/registration.dto'
 import { MailService } from '@/mail/mail.service'
 import { TokensService } from '@/tokens/tokens.service'
 import { Tokens } from '@/tokens/intarfaces/tokens.intarface'
+import { AuthenticationEntity } from '../entities/authentication.entity'
+import { instanceToPlain } from 'class-transformer'
 
 
 @Injectable()
@@ -50,19 +52,9 @@ export class AuthenticationService {
       </a>`
     })
 
-    const payload = {
-      id: newUser.id,
-      avatar: newUser.avatar,
-      name: newUser.name,
-      surname: newUser.surname,
-      email: newUser.email,
-      activatedLink: newUser.activatedLink,
-      role: newUser.role,
-      updated_at: newUser.updated_at,
-      created_at: newUser.created_at,
-    }
 
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const payload = new AuthenticationEntity(newUser)
+    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
 
     await this.token.saveToken(newUser.id, refresh_token)
 
@@ -87,19 +79,8 @@ export class AuthenticationService {
       })
     }
 
-    const payload = {
-      id: findUser.id,
-      avatar: findUser.avatar,
-      name: findUser.name,
-      surname: findUser.surname,
-      email: findUser.email,
-      activatedLink: findUser.activatedLink,
-      role: findUser.role,
-      updated_at: findUser.updated_at,
-      created_at: findUser.created_at,
-    }
-
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const payload = new AuthenticationEntity(findUser)
+    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
 
     await this.token.saveToken(findUser.id, refresh_token)
 
@@ -123,19 +104,8 @@ export class AuthenticationService {
       throw new UnauthorizedException({ message: 'User is not authorized' })
     }
 
-    const payload = {
-      id: findUser.id,
-      avatar: findUser.avatar,
-      name: findUser.name,
-      surname: findUser.surname,
-      email: findUser.email,
-      activatedLink: findUser.activatedLink,
-      role: findUser.role,
-      updated_at: findUser.updated_at,
-      created_at: findUser.created_at,
-    }
-
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const payload = new AuthenticationEntity(findUser)
+    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
 
     await this.token.saveToken(findUser.id, refresh_token)
 
