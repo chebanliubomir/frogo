@@ -12,7 +12,7 @@ export class TokensService {
     private readonly prisma: PrismaService,
   ) { }
 
-  async generateTokens(payload): Promise<TokensType> {
+  async generateTokens(payload) {
 
     const [accessToken, refreshToken] = await Promise.all([
 
