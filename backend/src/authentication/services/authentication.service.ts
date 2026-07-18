@@ -15,7 +15,7 @@ import { RegistrationDto } from '../dto/registration.dto'
 
 import { MailService } from '@/mail/mail.service'
 import { TokensService } from '@/tokens/tokens.service'
-import { TokensType } from '@/types/tokens.type'
+import { Tokens } from '@/tokens/intarfaces/tokens.intarface'
 
 
 @Injectable()
@@ -26,7 +26,7 @@ export class AuthenticationService {
     private readonly mailService: MailService
   ) { }
 
-  async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
+  async registration({ name, surname, email, password }: RegistrationDto): Promise<Tokens> {
     const findUser = await this.user.findUserEmail(email)
     if (findUser) {
       throw new ConflictException({
@@ -70,7 +70,7 @@ export class AuthenticationService {
 
   }
 
-  async login({ email, password }: LoginDto): Promise<TokensType> {
+  async login({ email, password }: LoginDto): Promise<Tokens> {
     const findUser = await this.user.findUserEmail(email)
     if (!findUser) {
       throw new NotFoundException({
@@ -106,7 +106,7 @@ export class AuthenticationService {
     return { access_token, refresh_token }
   }
 
-  async refresh(refreshToken: string): Promise<TokensType> {
+  async refresh(refreshToken: string): Promise<Tokens> {
     if (!refreshToken) {
       throw new UnauthorizedException({ message: 'User is not authorized' })
     }

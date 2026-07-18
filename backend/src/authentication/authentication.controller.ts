@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Res, Req, Get, Param, Query, UseGuards } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Request, Response } from 'express'
 
 import { LoginDto } from './dto/login.dto'
@@ -66,7 +66,7 @@ export class AuthenticationController {
     schema: {
       type: 'object',
       properties: {
-        email: { type: 'string', example: 'qwerty@gmail.com' }
+        email: { type: 'string', example: 'qwqzx1485@gmail.com' }
       },
       required: ['email']
     }
