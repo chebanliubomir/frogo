@@ -7,17 +7,17 @@ import {
 } from '@nestjs/common'
 import { Token } from '@prisma/generated'
 import * as bcrypt from 'bcrypt'
+import { instanceToPlain } from 'class-transformer'
 import uuid from 'uuid'
 
 import { UserService } from '../../user/user.service'
 import { LoginDto } from '../dto/login.dto'
 import { RegistrationDto } from '../dto/registration.dto'
+import { AuthenticationEntity } from '../entities/authentication.entity'
 
 import { MailService } from '@/mail/mail.service'
-import { TokensService } from '@/tokens/tokens.service'
 import { Tokens } from '@/tokens/intarfaces/tokens.intarface'
-import { AuthenticationEntity } from '../entities/authentication.entity'
-import { instanceToPlain } from 'class-transformer'
+import { TokensService } from '@/tokens/tokens.service'
 
 
 @Injectable()

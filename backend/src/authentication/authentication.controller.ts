@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Res, Req, Get, Param, Query, UseGuards } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Request, Response } from 'express'
 
 import { LoginDto } from './dto/login.dto'
