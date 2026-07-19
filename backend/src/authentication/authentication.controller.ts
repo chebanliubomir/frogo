@@ -66,7 +66,7 @@ export class AuthenticationController {
     schema: {
       type: 'object',
       properties: {
-        email: { type: 'string', example: 'qwerty@gmail.com' }
+        email: { type: 'string', example: 'qwqzx1485@gmail.com' }
       },
       required: ['email']
     }

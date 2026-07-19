@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Token, User } from '@prisma/generated'
 
+import { Tokens } from './intarfaces/tokens.intarface'
+
 import { PrismaService } from '@/prisma/prisma.service'
-import { TokensType } from '@/types/tokens.type'
 
 @Injectable()
 export class TokensService {
@@ -12,7 +13,7 @@ export class TokensService {
     private readonly prisma: PrismaService,
   ) { }
 
-  async generateTokens(payload) {
+  async generateTokens(payload): Promise<Tokens> {
 
     const [accessToken, refreshToken] = await Promise.all([
 

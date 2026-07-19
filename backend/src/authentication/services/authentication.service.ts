@@ -7,15 +7,17 @@ import {
 } from '@nestjs/common'
 import { Token } from '@prisma/generated'
 import * as bcrypt from 'bcrypt'
+import { instanceToPlain } from 'class-transformer'
 import uuid from 'uuid'
 
 import { UserService } from '../../user/user.service'
 import { LoginDto } from '../dto/login.dto'
 import { RegistrationDto } from '../dto/registration.dto'
+import { AuthenticationEntity } from '../entities/authentication.entity'
 
 import { MailService } from '@/mail/mail.service'
+import { Tokens } from '@/tokens/intarfaces/tokens.intarface'
 import { TokensService } from '@/tokens/tokens.service'
-import { TokensType } from '@/types/tokens.type'
 
 
 @Injectable()
@@ -26,7 +28,7 @@ export class AuthenticationService {
     private readonly mailService: MailService
   ) { }
 
-  async registration({ name, surname, email, password }: RegistrationDto): Promise<TokensType> {
+  async registration({ name, surname, email, password }: RegistrationDto): Promise<Tokens> {
     const findUser = await this.user.findUserEmail(email)
     if (findUser) {
       throw new ConflictException({
@@ -50,19 +52,9 @@ export class AuthenticationService {
       </a>`
     })
 
-    const payload = {
-      id: newUser.id,
-      avatar: newUser.avatar,
-      name: newUser.name,
-      surname: newUser.surname,
-      email: newUser.email,
-      activatedLink: newUser.activatedLink,
-      role: newUser.role,
-      updated_at: newUser.updated_at,
-      created_at: newUser.created_at,
-    }
 
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const payload = new AuthenticationEntity(newUser)
+    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
 
     await this.token.saveToken(newUser.id, refresh_token)
 
@@ -70,7 +62,7 @@ export class AuthenticationService {
 
   }
 
-  async login({ email, password }: LoginDto): Promise<TokensType> {
+  async login({ email, password }: LoginDto): Promise<Tokens> {
     const findUser = await this.user.findUserEmail(email)
     if (!findUser) {
       throw new NotFoundException({
@@ -87,26 +79,15 @@ export class AuthenticationService {
       })
     }
 
-    const payload = {
-      id: findUser.id,
-      avatar: findUser.avatar,
-      name: findUser.name,
-      surname: findUser.surname,
-      email: findUser.email,
-      activatedLink: findUser.activatedLink,
-      role: findUser.role,
-      updated_at: findUser.updated_at,
-      created_at: findUser.created_at,
-    }
-
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const payload = new AuthenticationEntity(findUser)
+    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
 
     await this.token.saveToken(findUser.id, refresh_token)
 
     return { access_token, refresh_token }
   }
 
-  async refresh(refreshToken: string): Promise<TokensType> {
+  async refresh(refreshToken: string): Promise<Tokens> {
     if (!refreshToken) {
       throw new UnauthorizedException({ message: 'User is not authorized' })
     }
@@ -123,19 +104,8 @@ export class AuthenticationService {
       throw new UnauthorizedException({ message: 'User is not authorized' })
     }
 
-    const payload = {
-      id: findUser.id,
-      avatar: findUser.avatar,
-      name: findUser.name,
-      surname: findUser.surname,
-      email: findUser.email,
-      activatedLink: findUser.activatedLink,
-      role: findUser.role,
-      updated_at: findUser.updated_at,
-      created_at: findUser.created_at,
-    }
-
-    const { access_token, refresh_token } = await this.token.generateTokens(payload)
+    const payload = new AuthenticationEntity(findUser)
+    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
 
     await this.token.saveToken(findUser.id, refresh_token)
 
