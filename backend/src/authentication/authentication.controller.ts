@@ -31,7 +31,7 @@ export class AuthenticationController {
 
     response.cookie('refreshToken', data.refresh_token, {
       httpOnly: true,
-      secure: false, // make to truthy for prodaction
+      secure: false,
       maxAge: 30 * 24 * 60 * 60 * 1000,
       path: '/'
     })
