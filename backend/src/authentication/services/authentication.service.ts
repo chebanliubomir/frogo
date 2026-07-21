@@ -16,7 +16,7 @@ import { RegistrationDto } from '../dto/registration.dto'
 import { AuthenticationEntity } from '../entities/authentication.entity'
 
 import { MailService } from '@/mail/mail.service'
-import { Tokens } from '@/tokens/intarfaces/tokens.intarface'
+import { Tokens } from '@/tokens/interfaces/tokens.intarface'
 import { TokensService } from '@/tokens/tokens.service'
 
 

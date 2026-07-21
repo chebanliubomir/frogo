@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Token, User } from '@prisma/generated'
 
-import { Tokens } from './intarfaces/tokens.intarface'
+import { Tokens } from './interfaces/tokens.intarface'
 
 import { PrismaService } from '@/prisma/prisma.service'
 
