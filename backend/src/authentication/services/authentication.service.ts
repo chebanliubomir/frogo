@@ -54,11 +54,11 @@ export class AuthenticationService {
 
 
     const payload = new AuthenticationEntity(newUser)
-    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
+    const { accessToken, refreshToken } = await this.token.generateTokens(instanceToPlain(payload))
 
-    await this.token.saveToken(newUser.id, refresh_token)
+    await this.token.saveToken(newUser.id, refreshToken)
 
-    return { access_token, refresh_token }
+    return { accessToken, refreshToken }
 
   }
 
@@ -80,11 +80,11 @@ export class AuthenticationService {
     }
 
     const payload = new AuthenticationEntity(findUser)
-    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
+    const { accessToken, refreshToken } = await this.token.generateTokens(instanceToPlain(payload))
 
-    await this.token.saveToken(findUser.id, refresh_token)
+    await this.token.saveToken(findUser.id, refreshToken)
 
-    return { access_token, refresh_token }
+    return { accessToken, refreshToken }
   }
 
   async refresh(refreshToken: string): Promise<Tokens> {
@@ -105,11 +105,11 @@ export class AuthenticationService {
     }
 
     const payload = new AuthenticationEntity(findUser)
-    const { access_token, refresh_token } = await this.token.generateTokens(instanceToPlain(payload))
+    const tokens = await this.token.generateTokens(instanceToPlain(payload))
 
-    await this.token.saveToken(findUser.id, refresh_token)
+    await this.token.saveToken(findUser.id, tokens.refreshToken)
 
-    return { access_token, refresh_token }
+    return { ...tokens }
   }
 
   async logout(refreshToken: string): Promise<Token | null> {

@@ -29,8 +29,8 @@ export class TokensService {
     ])
 
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken
+      accessToken: accessToken,
+      refreshToken: refreshToken
     }
 
   }
