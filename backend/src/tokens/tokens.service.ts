@@ -19,12 +19,12 @@ export class TokensService {
 
       this.jwt.sign(payload, {
         secret: process.env.JWT_ACCESS_SECRET_KEY,
-        expiresIn: '1m',
+        expiresIn: '1d',
       }),
 
       this.jwt.sign(payload, {
         secret: process.env.JWT_REFRESH_SECRET_KEY,
-        expiresIn: '1m',
+        expiresIn: '30d',
       })
     ])
 

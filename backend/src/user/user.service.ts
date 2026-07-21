@@ -3,6 +3,8 @@ import { User } from '@prisma/generated'
 
 import { PrismaService } from '../prisma/prisma.service'
 import { CreateUser } from './interfaces/create-user.intarface'
+import { instanceToPlain } from 'class-transformer'
+import { UserEntity } from './entities/get-user.entity'
 
 @Injectable()
 export class UserService {
@@ -52,11 +54,13 @@ export class UserService {
     if (allUsers.length <= 0) {
       throw new NotFoundException({
         status: HttpStatus.NOT_FOUND,
-        message: 'Жодного користувача не знайдено.'
+        message: 'No user found.'
       })
     }
 
-    return allUsers
+    const result = allUsers.map(user => new UserEntity(user))
+
+    return instanceToPlain(result)
   }
 
 }
