@@ -29,7 +29,7 @@ export class AuthenticationController {
   ) {
     const data = await this.authenticationService.registration(registrationDto)
 
-    response.cookie('refreshToken', data.refresh_token, {
+    response.cookie('refreshToken', data.refreshToken, {
       httpOnly: true,
       secure: false,
       maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -37,7 +37,7 @@ export class AuthenticationController {
     })
 
     response.json({
-      access_token: data.access_token
+      access_token: data.accessToken
     })
   }
 
@@ -50,7 +50,7 @@ export class AuthenticationController {
   ) {
     const data = await this.authenticationService.login(loginDto)
 
-    response.cookie('refreshToken', data.refresh_token, {
+    response.cookie('refreshToken', data.refreshToken, {
       httpOnly: true,
       secure: false, // make to truthy for prodaction
       maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -58,7 +58,7 @@ export class AuthenticationController {
     })
 
     response.json({
-      access_token: data.access_token,
+      access_token: data.accessToken,
     })
   }
 
@@ -115,14 +115,14 @@ export class AuthenticationController {
     const { refreshToken } = req.cookies
     const data = await this.authenticationService.refresh(refreshToken)
 
-    response.cookie('refreshToken', data.refresh_token, {
+    response.cookie('refreshToken', data.refreshToken, {
       httpOnly: true,
       secure: false, // make to truthy for prodaction
       maxAge: 30 * 24 * 60 * 60 * 1000,
       path: '/'
     })
 
-    response.json(data.access_token)
+    response.json(data.accessToken)
   }
 
   @UseGuards(ActivateAccountUserService)
