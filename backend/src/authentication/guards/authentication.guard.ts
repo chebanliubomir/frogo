@@ -11,13 +11,12 @@ export class AuthenticationGuard implements CanActivate {
     try {
       const request = context.switchToHttp().getRequest()
 
-      const access_token = this.expectTokenFromHeader(request)
-      if (!access_token) {
+      const accessToken = this.expectTokenFromHeader(request)
+      if (!accessToken) {
         throw new UnauthorizedException({ message: 'User is not authorized' })
       }
 
-      const validate = await this.token.validateAccessToken(access_token)
-      console.log(validate)
+      const validate = await this.token.validateAccessToken(accessToken)
       if (!validate) {
         throw new UnauthorizedException({ message: 'User is not authorized' })
       }
