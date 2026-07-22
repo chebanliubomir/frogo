@@ -1,4 +1,4 @@
-export type mailTypes = {
+export interface Mail {
   to: string
   subject: string
   html: string
