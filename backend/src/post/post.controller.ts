@@ -13,6 +13,7 @@ import { UserRolesGuard } from '@/user/guards/user-roles.guard'
 import 'multer'
 import { UserId } from '@/user/decorator/user-id.decorator'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { presentationStorage } from './utils/storage'
 
 @ApiTags('Post')
 @Controller('post')
@@ -26,7 +27,7 @@ export class PostController {
   @ApiOperation({ summary: 'Create post' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: CreatePostDto })
-  @UseInterceptors(FileInterceptor('presentation'))
+  @UseInterceptors(FileInterceptor('presentation', { storage: presentationStorage }))
   create(
     @UserId('id') userId: number,
     @Body() createPostDto: CreatePostDto,
