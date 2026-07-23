@@ -14,4 +14,7 @@ export class CreatePostDto {
   @ApiProperty({default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.'})
   description: string
 
+  @ApiProperty({ type: 'string', format: 'binary', description: 'Presentation' })
+  presentation: Express.Multer.File
+
 }

@@ -2,12 +2,24 @@ import { Injectable } from '@nestjs/common';
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class PostService {
-  create(createPostDto: CreatePostDto) {
-    console.log(createPostDto)
-    return 'This action adds a new post'
+
+  constructor(private readonly prisma: PrismaService) { }
+
+  async create(userId: number, createPostDto: CreatePostDto, presentation: Express.Multer.File) {
+
+    console.log(userId)
+    
+    const createPost = await this.prisma.post.create({
+      data: {
+        userId: userId,
+        title: createPostDto.title,
+        description: createPostDto.description
+      }
+    })
   }
 
   getAll() {
