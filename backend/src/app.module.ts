@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 
 import { AuthenticationModule } from './authentication/authentication.module'
 import { MailModule } from './mail/mail.module'
+import { PostModule } from './post/post.module';
 import { PrismaModule } from './prisma/prisma.module'
 import { TokensModule } from './tokens/tokens.module'
 import { UserModule } from './user/user.module'
@@ -19,6 +20,7 @@ import { UserModule } from './user/user.module'
     TokensModule,
     ConfigModule,
     MailModule,
+    PostModule,
   ],
   controllers: [],
   providers: [],
