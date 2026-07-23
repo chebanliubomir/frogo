@@ -3,9 +3,9 @@ import uuid from 'uuid'
 
 const generateUniqueFileName = (req, file, callback) => {
   const uniqueCode = uuid.v4()
-  const originalname = file.originalname.split('.')[0]
+  const originalname = file.originalname.split('.')
 
-  callback(null, [uniqueCode, originalname].join('-'))
+  callback(null, ([uniqueCode, originalname[0]].join('-')) + '.' + originalname[1])
 }
 
 export const presentationStorage = diskStorage({
