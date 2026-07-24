@@ -10,9 +10,6 @@ export class PostService {
   constructor(private readonly prisma: PrismaService) { }
 
   async create(userId: number, createPostDto: CreatePostDto, presentation: Express.Multer.File) {
-
-    console.log(userId)
-    
     const createPost = await this.prisma.post.create({
       data: {
         userId: userId,
@@ -20,6 +17,10 @@ export class PostService {
         description: createPostDto.description
       }
     })
+
+
+
+
   }
 
   getAll() {
