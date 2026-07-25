@@ -31,7 +31,7 @@ export class PostController {
   create(
     @UserId('id') userId: number,
     @Body() createPostDto: CreatePostDto,
-    @UploadedFile('presentation') presentation: Express.Multer.File
+    @UploadedFile() presentation: Express.Multer.File
   ) {
     return this.postService.create(userId, createPostDto, presentation)
   }
