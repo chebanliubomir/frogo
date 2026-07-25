@@ -18,8 +18,9 @@ export class PostService {
       }
     })
 
+    console.log(createPost)
 
-
+    console.log(presentation)
 
   }
 
