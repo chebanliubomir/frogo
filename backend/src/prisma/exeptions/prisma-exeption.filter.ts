@@ -12,6 +12,15 @@ export class PrismaClientExeptionFilter extends BaseExceptionFilter {
     const message = exception.message
     switch (code) {
 
+      case 'P2000': {
+        const status = HttpStatus.CONFLICT
+        response.status(status).json({
+          statusCode: status,
+          message: message,
+        })
+        break
+      }
+
       case 'P2002': {
         const status = HttpStatus.CONFLICT
         response.status(status).json({

@@ -17,10 +17,8 @@ export class PostService {
         description: createPostDto.description
       }
     })
-
-    console.log(createPost)
-
-    console.log(presentation)
+    
+    
 
   }
 
