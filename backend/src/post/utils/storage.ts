@@ -1,4 +1,4 @@
-import { diskStorage } from "multer"
+import { diskStorage } from 'multer'
 import uuid from 'uuid'
 
 const generateUniqueFileName = (req, file, callback) => {
