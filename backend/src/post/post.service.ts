@@ -18,7 +18,20 @@ export class PostService {
       }
     })
     
-    
+    const createPresentation = await this.prisma.presentation.create({
+      data: {
+        name: presentation.filename,
+        weight: presentation.size,
+        postId: createPost.id
+      }
+    })
+
+
+    return {
+      ...createPost,
+      presentation: createPresentation
+    }
+
 
   }
 

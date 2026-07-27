@@ -8,7 +8,7 @@ import { Role } from '@prisma/generated'
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
 import { PostService } from './post.service'
-import { presentationStorage } from './utils/storage'
+import { fileFilter, presentationStorage } from './utils/storage'
 
 import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
 import { UserId } from '@/user/decorator/user-id.decorator'
@@ -26,7 +26,7 @@ export class PostController {
   @ApiOperation({ summary: 'Create post' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: CreatePostDto })
-  @UseInterceptors(FileInterceptor('presentation', { storage: presentationStorage }))
+  @UseInterceptors(FileInterceptor('presentation', { storage: presentationStorage, fileFilter: fileFilter }))
   create(
     @UserId('id') userId: number,
     @Body() createPostDto: CreatePostDto,
