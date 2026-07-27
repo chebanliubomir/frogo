@@ -1,6 +1,11 @@
 import { diskStorage } from 'multer'
 import uuid from 'uuid'
 
+export const fileFilter = (req, file, callback) => {
+  // TODO: Create a filter for presentation only
+  callback(null, true)
+}
+
 const generateUniqueFileName = (req, file, callback) => {
   const uniqueCode = uuid.v4()
   const originalname = file.originalname.split('.')
@@ -10,5 +15,5 @@ const generateUniqueFileName = (req, file, callback) => {
 
 export const presentationStorage = diskStorage({
   destination: './uploads',
-  filename: generateUniqueFileName
+  filename: generateUniqueFileName,
 })
