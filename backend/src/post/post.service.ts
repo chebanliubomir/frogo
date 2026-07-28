@@ -18,7 +18,7 @@ export class PostService {
         description: createPostDto.description
       }
     })
-    
+
     const createPresentation = await this.prisma.presentation.create({
       data: {
         name: presentation.filename,
@@ -27,12 +27,8 @@ export class PostService {
       }
     })
 
-    console.log(images)
 
-    const createImagesForPost = await this.prisma.post_images.createMany({
-      data: [
-      ]
-    })
+    const createImagesForPost = await this.prisma.post_images.createMany({ data: [] })
 
     return {
       ...createPost,
