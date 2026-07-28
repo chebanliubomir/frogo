@@ -17,4 +17,7 @@ export class CreatePostDto {
   @ApiProperty({ type: 'string', format: 'binary', description: 'Presentation' })
   presentation: Express.Multer.File
 
+  @ApiProperty({ type: 'string', format: 'binary', description: 'Images' })
+  images: Express.Multer.File
+
 }

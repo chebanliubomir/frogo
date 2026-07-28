@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+
 import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class PostService {
 
   constructor(private readonly prisma: PrismaService) { }
 
-  async create(userId: number, createPostDto: CreatePostDto, presentation: Express.Multer.File) {
+  async create(userId: number, createPostDto: CreatePostDto, presentation: Express.Multer.File, images: Express.Multer.File[]) {
     const createPost = await this.prisma.post.create({
       data: {
         userId: userId,
@@ -26,6 +27,12 @@ export class PostService {
       }
     })
 
+    console.log(images)
+
+    const createImagesForPost = await this.prisma.post_images.createMany({
+      data: [
+      ]
+    })
 
     return {
       ...createPost,

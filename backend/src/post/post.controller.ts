@@ -1,6 +1,6 @@
 import 'multer'
 
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, UploadedFile, UseInterceptors, UploadedFiles } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Role } from '@prisma/generated'
@@ -27,12 +27,14 @@ export class PostController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: CreatePostDto })
   @UseInterceptors(FileInterceptor('presentation', { storage: presentationStorage, fileFilter: fileFilter }))
+  @UseInterceptors(FileInterceptor('images', { storage: presentationStorage, fileFilter: fileFilter }))
   create(
     @UserId('id') userId: number,
     @Body() createPostDto: CreatePostDto,
-    @UploadedFile() presentation: Express.Multer.File
+    @UploadedFile() presentation: Express.Multer.File,
+    @UploadedFiles() images: Express.Multer.File[]
   ) {
-    return this.postService.create(userId, createPostDto, presentation)
+    return this.postService.create(userId, createPostDto, presentation, images)
   }
 
   @Get('all')
