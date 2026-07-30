@@ -40,7 +40,6 @@ export class PostController {
       presentation: Express.Multer.File
     }
   ) {
-    console.log(files)
     return this.postService.create(userId, createPostDto, files.presentation, files.images)
   }
 

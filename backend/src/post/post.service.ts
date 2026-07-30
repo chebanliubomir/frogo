@@ -28,14 +28,18 @@ export class PostService {
       }
     })
 
-    const filterImages = images.filter(i => i.filename)
+
+    const filterImages = images.map(i => ({ name: i.filename, postId: createPost.id}))
 
 
-    const createImagesForPost = await this.prisma.post_images.createMany({ data: [] })
+    const createImagesForPost = await this.prisma.post_images.createMany({
+      data: filterImages
+    })
 
     return {
       ...createPost,
-      presentation: createPresentation
+      presentation: createPresentation,
+      images: createImagesForPost
     }
 
 
