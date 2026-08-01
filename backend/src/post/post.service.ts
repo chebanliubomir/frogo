@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -30,7 +30,7 @@ export class PostService {
     })
 
 
-    const filterImages = images.map(i => ({ name: i.filename, postId: createPost.id}))
+    const filterImages = images.map(i => ({ name: i.filename, postId: createPost.id }))
 
     const createImagesForPost = await this.prisma.post_images.createManyAndReturn({
       data: filterImages
@@ -45,12 +45,22 @@ export class PostService {
 
   }
 
-  getAll() {
-    return 'This action returns all post'
-  }
+  async getAll() { }
 
-  getOne(id: number) {
-    return `This action returns a #${id} post`
+  async getOne(id: number) {
+    const findPost = await this.prisma.post.findFirst({ where: { id } })
+
+    if(!findPost) {
+      throw new BadRequestException('There is no such post')
+    }
+
+    const findPostImages = await this.prisma.post_images.findMany({where: {postId: findPost?.id}})
+
+    return {
+      ...findPost,
+      images: findPostImages
+    }
+
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
