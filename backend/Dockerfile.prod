@@ -8,6 +8,6 @@ RUN yarn workspaces focus --all --production
 
 COPY  ./dest /app/dest
 
-EXPOSE 3000
+EXPOSE 5000
 
 CMD ["yarn", "backend:start:prod"]

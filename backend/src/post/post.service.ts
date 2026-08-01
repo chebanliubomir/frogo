@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -11,6 +11,7 @@ export class PostService {
   constructor(private readonly prisma: PrismaService) { }
 
   async create(userId: number, createPostDto: CreatePostDto, presentation: Express.Multer.File, images: Express.Multer.File[]) {
+
     const createPost = await this.prisma.post.create({
       data: {
         userId: userId,
@@ -29,8 +30,7 @@ export class PostService {
     })
 
 
-    const filterImages = images.map(i => ({ name: i.filename, postId: createPost.id}))
-
+    const filterImages = images.map(i => ({ name: i.filename, postId: createPost.id }))
 
     const createImagesForPost = await this.prisma.post_images.createManyAndReturn({
       data: filterImages
@@ -45,20 +45,39 @@ export class PostService {
 
   }
 
-  getAll() {
-    return 'This action returns all post'
-  }
+  async getAll() {}
 
-  getOne(id: number) {
-    return `This action returns a #${id} post`
+  async getOne(id: number) {
+    const findPost = await this.prisma.post.findFirst({ where: { id } })
+
+    if (!findPost) {
+      throw new BadRequestException('There is no such post')
+    }
+
+    const findPostImages = await this.prisma.post_images.findMany({ where: { postId: findPost?.id } })
+
+    return {
+      ...findPost,
+      images: findPostImages
+    }
+
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
-    console.log(updatePostDto)
     return `This action updates a #${id} post`
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`
+  async remove(id: number) {
+    const [deletedImages, deletedPresentation, deletedPost] = await this.prisma.$transaction([
+      this.prisma.post_images.deleteMany({ where: { postId: id } }),
+      this.prisma.presentation.deleteMany({ where: { postId: id } }),
+      this.prisma.post.deleteMany({ where: { id } })
+    ])
+
+    if (deletedPost.count === 0 || deletedPresentation.count === 0 || deletedImages.count === 0) {
+      throw new BadRequestException('There is no such post')
+    }
+
+    return { deletedPostCount: deletedPost.count }
   }
 }
