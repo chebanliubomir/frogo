@@ -1,19 +1,19 @@
 import 'multer'
 
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, UseInterceptors, UploadedFiles } from '@nestjs/common'
-import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express'
+import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Role } from '@prisma/generated'
 
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
 import { PostService } from './post.service'
+import { filesStorage } from './utils/storage'
 
 import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
 import { UserId } from '@/user/decorator/user-id.decorator'
 import { UserRoles } from '@/user/decorator/user-roles.decorator'
 import { UserRolesGuard } from '@/user/guards/user-roles.guard'
-import { filesStorage } from './utils/storage'
 @ApiTags('Post')
 @Controller('post')
 @ApiBearerAuth()

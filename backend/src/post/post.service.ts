@@ -45,9 +45,7 @@ export class PostService {
 
   }
 
-  async getAll() {
-    const findAllPost = await this.prisma.post.findMany()
-  }
+  async getAll() {}
 
   async getOne(id: number) {
     const findPost = await this.prisma.post.findFirst({ where: { id } })
@@ -66,7 +64,6 @@ export class PostService {
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
-    console.log(updatePostDto)
     return `This action updates a #${id} post`
   }
 

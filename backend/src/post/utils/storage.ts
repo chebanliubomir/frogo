@@ -10,10 +10,10 @@ const generateUniqueFileName = (req, file, callback) => {
   const uniqueCode = uuid.v4()
   const originalname = file.originalname.split('.')
 
-  callback(null, 'images' + "-" + ([uniqueCode, originalname[0]].join('-')) + '.' + originalname[1])
+  callback(null, 'images' + '-' + ([uniqueCode, originalname[0]].join('-')) + '.' + originalname[1])
 }
 
 export const filesStorage = diskStorage({
-  destination: `uploads/`,
+  destination: 'uploads/',
   filename: generateUniqueFileName,
 })
