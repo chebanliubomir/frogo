@@ -6,8 +6,6 @@ import uuid from 'uuid'
 //   callback(null, true)
 // }
 
-const folderName = uuid.v4()
-
 const generateUniqueFileName = (req, file, callback) => {
   const uniqueCode = uuid.v4()
   const originalname = file.originalname.split('.')
@@ -16,6 +14,6 @@ const generateUniqueFileName = (req, file, callback) => {
 }
 
 export const filesStorage = diskStorage({
-  destination: `uploads/${folderName}/presentation/`,
+  destination: `uploads/`,
   filename: generateUniqueFileName,
 })

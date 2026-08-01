@@ -11,6 +11,7 @@ export class PostService {
   constructor(private readonly prisma: PrismaService) { }
 
   async create(userId: number, createPostDto: CreatePostDto, presentation: Express.Multer.File, images: Express.Multer.File[]) {
+
     const createPost = await this.prisma.post.create({
       data: {
         userId: userId,
@@ -30,7 +31,6 @@ export class PostService {
 
 
     const filterImages = images.map(i => ({ name: i.filename, postId: createPost.id}))
-
 
     const createImagesForPost = await this.prisma.post_images.createManyAndReturn({
       data: filterImages
