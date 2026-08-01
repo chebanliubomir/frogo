@@ -45,16 +45,18 @@ export class PostService {
 
   }
 
-  async getAll() { }
+  async getAll() {
+    const findAllPost = await this.prisma.post.findMany()
+  }
 
   async getOne(id: number) {
     const findPost = await this.prisma.post.findFirst({ where: { id } })
 
-    if(!findPost) {
+    if (!findPost) {
       throw new BadRequestException('There is no such post')
     }
 
-    const findPostImages = await this.prisma.post_images.findMany({where: {postId: findPost?.id}})
+    const findPostImages = await this.prisma.post_images.findMany({ where: { postId: findPost?.id } })
 
     return {
       ...findPost,
@@ -68,7 +70,15 @@ export class PostService {
     return `This action updates a #${id} post`
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`
+  async remove(id: number) {
+    const removeImagesPost = await this.prisma.post_images.deleteMany({ where: { postId: id } })
+    const removePresentationPost = await this.prisma.presentation.delete({ where: { postId: id } })
+    const removePost = await this.prisma.post.delete({ where: { id } })
+
+    return {
+      ...removePost,
+      images: removeImagesPost,
+      presentation: removePresentationPost
+    }
   }
 }
