@@ -60,11 +60,23 @@ export class PostController {
   @UserRoles(Role.ADMIN)
   @UseGuards(AuthenticationGuard, UserRolesGuard)
   @ApiOperation({ summary: 'Update post by postId' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: UpdatePostDto })
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'images', maxCount: 10 },
+    { name: 'presentation', maxCount: 1 }
+  ], {
+    storage: filesStorage
+  }))
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updatePostDto: UpdatePostDto
+    @Body() updatePostDto: UpdatePostDto,
+    @UploadedFiles() files: {
+      images: Express.Multer.File[],
+      presentation: Express.Multer.File
+    }
   ) {
-    return this.postService.update(id, updatePostDto)
+    return this.postService.update(id, updatePostDto, files.presentation, files.images)
   }
 
   @Delete('remove/:id')

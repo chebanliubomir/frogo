@@ -1,3 +1,6 @@
+import * as fs from 'fs'
+import path from 'path'
+
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { CreatePostDto } from './dto/create-post.dto';
@@ -45,7 +48,7 @@ export class PostService {
 
   }
 
-  async getAll() {}
+  async getAll() { }
 
   async getOne(id: number) {
     const findPost = await this.prisma.post.findFirst({ where: { id } })
@@ -63,8 +66,56 @@ export class PostService {
 
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`
+  async update(id: number, updatePostDto: UpdatePostDto, presentation: Express.Multer.File, images: Express.Multer.File[]) {
+    const updatePost = await this.prisma.post.update({
+      where: { id },
+      data: {
+        title: updatePostDto.title,
+        description: updatePostDto.description
+      }
+    })
+
+    if (images) {
+      const findImagesPost = await this.prisma.post_images.findMany({ where: { postId: id } })
+      for (let i = 0; i < findImagesPost.length; i++) {
+        const filePath = path.join(process.cwd(), 'uploads', findImagesPost[i].name);
+        await fs.unlink(filePath, e => console.log('images', e))
+      }
+      await this.prisma.post_images.deleteMany({ where: { postId: id } })
+
+      const filterImages = images.map(i => ({ name: i.filename, postId: id }))
+
+      await this.prisma.post_images.createManyAndReturn({
+        data: filterImages
+      })
+    }
+
+    if (presentation) {
+      const findPresentationPost = await this.prisma.presentation.findMany({ where: { postId: id } })
+      const filePath = path.join(process.cwd(), 'uploads', findPresentationPost[0].name);
+
+      await fs.unlink(filePath, e => console.log('presentation', e))
+
+      await this.prisma.presentation.deleteMany({ where: { postId: id } })
+
+      await this.prisma.presentation.create({
+        data: {
+          name: presentation[0].filename,
+          weight: presentation[0].size,
+          postId: id
+        }
+      })
+    }
+
+    const postImages = await this.prisma.post_images.findMany({ where: { postId: id } })
+    const postPresentation = await this.prisma.presentation.findMany({ where: { postId: id } })
+
+    return {
+      ...updatePost,
+      images: postImages,
+      presentation: postPresentation
+    }
+
   }
 
   async remove(id: number) {
