@@ -75,9 +75,9 @@ export class PostService {
       }
     })
 
-    if (images.length !== 0) {
+    if (images) {
       const findImagesPost = await this.prisma.post_images.findMany({ where: { postId: id } })
-      for (let i = 0; i <= findImagesPost.length; i++) {
+      for (let i = 0; i < findImagesPost.length; i++) {
         const filePath = path.join(process.cwd(), 'uploads', findImagesPost[i].name);
         await fs.unlink(filePath, e => console.log('images', e))
       }
@@ -85,7 +85,7 @@ export class PostService {
 
       const filterImages = images.map(i => ({ name: i.filename, postId: id }))
 
-      const createImagesForPost = await this.prisma.post_images.createManyAndReturn({
+      await this.prisma.post_images.createManyAndReturn({
         data: filterImages
       })
     }
@@ -97,8 +97,8 @@ export class PostService {
       await fs.unlink(filePath, e => console.log('presentation', e))
 
       await this.prisma.presentation.deleteMany({ where: { postId: id } })
-      
-      const createPresentation = await this.prisma.presentation.create({
+
+      await this.prisma.presentation.create({
         data: {
           name: presentation[0].filename,
           weight: presentation[0].size,
@@ -107,6 +107,14 @@ export class PostService {
       })
     }
 
+    const postImages = await this.prisma.post_images.findMany({ where: { postId: id } })
+    const postPresentation = await this.prisma.presentation.findMany({ where: { postId: id } })
+
+    return {
+      ...updatePost,
+      images: postImages,
+      presentation: postPresentation
+    }
 
   }
 
