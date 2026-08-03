@@ -119,11 +119,23 @@ export class PostService {
   }
 
   async remove(id: number) {
+
+    const findImagesPost = await this.prisma.post_images.findMany({ where: { postId: id } })
+    for (let i = 0; i < findImagesPost.length; i++) {
+      const filePath = path.join(process.cwd(), 'uploads', findImagesPost[i].name);
+      await fs.unlink(filePath, e => console.log('remove images', e))
+    }
+
+    const findPresentationPost = await this.prisma.presentation.findMany({ where: { postId: id } })
+    const filePath = path.join(process.cwd(), 'uploads', findPresentationPost[0].name);
+    await fs.unlink(filePath, e => console.log('remove images', e))
+
     const [deletedImages, deletedPresentation, deletedPost] = await this.prisma.$transaction([
       this.prisma.post_images.deleteMany({ where: { postId: id } }),
       this.prisma.presentation.deleteMany({ where: { postId: id } }),
       this.prisma.post.deleteMany({ where: { id } })
     ])
+
 
     if (deletedPost.count === 0 || deletedPresentation.count === 0 || deletedImages.count === 0) {
       throw new BadRequestException('There is no such post')
