@@ -7,7 +7,8 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 import { PrismaService } from '@/prisma/prisma.service';
-import { Post, Post_images } from '@prisma/generated';
+import { take } from 'rxjs';
+import { SortOrder } from './enums/sort-order.enum';
 
 @Injectable()
 export class PostService {
@@ -49,12 +50,19 @@ export class PostService {
 
   }
 
-  async getAll() {
-    return await this.prisma.post.findMany({
+  async getAll(page: number, limit: number, order: SortOrder) {
+    const getAllPosts = await this.prisma.post.findMany({
       include: {
         post_images: true
+      },
+      take: limit,
+      skip: (page - 1) * limit,
+      orderBy: {
+        created_at: order
       }
     })
+
+    return getAllPosts.length === 0 ? { message: 'No posts' } : getAllPosts
   }
 
   async getOne(id: number) {
