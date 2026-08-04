@@ -7,6 +7,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 import { PrismaService } from '@/prisma/prisma.service';
+import { Post, Post_images } from '@prisma/generated';
 
 @Injectable()
 export class PostService {
@@ -48,21 +49,22 @@ export class PostService {
 
   }
 
-  async getAll() { }
+  async getAll() {
+    return await this.prisma.post.findMany({
+      include: {
+        post_images: true
+      }
+    })
+  }
 
   async getOne(id: number) {
-    const findPost = await this.prisma.post.findFirst({ where: { id } })
+    const findPost = await this.prisma.post.findFirst({ where: { id }, include: { post_images: true } })
 
     if (!findPost) {
       throw new BadRequestException('There is no such post')
     }
 
-    const findPostImages = await this.prisma.post_images.findMany({ where: { postId: findPost?.id } })
-
-    return {
-      ...findPost,
-      images: findPostImages
-    }
+    return findPost
 
   }
 
