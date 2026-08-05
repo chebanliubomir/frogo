@@ -82,6 +82,9 @@ export class PostService {
       data: {
         title: updatePostDto.title,
         description: updatePostDto.description
+      },
+      include: {
+        post_images: true
       }
     })
 
@@ -89,7 +92,7 @@ export class PostService {
       const findImagesPost = await this.prisma.post_images.findMany({ where: { postId: id } })
       for (let i = 0; i < findImagesPost.length; i++) {
         const filePath = path.join(process.cwd(), 'uploads', findImagesPost[i].name);
-        await fs.unlink(filePath, e => console.log('images', e))
+        await fs.unlink(filePath, e => { throw new BadRequestException(e) })
       }
       await this.prisma.post_images.deleteMany({ where: { postId: id } })
 
