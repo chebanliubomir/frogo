@@ -1,6 +1,6 @@
 import 'multer'
 
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, UseInterceptors, UploadedFiles } from '@nestjs/common'
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseGuards, UseInterceptors, UploadedFiles, Query } from '@nestjs/common'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Role } from '@prisma/generated'
@@ -14,6 +14,7 @@ import { AuthenticationGuard } from '@/authentication/guards/authentication.guar
 import { UserId } from '@/user/decorator/user-id.decorator'
 import { UserRoles } from '@/user/decorator/user-roles.decorator'
 import { UserRolesGuard } from '@/user/guards/user-roles.guard'
+import { SortOrder } from './enums/sort-order.enum'
 @ApiTags('Post')
 @Controller('post')
 @ApiBearerAuth()
@@ -45,8 +46,12 @@ export class PostController {
 
   @Get('all')
   @ApiOperation({ summary: 'Get all post' })
-  getAll() {
-    return this.postService.getAll()
+  getAll(
+    @Query('page', ParseIntPipe) page: number,
+    @Query('limit', ParseIntPipe) limit: number,
+    @Query('order') order: SortOrder,
+  ) {
+    return this.postService.getAll(page, limit, order)
   }
 
   @Get('one/:id')

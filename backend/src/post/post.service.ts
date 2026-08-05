@@ -7,7 +7,8 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 import { PrismaService } from '@/prisma/prisma.service';
-import { Post, Post_images } from '@prisma/generated';
+import { take } from 'rxjs';
+import { SortOrder } from './enums/sort-order.enum';
 
 @Injectable()
 export class PostService {
@@ -49,12 +50,19 @@ export class PostService {
 
   }
 
-  async getAll() {
-    return await this.prisma.post.findMany({
+  async getAll(page: number, limit: number, order: SortOrder) {
+    const getAllPosts = await this.prisma.post.findMany({
       include: {
         post_images: true
+      },
+      take: limit,
+      skip: (page - 1) * limit,
+      orderBy: {
+        created_at: order
       }
     })
+
+    return getAllPosts.length === 0 ? { message: 'No posts' } : getAllPosts
   }
 
   async getOne(id: number) {
@@ -74,6 +82,9 @@ export class PostService {
       data: {
         title: updatePostDto.title,
         description: updatePostDto.description
+      },
+      include: {
+        post_images: true
       }
     })
 
@@ -81,7 +92,7 @@ export class PostService {
       const findImagesPost = await this.prisma.post_images.findMany({ where: { postId: id } })
       for (let i = 0; i < findImagesPost.length; i++) {
         const filePath = path.join(process.cwd(), 'uploads', findImagesPost[i].name);
-        await fs.unlink(filePath, e => console.log('images', e))
+        await fs.unlink(filePath, e => { throw new BadRequestException(e) })
       }
       await this.prisma.post_images.deleteMany({ where: { postId: id } })
 
