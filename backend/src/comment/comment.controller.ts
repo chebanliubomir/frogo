@@ -4,13 +4,14 @@ import { CreateCommentDto } from './dto/create-comment.dto'
 import { UserRoles } from '@/user/decorator/user-roles.decorator';
 import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
 import { UserRolesGuard } from '@/user/guards/user-roles.guard'
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Role } from '@prisma/generated'
 import { UserId } from '@/user/decorator/user-id.decorator';
 
 
 ApiTags('Comment')
 @Controller('comment')
+@ApiBearerAuth()
 export class CommentController {
   constructor(private readonly commentService: CommentService) { }
 
@@ -19,7 +20,7 @@ export class CommentController {
   @ApiOperation({ summary: 'Create comment' })
   @ApiBody({ type: CreateCommentDto })
   create(
-    @UserId() userId: number,
+    @UserId('id') userId: number,
     @Query('postId', ParseIntPipe) postId: number,
     @Body() createCommentDto: CreateCommentDto
   ) {
