@@ -1,23 +1,38 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { CommentService } from './comment.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { Controller, Get, Post, Body, Param, Delete, UseGuards, Query, ParseIntPipe } from '@nestjs/common'
+import { CommentService } from './comment.service'
+import { CreateCommentDto } from './dto/create-comment.dto'
+import { UserRoles } from '@/user/decorator/user-roles.decorator';
+import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
+import { UserRolesGuard } from '@/user/guards/user-roles.guard'
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { Role } from '@prisma/generated'
+import { UserId } from '@/user/decorator/user-id.decorator';
 
+
+ApiTags('Comment')
 @Controller('comment')
 export class CommentController {
-  constructor(private readonly commentService: CommentService) {}
+  constructor(private readonly commentService: CommentService) { }
 
-  @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentService.create(createCommentDto);
+  @Post('create')
+  @UseGuards(AuthenticationGuard)
+  @ApiOperation({ summary: 'Create comment' })
+  @ApiBody({ type: CreateCommentDto })
+  create(
+    @UserId() userId: number,
+    @Query('postId', ParseIntPipe) postId: number,
+    @Body() createCommentDto: CreateCommentDto
+  ) {
+    return this.commentService.create(userId, postId, createCommentDto)
   }
 
-  @Get()
-  findAll() {
-    return this.commentService.findAll();
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.commentService.remove(+id);
+  @Delete('comment/:id')
+  @UserRoles(Role.ADMIN)
+  @UseGuards(AuthenticationGuard, UserRolesGuard)
+  @ApiOperation({ summary: 'Remove comment' })
+  remove(
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    return this.commentService.remove(id)
   }
 }
