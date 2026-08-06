@@ -118,11 +118,13 @@ export class PostService {
 
     const postImages = await this.prisma.post_images.findMany({ where: { postId: id } })
     const postPresentation = await this.prisma.presentation.findMany({ where: { postId: id } })
+    const postComment = await this.prisma.comment.findMany({ where: { postId: id } })
 
     return {
       ...updatePost,
       images: postImages,
-      presentation: postPresentation
+      presentation: postPresentation,
+      comments: postComment
     }
 
   }
