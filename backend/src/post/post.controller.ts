@@ -7,6 +7,7 @@ import { Role } from '@prisma/generated'
 
 import { CreatePostDto } from './dto/create-post.dto'
 import { UpdatePostDto } from './dto/update-post.dto'
+import { SortOrder } from './enums/sort-order.enum'
 import { PostService } from './post.service'
 import { filesStorage } from './utils/storage'
 
@@ -14,7 +15,6 @@ import { AuthenticationGuard } from '@/authentication/guards/authentication.guar
 import { UserId } from '@/user/decorator/user-id.decorator'
 import { UserRoles } from '@/user/decorator/user-roles.decorator'
 import { UserRolesGuard } from '@/user/guards/user-roles.guard'
-import { SortOrder } from './enums/sort-order.enum'
 @ApiTags('Post')
 @Controller('post')
 @ApiBearerAuth()
