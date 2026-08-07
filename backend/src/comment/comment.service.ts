@@ -8,19 +8,17 @@ export class CommentService {
   constructor(private readonly prisma: PrismaService) { }
 
   async create(userId: number, postId: number, createCommentDto: CreateCommentDto) {
-    const createCommentForPost = await this.prisma.comment.create({
+    return await this.prisma.comment.create({
       data: {
         userId: userId,
         postId: postId,
-        text: createCommentDto.description
-      } 
+        text: createCommentDto.comment
+      }
     })
-
-    return createCommentForPost
 
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  async remove(commentId: number) {
+    return await this.prisma.comment.delete({ where: { id: commentId } })
   }
 }
