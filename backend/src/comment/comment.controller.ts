@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, Param, Delete, UseGuards, Query, ParseIntPipe } from '@nestjs/common'
-import { CommentService } from './comment.service'
-import { CreateCommentDto } from './dto/create-comment.dto'
-import { UserRoles } from '@/user/decorator/user-roles.decorator';
-import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
-import { UserRolesGuard } from '@/user/guards/user-roles.guard'
+import { Controller, Post, Body, Param, Delete, UseGuards, Query, ParseIntPipe } from '@nestjs/common'
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Role } from '@prisma/generated'
+
+import { CommentService } from './comment.service'
+import { CreateCommentDto } from './dto/create-comment.dto'
+
+import { AuthenticationGuard } from '@/authentication/guards/authentication.guard'
 import { UserId } from '@/user/decorator/user-id.decorator';
+import { UserRoles } from '@/user/decorator/user-roles.decorator';
+import { UserRolesGuard } from '@/user/guards/user-roles.guard'
 
 
 ApiTags('Comment')
