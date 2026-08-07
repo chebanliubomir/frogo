@@ -7,7 +7,7 @@ import { UserModule } from '@/user/user.module';
 import { PrismaModule } from '@/prisma/prisma.module';
 
 @Module({
-  imports: [UserModule, TokensModule, PrismaModule],
+  imports: [PrismaModule, UserModule, TokensModule],
   controllers: [CommentController],
   providers: [CommentService],
 })

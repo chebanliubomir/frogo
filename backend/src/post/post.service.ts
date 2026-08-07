@@ -65,7 +65,13 @@ export class PostService {
   }
 
   async getOne(id: number) {
-    const findPost = await this.prisma.post.findFirst({ where: { id }, include: { post_images: true } })
+    const findPost = await this.prisma.post.findFirst({
+      where: { id },
+      include: {
+        post_images: true,
+        comments: true
+      }
+    })
 
     if (!findPost) {
       throw new BadRequestException('There is no such post')
