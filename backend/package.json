@@ -14,8 +14,7 @@
     "backend:prisma:generate": "yarn prisma generate",
     "backend:prisma:migrate": "yarn prisma migrate dev init --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
     "backend:prisma:studio": "yarn prisma studio --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
-    "backend:prisma:db:push": "yarn prisma db push --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'",
-    "backend:prisma:seed": "dotenv -e .env.development -- npx tsx prisma/seed/seed.ts"
+    "backend:prisma:db:push": "yarn prisma db push --url='postgresql://postgres:12345@localhost:5432/frogo?schema=public'"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.3.4",
