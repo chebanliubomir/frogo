@@ -31,13 +31,13 @@ export class AuthenticationController {
 
     response.cookie('refreshToken', data.refreshToken, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
       path: '/'
     })
 
     response.json({
-      access_token: data.accessToken
+      accessToken: data.accessToken
     })
   }
 
