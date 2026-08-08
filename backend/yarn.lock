@@ -2220,13 +2220,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"async@npm:^3.2.3":
-  version: 3.2.6
-  resolution: "async@npm:3.2.6"
-  checksum: 10c0/36484bb15ceddf07078688d95e27076379cc2f87b10c03b6dd8a83e89475a3c8df5848859dd06a4c95af1e4c16fc973de0171a77f18ea00be899aca2a4f85e70
-  languageName: node
-  linkType: hard
-
 "asynckit@npm:^0.4.0":
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
@@ -2282,7 +2275,6 @@ __metadata:
     dotenv-cli: "npm:^11.0.0"
     globals: "npm:^16.0.0"
     handlebars: "npm:^4.7.9"
-    libreoffice-convert: "npm:^1.8.1"
     nodemailer: "npm:^8.0.5"
     pg: "npm:^8.20.0"
     prisma: "npm:^7.4.2"
@@ -4903,16 +4895,6 @@ __metadata:
   version: 2.1.1
   resolution: "libqp@npm:2.1.1"
   checksum: 10c0/6e78f0676cd2424b3ddbf3273ab8539871299310dba433b7e2ec10a41830acecb4d074ea8b78b706dea349996f011ce519d92f81ede712c4824a2dd402aa376c
-  languageName: node
-  linkType: hard
-
-"libreoffice-convert@npm:^1.8.1":
-  version: 1.8.1
-  resolution: "libreoffice-convert@npm:1.8.1"
-  dependencies:
-    async: "npm:^3.2.3"
-    tmp: "npm:^0.2.1"
-  checksum: 10c0/3ca40b0b619e21e8eb6d87af3879c5429763ea0a210435bf043ac168a4edb2aa661baa76717821cab5d741c81d28b468651938433bbdc5f85ebaa2e816d59ce7
   languageName: node
   linkType: hard
 
@@ -7971,13 +7953,6 @@ __metadata:
   bin:
     tlds: bin.js
   checksum: 10c0/ce05d266618312dd52efe0c958ebd668da70b9b752b7ec1f1b8c4b8fabc6e0f044159f80fec6c3a78df02572afbeb343208df7ef8e83a43e9f8e6c26134c76ee
-  languageName: node
-  linkType: hard
-
-"tmp@npm:^0.2.1":
-  version: 0.2.7
-  resolution: "tmp@npm:0.2.7"
-  checksum: 10c0/59eb55584f2f07210d3231b6a1f6b5c2b9794d8a7b509c8ee867ed2acad6d2245ee2448b7937b676ffbff3155a70077edde8a69f9d7cf0f90c86a62e8910c357
   languageName: node
   linkType: hard
 
