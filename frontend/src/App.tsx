@@ -1,11 +1,7 @@
-import React from 'react';
-
 function App() {
   return (
-    <div>
-      Hello Frogo!
-    </div>
+    <h1>Hello Client!</h1>
   );
 }
 
-export default App;
+export default App
