@@ -3,5 +3,5 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en">
       <body>{children}</body>
     </html>
-  );
+  )
 }
