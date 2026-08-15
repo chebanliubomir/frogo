@@ -63,7 +63,7 @@ jobs:
         working-directory: ./backend
 
       - name: Installing dependencies to frontend directory
-        run: yarn install
+        run: npm install
         working-directory: ./frontend
 
       - name: Building backend
@@ -71,6 +71,6 @@ jobs:
         working-directory: ./backend
 
       - name: Building frontend
-        run: yarn run build
+        run: npm run build
         working-directory: ./frontend
 
