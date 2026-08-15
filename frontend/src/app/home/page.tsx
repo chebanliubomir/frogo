@@ -1,7 +1,7 @@
-import Button from "@/components/Button/button";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   return (
-    <Button>Hello Client!</Button>
+    <Button variant="outline">Hello Client!</Button>
   )
 } 
