@@ -1,7 +1,9 @@
-import Header from "@/components/Header/Header";
+import Wrapper from "@/components/Wrapper/wrapper";
 
 export default function HomePage() {
   return (
-    <Header/>
+    <Wrapper>
+      <h1>Hello World!</h1>
+    </Wrapper>
   )
 }
