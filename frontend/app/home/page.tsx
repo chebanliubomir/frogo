@@ -1,7 +1,7 @@
-import { Input } from "@/components/ui/input";
+import Header from "@/components/Header/Header";
 
 export default function HomePage() {
   return (
-    <Input type='text' />
+    <Header/>
   )
 }
