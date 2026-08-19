@@ -1,4 +1,5 @@
 import { Button } from "../ui/button"
+import { Input } from "../ui/input"
 
 export default function Header() {
 
@@ -7,6 +8,9 @@ export default function Header() {
   return (
     <header className="w-full h-15 rounded-tr-3xl rounded-tl-3xl bg-amber-950">
       <div className="logo"></div>
+      <div className="search">
+        <Input type="text"/>
+      </div>
       {auth ? <Button>Профіль</Button> : <Button>Авторизація</Button>}
     </header>
   )
