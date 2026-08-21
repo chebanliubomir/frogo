@@ -6,12 +6,14 @@ export default function Header() {
   const auth = false
 
   return (
-    <header className="flex w-full h-15 rounded-tr-3xl rounded-tl-3xl bg-amber-950">
-      <div className="flex-none">Logo</div>
-      <div className="flex-auto">
+    <header className="flex items-center justify-between w-full h-21 rounded-t-3xl">
+      <div className="flex-none px-12">Logo</div>
+      <div className="flex-auto max-w-5xl px-12">
         <Input type="text" placeholder="пошук"/>
       </div>
-      {auth ? <Button>Профіль</Button> : <Button>Авторизація</Button>}
+      <div className="flex-none px-14">
+        {auth ? <Button variant='outline'>Профіль</Button> : <Button variant='outline'>Авторизація</Button>}
+      </div>
     </header>
   )
 }
