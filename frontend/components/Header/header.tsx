@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Bodoni_Moda, Raleway } from "next/font/google";
+import Search from "../Search/search";
 
 const bodoniModa = Bodoni_Moda({
   weight: '400',
@@ -17,7 +17,7 @@ const raleway = Raleway({
 
 
 export default function Header() {
-  const auth = true
+  const auth = false
 
   return (
     <header className="mx-10 max-w-full h-18 flex items-center justify-between">
@@ -32,15 +32,13 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="hidden lg:flex lg:flex-auto mx-10 max-w-3xl">
-        <Input type="text" placeholder="Пошук" />
-      </div>
+      <Search/>
 
       {
         auth ? (
           <nav className="flex-none">
             <ul className="flex">
-              <li className="flex-1"><Button>Профіль</Button></li>
+              <li className="flex-1"><Button className={bodoniModa.className}>Профіль</Button></li>
               <li className="flex-1"><Button>Кошик</Button></li>
             </ul>
           </nav>
