@@ -17,7 +17,7 @@ const raleway = Raleway({
 
 
 export default function Header() {
-  const auth = false
+  const auth = true
 
   return (
     <header className="mx-10 max-w-full h-18 flex items-center justify-between">
@@ -26,7 +26,7 @@ export default function Header() {
         <AspectRatio ratio={1 / 1}>
           <Image src="" alt="Logo" className="w-full h-full rounded-md object-cover bg-amber-950" />
         </AspectRatio>
-        <div className="ml-1.5">
+        <div className="ml-2">
           <h1 className={`${bodoniModa.className} text-base`}>Frogo</h1>
           <p className={`${raleway.className} text-xs`}>все для логопедії</p>
         </div>
@@ -38,7 +38,7 @@ export default function Header() {
         auth ? (
           <nav className="flex-none">
             <ul className="flex">
-              <li className="flex-1"><Button className={bodoniModa.className}>Профіль</Button></li>
+              <li className="flex-1"><Button>Профіль</Button></li>
               <li className="flex-1"><Button>Кошик</Button></li>
             </ul>
           </nav>
