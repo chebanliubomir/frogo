@@ -17,14 +17,14 @@ export default function Header() {
         auth ? (
           <nav className="flex-none">
             <ul className="flex">
-              <li className="flex-1">
+              <li className="mr-1 flex-1">
                 <Button>
                   <Link href="/profile">Профіль</Link>
                   <User size={48} strokeWidth={3} />
                 </Button>
               </li>
               <li className="flex-1">
-                <Button>
+                <Button variant="outline">
                   <Link href="/basket">Кошик</Link>
                   <ShoppingCart size={48} strokeWidth={3} />
                 </Button>
