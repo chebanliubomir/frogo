@@ -8,7 +8,7 @@ export default function Search() {
 
   const [search, setSearch] = useState({
     search: '',
-    countResult: 1
+    countResult: 0
   })
 
   return (
