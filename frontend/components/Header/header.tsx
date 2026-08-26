@@ -24,7 +24,7 @@ export default function Header() {
                 </Button>
               </li>
               <li className="flex-1">
-                <Button variant="outline">
+                <Button variant="outline" className="">
                   <Link href="/basket">Кошик</Link>
                   <ShoppingCart size={48} strokeWidth={3} />
                 </Button>
