@@ -4,8 +4,15 @@ import Post from "@/components/Post/post";
 export default function HomePage() {
   return (
     <>
-      <Header/>
-      <Post/>
+      <Header />
+      <div className="grid grid-cols-3 gap-5">
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+      </div>
     </>
   )
 }
