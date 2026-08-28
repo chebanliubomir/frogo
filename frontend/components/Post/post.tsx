@@ -5,7 +5,7 @@ import { AspectRatio } from "../ui/aspect-ratio"
 
 export default function Post() {
   return (
-    <article>
+    <article className="max-w-2/12 p-1.5">
       <div className="intro">
         <AspectRatio ratio={1 / 1}>
         <Image src="" alt="Logo" className="w-full h-full rounded-md object-cover bg-amber-950" />
