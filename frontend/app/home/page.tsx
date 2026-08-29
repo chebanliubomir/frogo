@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <div className="grid grid-cols-3 gap-5">
+      <div className="mt-5 grid grid-cols-3 gap-5 items-center justify-items-center">
         <Post />
         <Post />
         <Post />
