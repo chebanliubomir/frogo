@@ -6,12 +6,14 @@ export default function HomePage() {
     <>
       <Header />
       <div className="mt-5 grid grid-cols-3 gap-5 items-center justify-items-center">
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        <Post
+          postId={1}
+          image=""
+          title="test post title"
+          description="test post description"
+          countDownloads={0}
+          countPurchases={0}
+        />
       </div>
     </>
   )
