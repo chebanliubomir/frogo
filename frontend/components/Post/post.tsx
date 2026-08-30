@@ -3,23 +3,32 @@
 import Image from "next/image"
 import { AspectRatio } from "../ui/aspect-ratio"
 
-export default function Post() {
+interface IPost {
+  postId: number
+  image: string
+  title: string
+  description: string
+  countDownloads: number
+  countPurchases: number
+}
+
+export default function Post({ postId, image, title, description, countDownloads, countPurchases }: IPost) {
   return (
-    <article className="w-4/12 p-1.5">
+    <article key={postId} className="w-4/12 p-1.5">
       <div className="intro">
         <AspectRatio ratio={4 / 4}>
-        <Image src="" alt="Logo" className="w-full h-full rounded-md object-cover bg-amber-950" />
-      </AspectRatio>
+          <Image src={image} alt="Logo" className="w-full h-full rounded-md object-cover bg-amber-950" />
+        </AspectRatio>
       </div>
       <div className="title">
-        <h3>Title</h3>
+        {title}
       </div>
       <div className="description">
-        <p></p>
+        <p>{description}</p>
       </div>
       <div className="info">
-        <div className="downloads"><span>1</span></div>
-        <div className="purchases"><span>45</span></div>
+        <div className="downloads"><span>{countDownloads}</span></div>
+        <div className="purchases"><span>{countPurchases}</span></div>
       </div>
     </article>
   )
