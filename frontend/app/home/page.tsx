@@ -14,6 +14,22 @@ export default function HomePage() {
           countDownloads={0}
           countPurchases={0}
         />
+        <Post
+          postId={2}
+          image=""
+          title="test post title"
+          description="test post description"
+          countDownloads={0}
+          countPurchases={0}
+        />
+        <Post
+          postId={3}
+          image=""
+          title="test post title"
+          description="test post description"
+          countDownloads={0}
+          countPurchases={0}
+        />
       </div>
     </>
   )
