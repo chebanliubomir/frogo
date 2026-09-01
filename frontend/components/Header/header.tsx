@@ -3,6 +3,7 @@ import Search from "../Search/search";
 import Logo from "../Logo/logo";
 import { LogIn, ShoppingCart, User } from 'lucide-react';
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function Header() {
 
@@ -18,10 +19,10 @@ export default function Header() {
           <nav className="flex-none">
             <ul className="flex">
               <li className="mr-1 flex-1">
-                <Button>
-                  <Link href="/profile">Профіль</Link>
-                  <User size={48} strokeWidth={3} />
-                </Button>
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
               </li>
               <li className="flex-1">
                 <Button>
