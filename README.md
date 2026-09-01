@@ -2,7 +2,7 @@
 
 ## Tech Stack
 
-**Client:** ReactJS, TypeScript, Redux
+**Client:** NextJS, TypeScript, Redux
 
 **Server:** NestJS, TypeScript, PrismaORM, PostgreSQL
 
