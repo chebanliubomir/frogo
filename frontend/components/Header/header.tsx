@@ -19,10 +19,15 @@ export default function Header() {
           <nav className="flex-none">
             <ul className="flex">
               <li className="mr-1 flex-1">
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                <Button>
+                  <Avatar size="sm">
+                    <AvatarImage src="" alt="@shadcn" />
+                    <AvatarFallback>
+                      <User size={48} strokeWidth={2} />
+                    </AvatarFallback>
+                  </Avatar>
+                  <Link href="/basket">Кошик</Link>
+                </Button>
               </li>
               <li className="flex-1">
                 <Button>
