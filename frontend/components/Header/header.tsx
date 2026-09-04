@@ -21,7 +21,7 @@ export default function Header() {
               <li className="mr-1 flex-1">
                 <Button>
                   <Avatar size="sm">
-                    <AvatarImage src="" alt="avatar" />
+                    <AvatarImage src="#" alt="avatar" />
                     <AvatarFallback>
                       <User size={48} strokeWidth={2} />
                     </AvatarFallback>
