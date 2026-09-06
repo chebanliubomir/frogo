@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function Header() {
 
-  const auth = true
+  const auth = false
 
   return (
     <header className="mx-10 max-w-full h-18 flex items-center justify-between">
