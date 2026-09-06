@@ -28,11 +28,11 @@ export default function Post({ postId, image, title, description, countDownloads
         <p>{description}</p>
       </div>
       <div className="flex justify-around">
-        <div className="flex">
+        <div className="flex items-center">
           <ArrowDown size={18} />
           <span>{countDownloads}</span>
         </div>
-        <div className="flex">
+        <div className="flex items-center">
           <Handbag size={18} />
           <span>{countPurchases}</span>
         </div>
